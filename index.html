@@ -295,6 +295,62 @@
         #point_desc_1, #point_desc_2, #point_desc_3 {
             text-align: center;
         }
+
+        /* --- เพิ่มส่วน Mobile Responsive --- */
+        @media (max-width: 600px) {
+            :root {
+                --base-font-size: 18px; /* ลดขนาดตัวอักษรเริ่มต้นบนมือถือ */
+            }
+            .container {
+                padding: 10px;
+            }
+            .toolbar {
+                gap: 5px;
+                padding: 5px;
+            }
+            button {
+                font-size: 16px;
+                padding: 4px 10px;
+            }
+            /* จัดการตารางไม่ให้ล้น */
+            .table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            table {
+                min-width: 100%; /* บังคับให้ตารางขยายตามเนื้อหาแต่เลื่อนซ้ายขวาได้ */
+                font-size: 0.9em;
+            }
+            /* จัดการรูป QR ให้พอดีจอ */
+            .point-qrcode {
+                width: 100% !important;
+                height: auto !important;
+                max-width: 300px; /* ไม่ให้ใหญ่เกินไปบนมือถือ */
+            }
+            .qr-section .img-placeholder {
+                width: 100% !important;
+                height: auto !important;
+                border: none;
+            }
+            .point-line {
+                width: 180px;
+                height: 180px;
+            }
+        }
+        
+        /* สไตล์สำหรับปุ่มดาวน์โหลด */
+        .btn-download {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -340,6 +396,7 @@
             <span>▼</span>
         </div>
         <div class="accordion-content">
+            <div class="table-wrapper">
             <table>
                 <thead>
                     <tr><th id="th_price">ราคา (บาท)</th><th id="th_receive_1">สิทธิพิเศษ</th></tr>
@@ -352,6 +409,7 @@
                     <tr><td id="vip_td_5">โอน 2,050 บาท</td><td id="vip_td_10">VIP 2 ปี (แถม 1,500 Coin)</td></tr>
                 </tbody>
             </table>
+            </div>
             <div id="vip-benefits">
                 <strong id="label_vip_ben">สิทธิพิเศษ VIP:</strong>
                 <ol>
@@ -372,6 +430,7 @@
             <span>▼</span>
         </div>
         <div class="accordion-content">
+            <div class="table-wrapper">
             <table>
                 <thead>
                     <tr><th id="th_price">ราคา (บาท)</th><th id="th_receive_2">Coin ที่จะได้รับ</th></tr>
@@ -384,6 +443,7 @@
                     <tr><td id="coin_td_5">โอน 2,050 บาท</td><td id="coin_td_10">15,000 Coin (+20%)</td></tr>
                 </tbody>
             </table>
+            </div>
             <div id="coin-benefits">
                 <strong id="label_note_1">หมายเหตุ: </strong><span id="note_coin_2"> <img src="assets/coin.gif" style="height:20px; vertical-align:middle;"> Coin ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</span>
             </div>
@@ -453,11 +513,15 @@
     <div class="qr-section">
         <h3 id="label_qr">QR สำหรับชำระเงิน</h3>
         <p id="qr_desc">รองรับ แอปธนาคาร/ทรูวอลเลต/แอปวอลเลตอื่นๆ</p>
-        <div class="img-placeholder" style="width: 350px; height: 506px;"><img src="assets/qr2026v1.jpg" alt="QR Code" class="point-qrcode"></div>
+        <div class="img-placeholder" style="width: 350px; height: 506px; margin-bottom: 10px">
+            <img src="assets/qr2026v1.jpg" alt="QR Code" class="point-qrcode"></div>
+        <a href="assets/qr2026v1.jpg" download="Meaw_QR_Payment.jpg" class="btn-download" id="btn_save_qr">
+        💾 บันทึกรูป QR ลงเครื่อง</a>
+        <p style="font-size: 0.8em; margin-top: 8px; opacity: 0.8;" id="qr_hint">(หากกดปุ่มไม่ได้ ให้กดค้างที่รูปเพื่อบันทึก)</p>
         <p class="important" id="footer_note">⚠️ อย่าลืมส่งสลิปทาง Line และแจ้งจำนวน VIP/Coin ที่ต้องการจะเติม ⚠️</p>
     </div>
     <div style="text-align: center; margin-top: 20px; font-size: 14px; opacity: 0.6;">
-    <p id="footer-info">v1.0.15 | Powered by Meaw 😺</p>
+    <p id="footer-info">v1.1.0 | Powered by Meaw 😺</p>
     </div>
 </div>
 

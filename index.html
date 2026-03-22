@@ -110,19 +110,20 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 10px 0;
+            margin: 5px 0; /* ลดระยะห่างภายนอกรอบๆ ตาราง (บน-ล่าง) */
         }
 
         th, td {
             border: 1px solid var(--border-color);
-            padding: 10px;
-            text-align: left;
+            padding: 5px 10px; /* ลดเลขตัวแรก (บน-ล่าง) ลงเพื่อความกระชับ / เลขตัวหลังคือ ซ้าย-ขวา */
+            text-align: center; /* เปลี่ยนจาก left เป็น center เพื่อให้อยู่กึ่งกลาง */
             vertical-align: middle;
         }
 
         .point-name {
             display: flex;
             align-items: center;
+            justify-content: center; /* จัดรูปและข้อความให้อยู่กลางกลุ่ม */
             gap: 12px; /* ระยะห่างระหว่างรูปกับข้อความ */
         }
 

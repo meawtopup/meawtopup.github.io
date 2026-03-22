@@ -74,6 +74,18 @@
         /* Headings */
         .header-section { text-align: center; margin-bottom: 30px; }
         .important { color: var(--accent-color); font-weight: bold; }
+        
+        /* เลือกเฉพาะ h1 และ h2 ที่อยู่ใน header-section */
+        .header-section h1 {
+            margin-bottom: 0; /* เอาขอบล่างของ h1 ออก */
+            padding-bottom: 0;
+        }
+
+        .header-section h2 {
+            margin-top: 0;    /* เอาขอบบนของ h2 ออก เพื่อให้ขยับขึ้นไปชิด h1 */
+            padding-top: 0;
+            font-weight: normal; /* ปรับให้ตัวบางลงถ้าต้องการ (เลือกใส่ได้ครับ) */
+        }
 
         /* Accordion (Hide/Show) */
         .accordion {

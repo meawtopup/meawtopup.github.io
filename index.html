@@ -518,10 +518,10 @@
         <a href="assets/qr2026v1.jpg" download="Meaw_QR_Payment.jpg" class="btn-download" id="btn_save_qr">
         💾 บันทึกรูป QR ลงเครื่อง</a>
         <p style="font-size: 0.8em; margin-top: 8px; opacity: 0.8;" id="qr_hint">(หากกดปุ่มไม่ได้ ให้กดค้างที่รูปเพื่อบันทึก)</p>
-        <p class="important" id="footer_note">⚠️ อย่าลืมส่งสลิปทาง Line ⚠️</br>⚠️ และแจ้งจำนวน VIP/Coin ที่ต้องการจะเติม ⚠️</p>
+        <p class="important" id="footer_note">⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ และแจ้งจำนวน VIP/Coin ที่ต้องการจะเติม ⚠️</p>
     </div>
     <div style="text-align: center; margin-top: 20px; font-size: 14px; opacity: 0.6;">
-    <p id="footer-info">v1.1.1 | Powered by Meaw 😺</p>
+    <p id="footer-info">v1.1.2 | Powered by Meaw 😺</p>
     </div>
 </div>
 
@@ -571,7 +571,7 @@
             point_label: "Pay with Points (Point Pay)",
             qr_label: "QR Payment",
             qr_desc: "Supports Bank Apps and TRUE Wallet",
-            footer_note: "⚠️ Don't forget to send your slip via Line ⚠️</br>⚠️ And specify the VIP/Coin amount ⚠️",
+            footer_note: "⚠️ Don't forget to send your slip via Line ⚠️<br>⚠️ And specify the VIP/Coin amount ⚠️",
             th_price: "Price (THB)",
             th_vip_rec: "Privileges",
             th_coin_rec: "Coins Received",
@@ -614,7 +614,9 @@
             td_point_5: "Max Point by MaxMe",
             td_point_6: "10 Point = 1 THB",
             td_point_7: "Global Club Point",
-            td_point_8: "10 Point = 1 THB"
+            td_point_8: "10 Point = 1 THB",
+            btn_save_qr: "💾 Save QR Image",
+            qr_hint: "(If button fails, long press image to save)"
         },
         th: {
             title: "MEAW TOPUP",
@@ -631,7 +633,7 @@
             point_label: "จ่ายด้วยพอยท์ (Point Pay)",
             qr_label: "QR สำหรับชำระเงิน",
             qr_desc: "รองรับแอปธนาคารและทรูวอลเลต",
-            footer_note: "⚠️ อย่าลืมส่งสลิปทาง Line ⚠️</br>⚠️ และแจ้งจำนวน VIP/Coin ที่ต้องการจะเติม ⚠️",
+            footer_note: "⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ และแจ้งจำนวน VIP/Coin ที่ต้องการจะเติม ⚠️",
             th_price: "ราคา (บาท)",
             th_vip_rec: "สิทธิพิเศษ",
             th_coin_rec: "Coin ที่จะได้รับ",
@@ -674,7 +676,9 @@
             td_point_5: "Max Point by MaxMe",
             td_point_6: "10 แต้ม = 1 บาท",
             td_point_7: "คะแนนโกลบอลคลับ",
-            td_point_8: "10 คะแนน = 1 บาท"
+            td_point_8: "10 คะแนน = 1 บาท",
+            btn_save_qr: "💾 บันทึกรูป QR ลงเครื่อง",
+            qr_hint: "(หากกดปุ่มไม่ได้ ให้กดค้างที่รูปเพื่อบันทึก)"
         }
     };
 
@@ -748,7 +752,14 @@ function toggleLang() {
         // ส่วน QR และ Footer
         document.getElementById('label_qr').innerText = t.qr_label;
         document.getElementById('qr_desc').innerText = t.qr_desc;
-        document.getElementById('footer_note').innerText = t.footer_note;
+        document.getElementById('footer_note').innerHTML = t.footer_note;
+
+        // เพิ่มส่วนนี้เพื่อเปลี่ยนภาษาปุ่มบันทึก QR
+        const btnSave = document.getElementById('btn_save_qr');
+        const qrHint = document.getElementById('qr_hint');
+    
+        if (btnSave) btnSave.innerText = t.btn_save_qr;
+        if (qrHint) qrHint.innerText = t.qr_hint;
     }
 </script>
 

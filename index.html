@@ -421,10 +421,10 @@
     </div>
 
     <div class="qr-section">
-        <h3 id="label-qr">QR สำหรับชำระเงิน</h3>
-        <p id="qr-desc">รองรับ แอปธนาคาร/ทรูวอลเลต/แอปวอลเลตอื่นๆ</p>
+        <h3 id="label_qr">QR สำหรับชำระเงิน</h3>
+        <p id="qr_desc">รองรับ แอปธนาคาร/ทรูวอลเลต/แอปวอลเลตอื่นๆ</p>
         <div class="img-placeholder" style="width: 350px; height: 506px;"><img src="assets/qr2026v1.jpg" alt="QR Code" class="point-qrcode"></div>
-        <p class="important" id="footer-note">⚠️ อย่าลืมส่งสลิปทาง Line และแจ้งจำนวนที่ต้องการเติม ⚠️</p>
+        <p class="important" id="footer_note">⚠️ อย่าลืมส่งสลิปทาง Line และแจ้งจำนวนที่ต้องการเติม ⚠️</p>
     </div>
 </div>
 
@@ -616,20 +616,20 @@ function toggleLang() {
         
         // หมายเหตุและ Coin Description
         document.querySelectorAll('#label_note_1, #label_note_2').forEach(el => el.innerText = t.note_label);
-        document.getElementById('note-coin-1').innerHTML = t.note_coin;
+        document.getElementById('note_coin_1').innerHTML = t.note_coin;
 
         // ส่วน Point Pay
-        document.querySelectorAll('#point-desc').forEach((el, index) => {
+        document.querySelectorAll('#point_desc').forEach((el, index) => {
             if (index === 0) el.innerText = t.point_d1;
             if (index === 1) el.innerText = t.point_d2;
             if (index === 2) el.innerText = t.point_d3;
         });
-        document.getElementById('note-point').innerText = t.note_point;
+        document.getElementById('note_point').innerText = t.note_point;
 
         // ส่วน QR และ Footer
-        document.getElementById('label-qr').innerText = t.qr_label;
-        document.getElementById('qr-desc').innerText = t.qr_desc;
-        document.getElementById('footer-note').innerText = t.footer_note;
+        document.getElementById('label_qr').innerText = t.qr_label;
+        document.getElementById('qr_desc').innerText = t.qr_desc;
+        document.getElementById('footer_note').innerText = t.footer_note;
     }
 </script>
 

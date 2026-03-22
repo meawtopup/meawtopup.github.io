@@ -135,11 +135,29 @@
             padding: 2px;
             border: 1px solid var(--border-color);
         }
+        .point-logo {
+            width: 80px; 
+            height: 80px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: white; 
+            padding: 2px;
+            border: 1px solid var(--border-color);
+        }
+        .point-line {
+            width: 240px; 
+            height: 240px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: white; 
+            padding: 2px;
+            border: 1px solid var(--border-color);
+        }
 
         /* Placeholders & QR */
         .img-placeholder {
-            width: 200px;
-            height: 200px;
+            width: 250px;
+            height: 250px;
             background: #eee;
             margin: 10px auto;
             display: flex;
@@ -190,7 +208,7 @@
         <div id="contact-info">
             <p><strong>ช่องทางติดต่อ:</strong> Line ID : meaw1336 (ไม่ต้องมี @ )</p>
             <p>หรือกดลิ้ง https://line.me/ti/p/9CCO97Sl1V</p>
-            <div class="img-placeholder"><img src="assets/meaw1336.jpg" alt="Line" class="point-icon"></div>
+            <div class="img-placeholder"><img src="assets/meaw1336.jpg" alt="Line" class="point-line"></div>
         </div>
     </div>
 
@@ -234,11 +252,11 @@
         <div class="accordion-content">
             <table>
                 <tbody id="coin-table-body">
-                    <tr><td>200 บาท</td><td>1,200 Coin</td></tr>
-                    <tr><td>425 บาท</td><td>3,000 Coin</td></tr>
-                    <tr><td>750 บาท</td><td>5,000 Coin (+10%)</td></tr>
-                    <tr><td>1,250 บาท</td><td>9,000 Coin (+15%)</td></tr>
-                    <tr><td>2,050 บาท</td><td>15,000 Coin (+20%)</td></tr>
+                    <tr><td>โอน 200 บาท</td><td>1,200 Coin</td></tr>
+                    <tr><td>โอน 425 บาท</td><td>3,000 Coin</td></tr>
+                    <tr><td>โอน 750 บาท</td><td>5,000 Coin (+10%)</td></tr>
+                    <tr><td>โอน 1,250 บาท</td><td>9,000 Coin (+15%)</td></tr>
+                    <tr><td>โอน 2,050 บาท</td><td>15,000 Coin (+20%)</td></tr>
                 </tbody>
             </table>
             <div id="coin-benefits">
@@ -253,7 +271,9 @@
             <span>▼</span>
         </div>
         <div class="accordion-content">
-            <p id="point-desc">ใช้คะแนนสะสมแทนเงินสด หรือใช้ร่วมกับเงินสดได้</p>
+            <p id="point-desc">สามารถใช้คะแนนสะสมตามรายการด้านล่างเพื่อจ่ายแทนเงินสดได้</p>
+            <p id="point-desc">เช่น ใช้ MAAI by KTC เติม VIP 1 เดือน ใช้ 2,000 พอยท์ (เท่ากับ 200บาท)</p>
+            <p id="point-desc">หรือใช้ร่วมกับเงินสดก็ได้ ติดต่อสอบถามได้ทาง Line</p>
             
             <table class="point-table">
                 <thead>
@@ -266,7 +286,7 @@
                     <tr>
                         <td>
                             <div class="point-name">
-                                <img src="assets/maai.png" alt="MAAI" class="point-icon">
+                                <img src="assets/maai.png" alt="MAAI" class="point-logo">
                                 <span>MAAI by KTC</span>
                             </div>
                         </td>
@@ -275,7 +295,7 @@
                     <tr>
                         <td>
                             <div class="point-name">
-                                <img src="assets/bcp.png" alt="Bangchak" class="point-icon">
+                                <img src="assets/bcp.png" alt="Bangchak" class="point-logo">
                                 <span>บางจากพอยท์</span>
                             </div>
                         </td>
@@ -284,7 +304,7 @@
                     <tr>
                         <td>
                             <div class="point-name">
-                                <img src="assets/maxme.png" alt="MaxMe" class="point-icon">
+                                <img src="assets/maxme.png" alt="MaxMe" class="point-logo">
                                 <span>Max Point by MaxMe</span>
                             </div>
                         </td>
@@ -293,7 +313,7 @@
                     <tr>
                         <td>
                             <div class="point-name">
-                                <img src="assets/ghbclub.png" alt="Global House" class="point-icon">
+                                <img src="assets/ghbclub.png" alt="Global House" class="point-logo">
                                 <span>คะแนนโกลบอลคลับ</span>
                             </div>
                         </td>
@@ -302,7 +322,7 @@
                 </tbody>
             </table>
 
-            <p class="important" id="point-note">* งดทำรายการช่วง 23.00 น. - 06.00 น.</p>
+            <strong>หมายเหตุ: </strong><p>ชำระด้วยพอยท์ งดทำรายการช่วงเวลา 23.00น.-06.00น.</p>
         </div>
     </div>
 

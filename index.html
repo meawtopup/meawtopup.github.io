@@ -361,7 +361,7 @@
                     <li id="vip_li_4">ท่านจะได้รับสัญลักษณ์ <img src="assets/star.gif" style="height:20px; vertical-align:middle;"> ต่อท้ายที่ชื่อ ไปตลอดแม้ว่าจะไม่ต่ออายุ VIP ก็ตาม</li>
                     <li id="vip_li_5">ได้รับ <img src="assets/coin.gif" style="height:20px; vertical-align:middle;"> Coin แถมตามที่ระบุไว้</li>
                 </ol>
-                <strong id="label_note_1">หมายเหตุ:</strong><span id="note_coin_1"> Coin <img src="assets/coin.gif" style="height:20px; vertical-align:middle;"> ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</span>
+                <strong id="label_note_1">หมายเหตุ:</strong><span id="note_coin_1"> <img src="assets/coin.gif" style="height:20px; vertical-align:middle;"> Coin ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</span>
             </div>
         </div>
     </div>
@@ -385,7 +385,7 @@
                 </tbody>
             </table>
             <div id="coin-benefits">
-                <strong id="label_note_1">หมายเหตุ: </strong><span id="note_coin_1"> Coin <img src="assets/coin.gif" style="height:20px; vertical-align:middle;"> ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</span>
+                <strong id="label_note_1">หมายเหตุ: </strong><span id="note_coin_2"> <img src="assets/coin.gif" style="height:20px; vertical-align:middle;"> Coin ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</span>
             </div>
         </div>
     </div>
@@ -457,7 +457,7 @@
         <p class="important" id="footer_note">⚠️ อย่าลืมส่งสลิปทาง Line และแจ้งจำนวน VIP/Coin ที่ต้องการจะเติม ⚠️</p>
     </div>
     <div style="text-align: center; margin-top: 20px; font-size: 14px; opacity: 0.6;">
-    <p id="footer-info">v1.0.9 | Powered by Meaw 😺</p>
+    <p id="footer-info">v1.0.11 | Powered by Meaw 😺</p>
     </div>
 </div>
 
@@ -518,7 +518,8 @@
             vip_li4: "Receive <img src='assets/star.gif' style='height:20px; vertical-align:middle;'> after your name",
             vip_li5: "Receive bonus <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coins as specified",
             note_label: "Note:",
-            note_coin: " Coin <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> here is site currency, not BitCoin",
+            note_coin_1: " <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin here is site currency, not BitCoin",
+            note_coin_2: " <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin here is site currency, not BitCoin",
             point_d1: "You can use collected points from below apps instead of cash.",
             point_d2: "e.g., Use 2,000 MAAI points for 1 month VIP (200 THB).",
             point_d3: "Can be used with cash. Contact us via Line.",
@@ -578,7 +579,8 @@
             vip_li4: "ท่านจะได้รับสัญลักษณ์ <img src='assets/star.gif' style='height:20px; vertical-align:middle;'> ต่อท้ายที่ชื่อ ไปตลอดแม้ว่าจะไม่ต่ออายุ VIP ก็ตาม",
             vip_li5: "ได้รับ <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin แถมตามที่ระบุไว้",
             note_label: "หมายเหตุ:",
-            note_coin: " Coin <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin",
+            note_coin_1: " <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin",
+            note_coin_2: " <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin",
             point_d1: "สามารถใช้คะแนนสะสมตามรายการด้านล่างเพื่อจ่ายแทนเงินสดได้",
             point_d2: "เช่น ใช้ MAAI by KTC เติม VIP 1 เดือน ใช้ 2,000 พอยท์ (เท่ากับ 200บาท)",
             point_d3: "หรือใช้ร่วมกับเงินสดก็ได้ ติดต่อสอบถามได้ทาง Line",
@@ -669,7 +671,9 @@ function toggleLang() {
         
         // หมายเหตุและ Coin Description
         document.querySelectorAll('#label_note_1, #label_note_2').forEach(el => el.innerText = t.note_label);
-        document.getElementById('note_coin_1').innerHTML = t.note_coin;
+        document.querySelectorAll('#note_coin_1, #note_coin_2').forEach(el => {
+            if (el) el.innerHTML = t.note_coin;
+        });
 
         // ส่วน Point Pay Description
         document.getElementById('point_desc_1').innerText = t.point_d1;

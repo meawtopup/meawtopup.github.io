@@ -299,18 +299,18 @@
         /* --- เพิ่มส่วน Mobile Responsive --- */
         @media (max-width: 600px) {
             :root {
-                --base-font-size: 16px; /* ลดขนาดตัวอักษรเริ่มต้นบนมือถือ */
+                --base-font-size: 14px; /* ลดขนาดตัวอักษรเริ่มต้นบนมือถือ */
             }
             .container {
-                padding: 10px;
-            }
-            .toolbar {
-                gap: 5px;
                 padding: 5px;
             }
+            .toolbar {
+                gap: 3px;
+                padding: 3px;
+            }
             button {
-                font-size: 14px;
-                padding: 4px 10px;
+                font-size: 12px;
+                padding: 3px 8px;
             }
             /* จัดการตารางไม่ให้ล้น */
             .table-wrapper {
@@ -319,7 +319,7 @@
             }
             table {
                 min-width: 100%; /* บังคับให้ตารางขยายตามเนื้อหาแต่เลื่อนซ้ายขวาได้ */
-                font-size: 0.9em;
+                font-size: 0.8em;
             }
             /* จัดการรูป QR ให้พอดีจอ */
             .point-qrcode {

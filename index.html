@@ -271,11 +271,23 @@
         <p class="important" id="alert-msg">⚠️ ต้องส่งสลิปหรือหลักฐานการชำระเงินทาง Line เท่านั้น ⚠️</p>
         
         <div id="contact-info">
-            <p><strong>ช่องทางติดต่อ:</strong> Line ID : meaw1336 (ไม่ต้องมี @ )</p>
-            <p>หรือ <a href="https://line.me/ti/p/9CCO97Sl1V" target="_blank" style="text-decoration: none;">
-                <button type="button" style="background-color: #06C755; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">เพิ่มเพื่อนผ่าน Line
-                </button>
-                    </a>
+            <p>
+                <strong id="label-contact">ช่องทางติดต่อ:</strong> 
+                    Line ID : meaw1336 <span id="label-no-at">(ไม่ต้องมี @)</span>
+            </p>
+
+            <p>
+                <a href="https://line.me/ti/p/9CCO97Sl1V" target="_blank" style="text-decoration: none;">
+                    <button id="btn-add-line" type="button" style="background-color: #06C755; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                        เพิ่มเพื่อนผ่าน Line
+                    </button>
+                </a>
+            </p>
+
+            <p>
+                <span id="line-time-1">🕙 เวลาออนไลน์: 10.00 น. - 22.00 น. (เวลาไทย)</span><br>
+                <span id="line-time-2">🕠 นอกเวลา สามารถทักหาได้ ถ้าอยู่จะตอบทันที</span><br>
+                <span id="line-time-3">⌛ ถ้าไม่อยู่ จะดำเนินการให้ทันทีที่เห็นข้อความ</span>
             </p>
             <div class="img-placeholder"><img src="assets/meaw1336.jpg" alt="Line" class="point-line"></div>
         </div>
@@ -393,7 +405,7 @@
         </tr>
     </tbody>
 </table>
-            <strong>หมายเหตุ: </strong><span> ชำระด้วยพอยท์ งดทำรายการช่วงเวลา 23.00น.-06.00น.</span>
+            <strong>หมายเหตุ: </strong><span> ชำระด้วยพอยท์ 🚨 งดทำรายการช่วงเวลา 23.00 น.- 06.00 น.</span>
         </div>
     </div>
 
@@ -440,6 +452,12 @@
             title: "MEAW TOPUP",
             subtitle: "VIP/Coin Donation TorrentDD",
             alert: "⚠️ Must send slip via Line ONLY ⚠️",
+            label_contact: "Contact:",
+            no_at: "(No @ sign)",
+            btn_add_line: "Add friend via Line",
+            time1: "🕙 Online: 10:00 AM - 10:00 PM (GMT+7)",
+            time2: "🕠 You can message anytime, I'll reply if online.",
+            time3: "⌛ If away, I'll process immediately once seen."
             vip_label: "VIP Prices (Click to view)",
             coin_label: "Coin Prices (Click to view)",
             point_label: "Pay with Points (Point Pay)",
@@ -451,6 +469,12 @@
             title: "MEAW TOPUP",
             subtitle: "VIP/Coin Donation TorrentDD",
             alert: "⚠️ ต้องส่งสลิปหรือหลักฐานการชำระเงินทาง Line เท่านั้น ⚠️",
+            label_contact: "ช่องทางติดต่อ:",
+            no_at: "(ไม่ต้องมี @)",
+            btn_add_line: "เพิ่มเพื่อนผ่าน Line",
+            time1: "🕙 เวลาออนไลน์: 10.00 น. - 22.00 น. (เวลาไทย)",
+            time2: "🕠 นอกเวลา สามารถทักหาได้ ถ้าอยู่จะตอบทันที",
+            time3: "⌛ ถ้าไม่อยู่ จะดำเนินการให้ทันทีที่เห็นข้อความ"
             vip_label: "ราคา VIP (คลิกเพื่อดู)",
             coin_label: "ราคา Coin (คลิกเพื่อดู)",
             point_label: "จ่ายด้วยพอยท์ (Point Pay)",

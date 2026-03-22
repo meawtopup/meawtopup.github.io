@@ -13,7 +13,7 @@
             --accent-color: #ee0000;
             --card-bg: #f9f9f9;
             --border-color: #dddddd;
-            --base-font-size: 18px;
+            --base-font-size: 20px;
         }
 
         [data-theme="dark"] {
@@ -72,7 +72,7 @@
         }
 
         /* Headings */
-        .header-section { text-align: center; margin-bottom: 40px; }
+        .header-section { text-align: center; margin-bottom: 30px; }
         .important { color: var(--accent-color); font-weight: bold; }
 
         /* Accordion (Hide/Show) */
@@ -174,15 +174,15 @@
             border-top: 2px solid var(--primary-color); 
         }
         ol {
-            padding-left: 25px;
+            padding-left: 25px; /* เว้นระยะห่างด้านซ้ายสำหรับตัวเลข */
             margin: 15px 0;
         }
 
         ol li {
-            margin-bottom: 8px;
+            margin-bottom: 8px; /* ระยะห่างระหว่างบรรทัด */
             padding-left: 5px;
         }
-
+        /* ปรับให้ตัวเลขเป็นสีเดียวกับ Primary Color ของคุณ (ถ้าต้องการ) */
         ol li::marker {
             color: var(--primary-color);
             font-weight: bold;
@@ -193,7 +193,7 @@
 
 <div class="container">
     <div class="toolbar">
-        <button onclick="toggleLang()" id="btn-lang">EN / TH</button>
+        <button onclick="toggleLang()" id="btn-lang">EN/TH</button>
         <button onclick="changeFontSize(2)">A+</button>
         <button onclick="changeFontSize(-2)">A-</button>
         <button onclick="toggleTheme()" id="btn-theme">Day/Night</button>
@@ -201,8 +201,7 @@
 
     <div class="header-section">
         <h1 id="title">MEAW TOPUP</h1>
-        <h2 id="subtitle1">คนกลางบริการเติม</h2>
-        <h3 id="subtitle2">VIP/Coin Donation TorrentDD</h3>
+        <h2 id="subtitle">คนกลางบริการเติม</br>VIP/Coin Donation TorrentDD</h2>
         <p class="important" id="alert-msg">⚠️ ต้องส่งสลิปหรือหลักฐานการชำระเงินทาง Line เท่านั้น ⚠️</p>
         
         <div id="contact-info">
@@ -367,8 +366,7 @@
     const translations = {
         en: {
             title: "MEAW TOPUP",
-            subtitle1: "Agent for",
-            subtitle2: "VIP / Coin Donation TorrentDD",
+            subtitle: "Agent for VIP / Coin Donation TorrentDD",
             alert: "⚠️ Must send slip via Line ONLY ⚠️",
             vip_label: "VIP Prices (Click to view)",
             coin_label: "Coin Prices (Click to view)",
@@ -379,8 +377,7 @@
         },
         th: {
             title: "MEAW TOPUP",
-            subtitle1: "คนกลางบริการเติม",
-            subtitle2: "VIP/Coin Donation TorrentDD",
+            subtitle: "คนกลางบริการเติม</br>VIP/Coin Donation TorrentDD",
             alert: "⚠️ ต้องส่งสลิปหรือหลักฐานการชำระเงินทาง Line เท่านั้น ⚠️",
             vip_label: "ราคา VIP (คลิกเพื่อดู)",
             coin_label: "ราคา Coin (คลิกเพื่อดู)",

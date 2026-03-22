@@ -119,7 +119,28 @@
             text-align: center; /* เปลี่ยนจาก left เป็น center เพื่อให้อยู่กึ่งกลาง */
             vertical-align: middle;
         }
+        /* ปรับแต่งตาราง Point Pay เพิ่มเติม */
+        .point-table td {
+            padding: 8px 10px;
+        }
 
+        .point-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto; /* จัดรูปให้อยู่กลางช่องของตัวเอง */
+        }
+
+        /* ทำให้ช่องรูปกับช่องชื่อแอปดูเป็นช่องเดียวกัน */
+        .point-table td[style*="border-right: none"] {
+            padding-right: 0;
+        }
+        .point-table td[style*="border-left: none"] {
+            padding-left: 0;
+        }
+
+        /* ส่วนของข้อความ และรูป */
         .point-name {
             display: flex;
             align-items: center;
@@ -292,52 +313,52 @@
             <p id="point-desc">เช่น ใช้ MAAI by KTC เติม VIP 1 เดือน ใช้ 2,000 พอยท์ (เท่ากับ 200บาท)</p>
             <p id="point-desc">หรือใช้ร่วมกับเงินสดก็ได้ ติดต่อสอบถามได้ทาง Line</p>
             
-            <table class="point-table">
-                <thead>
-                    <tr>
-                        <th id="th-app">แอปพลิเคชัน</th>
-                        <th id="th-rate">อัตราแลกเปลี่ยน</th>
-                    </tr>
-                </thead>
-                <tbody id="point-table-body">
-                    <tr>
-                        <td>
-                            <div class="point-name">
-                                <img src="assets/maai.png" alt="MAAI" class="point-logo">
-                                <span>MAAI by KTC</span>
-                            </div>
-                        </td>
-                        <td>10 คะแนน = 1 บาท</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="point-name">
-                                <img src="assets/bcp.png" alt="Bangchak" class="point-logo">
-                                <span>บางจากพอยท์</span>
-                            </div>
-                        </td>
-                        <td>8 พอยท์ = 1 บาท</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="point-name">
-                                <img src="assets/maxme.png" alt="MaxMe" class="point-logo">
-                                <span>Max Point by MaxMe</span>
-                            </div>
-                        </td>
-                        <td>10 แต้ม = 1 บาท</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="point-name">
-                                <img src="assets/ghbclub.png" alt="Global House" class="point-logo">
-                                <span>คะแนนโกลบอลคลับ</span>
-                            </div>
-                        </td>
-                        <td>10 คะแนน = 1 บาท</td>
-                    </tr>
-                </tbody>
-            </table>
+<table class="point-table">
+    <thead>
+        <tr>
+            <th colspan="2" id="th-app">แอปพลิเคชัน</th>
+            <th id="th-rate">อัตราแลกเปลี่ยน</th>
+        </tr>
+    </thead>
+    <tbody id="point-table-body">
+        <tr>
+            <td style="width: 50px; border-right: none;">
+                <img src="assets/maai.png" alt="MAAI" class="point-icon">
+            </td>
+            <td style="border-left: none; text-align: center;">
+                <span>MAAI by KTC</span>
+            </td>
+            <td>10 คะแนน = 1 บาท</td>
+        </tr>
+        <tr>
+            <td style="width: 50px; border-right: none;">
+                <img src="assets/bcp.png" alt="Bangchak" class="point-icon">
+            </td>
+            <td style="border-left: none; text-align: center;">
+                <span>บางจากพอยท์</span>
+            </td>
+            <td>8 พอยท์ = 1 บาท</td>
+        </tr>
+        <tr>
+            <td style="width: 50px; border-right: none;">
+                <img src="assets/maxme.png" alt="MaxMe" class="point-icon">
+            </td>
+            <td style="border-left: none; text-align: center;">
+                <span>Max Point by MaxMe</span>
+            </td>
+            <td>10 แต้ม = 1 บาท</td>
+        </tr>
+        <tr>
+            <td style="width: 50px; border-right: none;">
+                <img src="assets/ghbclub.png" alt="Global House" class="point-icon">
+            </td>
+            <td style="border-left: none; text-align: center;">
+                <span>คะแนนโกลบอลคลับ</span>
+            </td>
+            <td>10 คะแนน = 1 บาท</td>
+        </tr>
+    </tbody>
+</table>
 
             <strong>หมายเหตุ: </strong><p>ชำระด้วยพอยท์ งดทำรายการช่วงเวลา 23.00น.-06.00น.</p>
         </div>

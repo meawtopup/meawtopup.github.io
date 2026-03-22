@@ -464,7 +464,7 @@
     <thead>
         <tr>
             <th colspan="2" id="th_app">แอปพลิเคชัน</th>
-            <th id="th-rate">อัตราแลกเปลี่ยน</th>
+            <th id="th_rate">อัตราแลกเปลี่ยน</th>
         </tr>
     </thead>
     <tbody id="point-table-body">
@@ -513,15 +513,15 @@
     <div class="qr-section">
         <h3 id="label_qr">QR สำหรับชำระเงิน</h3>
         <p id="qr_desc">รองรับแอปธนาคารและทรูวอลเลต</p>
+        <p class="important" id="footer_note">⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ พร้อมแจ้งจำนวน VIP/Coin ⚠️</p>
         <div class="img-placeholder" style="width: 350px; height: 506px; margin-bottom: 10px">
             <img src="assets/qr2026v1.jpg" alt="QR Code" class="point-qrcode"></div>
         <a href="assets/qr2026v1.jpg" download="Meaw_QR_Payment.jpg" class="btn-download" id="btn_save_qr">
         💾 บันทึกรูป QR ลงเครื่อง</a>
         <p style="font-size: 0.8em; margin-top: 8px; opacity: 0.8;" id="qr_hint">(หากกดปุ่มไม่ได้ ให้กดค้างที่รูปเพื่อบันทึก)</p>
-        <p class="important" id="footer_note">⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ พร้อมแจ้งจำนวน VIP/Coin ⚠️</p>
     </div>
     <div style="text-align: center; margin-top: 20px; font-size: 14px; opacity: 0.6;">
-    <p id="footer-info">v1.1.6 © 2026 | Made by Meaw 😺</p>
+    <p id="footer-info">v1.1.8 © 2026 | Made by Meaw 😺</p>
     </div>
 </div>
 
@@ -615,6 +615,8 @@
             td_point_6: "10 Point = 1 THB",
             td_point_7: "Global Club Point",
             td_point_8: "10 Point = 1 THB",
+            th_app: "Application",
+            th_rate: "Exchange Rate",
             btn_save_qr: "💾 Save QR Image",
             qr_hint: "(If button fails, long press image to save)"
         },
@@ -677,6 +679,8 @@
             td_point_6: "10 แต้ม = 1 บาท",
             td_point_7: "คะแนนโกลบอลคลับ",
             td_point_8: "10 คะแนน = 1 บาท",
+            th_app: "แอปพลิเคชัน",
+            th_rate: "อัตราแลกเปลี่ยน",
             btn_save_qr: "💾 บันทึกรูป QR ลงเครื่อง",
             qr_hint: "(หากกดปุ่มไม่ได้ ให้กดค้างที่รูปเพื่อบันทึก)"
         }
@@ -708,6 +712,8 @@ function toggleLang() {
         document.querySelectorAll('#th_price').forEach(el => el.innerText = t.th_price);
         if(document.getElementById('th_receive_1')) document.getElementById('th_receive_1').innerText = t.th_vip_rec;
         if(document.getElementById('th_receive_2')) document.getElementById('th_receive_2').innerText = t.th_coin_rec;
+        if(document.getElementById('th_app')) document.getElementById('th_app').innerText = t.th_app;
+        if(document.getElementById('th_rate')) document.getElementById('th_rate').innerText = t.th_rate;
 
         // ตารางราคา VIP (ใช้ ['key'] เพื่อรองรับ ID ที่มีขีดกลาง)
         for (let i = 1; i <= 10; i++) {

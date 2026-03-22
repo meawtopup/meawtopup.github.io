@@ -155,6 +155,20 @@
             padding: 20px; 
             border-top: 2px solid var(--primary-color); 
         }
+        ol {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+
+        ol li {
+            margin-bottom: 8px;
+            padding-left: 5px;
+        }
+
+        ol li::marker {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -162,25 +176,27 @@
 <div class="container">
     <div class="toolbar">
         <button onclick="toggleLang()" id="btn-lang">EN / TH</button>
-        <button onclick="changeFontSize(2)">A^</button>
-        <button onclick="changeFontSize(-2)">Av</button>
+        <button onclick="changeFontSize(2)">A+</button>
+        <button onclick="changeFontSize(-2)">A-</button>
         <button onclick="toggleTheme()" id="btn-theme">Day/Night</button>
     </div>
 
     <div class="header-section">
         <h1 id="title">MEAW TOPUP</h1>
-        <h2 id="subtitle">คนกลางบริการเติม VIP / Coin Donation TorrentDD</h2>
-        <p class="important" id="alert-msg">!! ต้องส่งสลิปหรือหลักฐานการชำระเงินทาง Line เท่านั้น !!</p>
+        <h2 id="subtitle1">คนกลางบริการเติม</h2>
+        <h3 id="subtitle2">VIP/Coin Donation TorrentDD</h3>
+        <p class="important" id="alert-msg">⚠️ ต้องส่งสลิปหรือหลักฐานการชำระเงินทาง Line เท่านั้น ⚠️</p>
         
         <div id="contact-info">
-            <p><strong>ช่องทางติดต่อ:</strong> Line ID : meaw1336</p>
-            <div class="img-placeholder">[รูป QR Line]</div>
+            <p><strong>ช่องทางติดต่อ:</strong> Line ID : meaw1336 (ไม่ต้องมี @ )</p>
+            <p>หรือกดลิ้ง https://line.me/ti/p/9CCO97Sl1V</p>
+            <div class="img-placeholder"><img src="assets/meaw1336.jpg" alt="Line" class="point-icon"></div>
         </div>
     </div>
 
     <div class="accordion">
         <div class="accordion-header" onclick="toggleAccordion(this)">
-            <span id="label-vip-price">ราคา VIP (คลิกเพื่อดู)</span>
+            <span id="label-vip-price">ราคา VIP <img src="assets/star.gif"> (คลิกเพื่อดู)</span>
             <span>▼</span>
         </div>
         <div class="accordion-content">
@@ -189,28 +205,30 @@
                     <tr><th id="th-price">ราคา (บาท)</th><th id="th-receive">ได้รับ</th></tr>
                 </thead>
                 <tbody id="vip-table-body">
-                    <tr><td>200</td><td>VIP 1 เดือน (แถม 100 Coin)</td></tr>
-                    <tr><td>425</td><td>VIP 3 เดือน (แถม 300 Coin)</td></tr>
-                    <tr><td>750</td><td>VIP 6 เดือน (แถม 500 Coin)</td></tr>
-                    <tr><td>1,250</td><td>VIP 1 ปี (แถม 900 Coin)</td></tr>
-                    <tr><td>2,050</td><td>VIP 2 ปี (แถม 1,500 Coin)</td></tr>
+                    <tr><td>โอน 200 บาท</td><td>VIP 1 เดือน (แถม 100 Coin)</td></tr>
+                    <tr><td>โอน 425 บาท</td><td>VIP 3 เดือน (แถม 300 Coin)</td></tr>
+                    <tr><td>โอน 750 บาท</td><td>VIP 6 เดือน (แถม 500 Coin)</td></tr>
+                    <tr><td>โอน 1,250 บาท</td><td>VIP 1 ปี (แถม 900 Coin)</td></tr>
+                    <tr><td>โอน 2,050 บาท</td><td>VIP 2 ปี (แถม 1,500 Coin)</td></tr>
                 </tbody>
             </table>
             <div id="vip-benefits">
                 <strong>สิทธิพิเศษ VIP:</strong>
-                <ul>
-                    <li>Download ไม่จำกัดแม้ Ratio ต่ำ</li>
-                    <li>ไม่คิดจำนวนการดาวน์โหลด</li>
-                    <li>เปลี่ยน Class เป็น VIP Class</li>
-                    <li>ได้รับสัญลักษณ์พิเศษหลังชื่อ</li>
-                </ul>
+                <ol>
+                    <li>1. Download ไฟล์ได้อย่างไม่จำกัด แม้ว่า Ratio จะน้อยกว่า 0.5 ก็ตาม</li>
+                    <li>2. ไม่คิดจำนวนการ Download (หยุดดาวโหลดไว้)</li>
+                    <li>3. จะได้รับการเปลี่ยน Class เป็นVIP Class</li>
+                    <li>4. ท่านจะได้รับสัญลักษณ์  ต่อท้ายที่ชื่อ ไปตลอดแม้ว่าจะไม่ต่ออายุ VIP ก็ตาม</li>
+                    <li>5. ได้รับ  Coin แถมตามที่ระบุไว้</li>
+                </ol>
+                <strong>หมายเหตุ: </strong><p>Coin <img src="assets/coin.gif"> ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</p>
             </div>
         </div>
     </div>
 
     <div class="accordion">
         <div class="accordion-header" onclick="toggleAccordion(this)">
-            <span id="label-coin-price">ราคา Coin (คลิกเพื่อดู)</span>
+            <span id="label-coin-price">ราคา Coin <img src="assets/coin.gif"> (คลิกเพื่อดู)</span>
             <span>▼</span>
         </div>
         <div class="accordion-content">
@@ -223,6 +241,9 @@
                     <tr><td>2,050 บาท</td><td>15,000 Coin (+20%)</td></tr>
                 </tbody>
             </table>
+            <div id="coin-benefits">
+                <strong>หมายเหตุ: </strong><p>Coin <img src="assets/coin.gif"> ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</p>
+            </div>
         </div>
     </div>
 
@@ -289,7 +310,7 @@
         <h3 id="label-qr">QR สำหรับชำระเงิน</h3>
         <p id="qr-desc">รองรับ แอปธนาคาร / TrueWallet / วอลเลตอื่นๆ</p>
         <div class="img-placeholder" style="width: 250px; height: 300px;">[รูป QR PromptPay]</div>
-        <p class="important" id="footer-note">!! อย่าลืมส่งสลิปทาง Line และแจ้งจำนวนที่ต้องการเติม !!</p>
+        <p class="important" id="footer-note">⚠️ อย่าลืมส่งสลิปทาง Line และแจ้งจำนวนที่ต้องการเติม ⚠️</p>
     </div>
 </div>
 
@@ -326,25 +347,27 @@
     const translations = {
         en: {
             title: "MEAW TOPUP",
-            subtitle: "Agent for VIP / Coin Donation TorrentDD",
-            alert: "!! Must send slip via Line ONLY !!",
+            subtitle1: "Agent for",
+            subtitle2: "VIP / Coin Donation TorrentDD",
+            alert: "⚠️ Must send slip via Line ONLY ⚠️",
             vip_label: "VIP Prices (Click to view)",
             coin_label: "Coin Prices (Click to view)",
             point_label: "Pay with Points (Point Pay)",
             qr_label: "QR Payment",
             qr_desc: "Supports Bank Apps / TrueWallet / Other Wallets",
-            footer_note: "!! Don't forget to send slip via Line and specify amount !!"
+            footer_note: "⚠️ Don't forget to send slip via Line and specify amount ⚠️"
         },
         th: {
             title: "MEAW TOPUP",
-            subtitle: "คนกลางบริการเติม VIP / Coin Donation TorrentDD",
-            alert: "!! ต้องส่งสลิปหรือหลักฐานการชำระเงินทาง Line เท่านั้น !!",
+            subtitle1: "คนกลางบริการเติม",
+            subtitle2: "VIP/Coin Donation TorrentDD",
+            alert: "⚠️ ต้องส่งสลิปหรือหลักฐานการชำระเงินทาง Line เท่านั้น ⚠️",
             vip_label: "ราคา VIP (คลิกเพื่อดู)",
             coin_label: "ราคา Coin (คลิกเพื่อดู)",
             point_label: "จ่ายด้วยพอยท์ (Point Pay)",
             qr_label: "QR สำหรับชำระเงิน",
             qr_desc: "รองรับ แอปธนาคาร / TrueWallet / วอลเลตอื่นๆ",
-            footer_note: "!! อย่าลืมส่งสลิปทาง Line และแจ้งจำนวนที่ต้องการเติม !!"
+            footer_note: "⚠️ อย่าลืมส่งสลิปทาง Line และแจ้งจำนวนที่ต้องการเติม ⚠️"
         }
     };
 

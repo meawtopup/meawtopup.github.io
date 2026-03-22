@@ -223,6 +223,46 @@
             margin-bottom: 5px; /* ตั้งค่าขอบล่างให้เหลือนิดเดียว (ปรับตัวเลขตามชอบ) */
             line-height: 1.2;  /* ปรับระยะห่างระหว่างบรรทัดภายในตัวอักษรเองด้วย */
         }
+        #vip-benefits ol {
+            margin-top: 5px;      /* ลดระยะห่างระหว่างหัวข้อ "สิทธิพิเศษ" กับรายการเลข 1 */
+            margin-bottom: 10px;  /* ระยะห่างก่อนถึงคำว่า "หมายเหตุ" */
+            padding-left: 25px;   /* ระยะเยื้องของตัวเลข */
+        }
+
+        #vip-benefits li {
+            margin-bottom: 2px;   /* ปรับค่านี้เพื่อคุมระยะห่างระหว่างข้อ 1, 2, 3... ยิ่งน้อยยิ่งชิด */
+            line-height: 1.4;     /* ความสูงของบรรทัดตัวอักษร */
+        }
+
+        #vip-benefits strong {
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        #vip-benefits img {
+            height: 20px;         
+            vertical-align: middle;
+        }
+        #coin-benefits ol {
+            margin-top: 5px;      
+            margin-bottom: 10px;  
+            padding-left: 25px;   
+        }
+
+        #coin-benefits li {
+            margin-bottom: 2px;   
+            line-height: 1.4;     
+        }
+
+        #coin-benefits strong {
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        #coin-benefits img {
+            height: 20px;         
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -274,7 +314,7 @@
                     <li>4. ท่านจะได้รับสัญลักษณ์  ต่อท้ายที่ชื่อ ไปตลอดแม้ว่าจะไม่ต่ออายุ VIP ก็ตาม</li>
                     <li>5. ได้รับ  Coin แถมตามที่ระบุไว้</li>
                 </ol>
-                <strong>หมายเหตุ: </strong><p>Coin <img src="assets/coin.gif"> ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</p>
+                <strong>หมายเหตุ: </strong><span>Coin <img src="assets/coin.gif"> ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</span>
             </div>
         </div>
     </div>
@@ -298,7 +338,7 @@
                 </tbody>
             </table>
             <div id="coin-benefits">
-                <strong>หมายเหตุ: </strong><p>Coin <img src="assets/coin.gif"> ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</p>
+                <strong>หมายเหตุ: </strong><span>Coin <img src="assets/coin.gif"> ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin</span>
             </div>
         </div>
     </div>

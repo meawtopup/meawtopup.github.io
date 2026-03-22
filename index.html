@@ -106,7 +106,7 @@
             padding: 15px;
         }
 
-        /* Tables */
+        /* Tables & Point Pay Styling */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -117,8 +117,26 @@
             border: 1px solid var(--border-color);
             padding: 10px;
             text-align: left;
+            vertical-align: middle;
         }
 
+        .point-name {
+            display: flex;
+            align-items: center;
+            gap: 12px; /* ระยะห่างระหว่างรูปกับข้อความ */
+        }
+
+        .point-icon {
+            width: 40px; /* ขนาดรูปภาพคงที่ */
+            height: 40px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: white; /* กันรูปโปร่งใสกลืนกับพื้นหลังเข้ม */
+            padding: 2px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Placeholders & QR */
         .img-placeholder {
             width: 200px;
             height: 200px;
@@ -131,7 +149,12 @@
             color: #888;
         }
 
-        .qr-section { text-align: center; margin-top: 40px; padding: 20px; border-top: 2px solid var(--primary-color); }
+        .qr-section { 
+            text-align: center; 
+            margin-top: 40px; 
+            padding: 20px; 
+            border-top: 2px solid var(--primary-color); 
+        }
     </style>
 </head>
 <body>
@@ -203,19 +226,61 @@
         </div>
     </div>
 
-    <div class="accordion">
+<div class="accordion">
         <div class="accordion-header" onclick="toggleAccordion(this)">
             <span id="label-point-pay">จ่ายด้วยพอยท์ (Point Pay)</span>
             <span>▼</span>
         </div>
         <div class="accordion-content">
             <p id="point-desc">ใช้คะแนนสะสมแทนเงินสด หรือใช้ร่วมกับเงินสดได้</p>
-            <ul>
-                <li>MAAI by KTC: 10 คะแนน = 1 บาท</li>
-                <li>บางจากพอยท์: 8 พอยท์ = 1 บาท</li>
-                <li>Max Point: 10 แต้ม = 1 บาท</li>
-                <li>Global Club: 10 คะแนน = 1 บาท</li>
-            </ul>
+            
+            <table class="point-table">
+                <thead>
+                    <tr>
+                        <th id="th-app">แอปพลิเคชัน</th>
+                        <th id="th-rate">อัตราแลกเปลี่ยน</th>
+                    </tr>
+                </thead>
+                <tbody id="point-table-body">
+                    <tr>
+                        <td>
+                            <div class="point-name">
+                                <img src="assets/maai.png" alt="MAAI" class="point-icon">
+                                <span>MAAI by KTC</span>
+                            </div>
+                        </td>
+                        <td>10 คะแนน = 1 บาท</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="point-name">
+                                <img src="assets/bcp.png" alt="Bangchak" class="point-icon">
+                                <span>บางจากพอยท์</span>
+                            </div>
+                        </td>
+                        <td>8 พอยท์ = 1 บาท</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="point-name">
+                                <img src="assets/maxme.png" alt="MaxMe" class="point-icon">
+                                <span>Max Point by MaxMe</span>
+                            </div>
+                        </td>
+                        <td>10 แต้ม = 1 บาท</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="point-name">
+                                <img src="assets/ghbclub.png" alt="Global House" class="point-icon">
+                                <span>คะแนนโกลบอลคลับ</span>
+                            </div>
+                        </td>
+                        <td>10 คะแนน = 1 บาท</td>
+                    </tr>
+                </tbody>
+            </table>
+
             <p class="important" id="point-note">* งดทำรายการช่วง 23.00 น. - 06.00 น.</p>
         </div>
     </div>

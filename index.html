@@ -362,7 +362,7 @@
 
 <div class="accordion">
         <div class="accordion-header" onclick="toggleAccordion(this)">
-            <span id="label-point-pay">จ่ายด้วยพอยท์ (Point Pay)</span>
+            <span id="label_point_pay">จ่ายด้วยพอยท์ (Point Pay)</span>
             <span>▼</span>
         </div>
         <div class="accordion-content">
@@ -575,12 +575,12 @@ function toggleLang() {
         // หัวข้อ Accordion (ใช้ innerHTML เพื่อรองรับรูปภาพในหัวข้อ)
         document.getElementById('label_vip_price').innerHTML = t.vip_label + ' <img src="assets/star.gif">';
         document.getElementById('label_coin_price').innerHTML = t.coin_label + ' <img src="assets/coin.gif">';
-        document.getElementById('label-point-pay').innerText = t.point_label;
+        document.getElementById('label_point_pay').innerText = t.point_label;
 
         // หัวตาราง
         document.querySelectorAll('#th_price').forEach(el => el.innerText = t.th_price);
         if(document.getElementById('th_receive')) document.getElementById('th_receive').innerText = t.th_vip_rec;
-        if(document.getElementById('th_receive-coin')) document.getElementById('th_receive-coin').innerText = t.th_coin_rec;
+        if(document.getElementById('th_receive_coin')) document.getElementById('th_receive_coin').innerText = t.th_coin_rec;
 
         // ตารางราคา VIP (ใช้ ['key'] เพื่อรองรับ ID ที่มีขีดกลาง)
         for (let i = 1; i <= 10; i++) {

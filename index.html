@@ -457,7 +457,7 @@
         <p class="important" id="footer_note">⚠️ อย่าลืมส่งสลิปทาง Line และแจ้งจำนวน VIP/Coin ที่ต้องการจะเติม ⚠️</p>
     </div>
     <div style="text-align: center; margin-top: 20px; font-size: 14px; opacity: 0.6;">
-    <p id="footer-info">v1.0.11 | Powered by Meaw 😺</p>
+    <p id="footer-info">v1.0.12 | Powered by Meaw 😺</p>
     </div>
 </div>
 
@@ -517,7 +517,7 @@
             vip_li3: "Account upgraded to VIP Class",
             vip_li4: "Receive <img src='assets/star.gif' style='height:20px; vertical-align:middle;'> after your name",
             vip_li5: "Receive bonus <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coins as specified",
-            note_label: "Note:",
+            note_label_1: "Note:",
             note_coin_1: " <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin here is site currency, not BitCoin",
             note_coin_2: " <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin here is site currency, not BitCoin",
             point_d1: "You can use collected points from below apps instead of cash.",
@@ -578,7 +578,7 @@
             vip_li3: "จะได้รับการเปลี่ยน Class เป็น VIP Class",
             vip_li4: "ท่านจะได้รับสัญลักษณ์ <img src='assets/star.gif' style='height:20px; vertical-align:middle;'> ต่อท้ายที่ชื่อ ไปตลอดแม้ว่าจะไม่ต่ออายุ VIP ก็ตาม",
             vip_li5: "ได้รับ <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin แถมตามที่ระบุไว้",
-            note_label: "หมายเหตุ:",
+            note_label_1: "หมายเหตุ:",
             note_coin_1: " <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin",
             note_coin_2: " <img src='assets/coin.gif' style='height:20px; vertical-align:middle;'> Coin ในที่นี้คือสกุลเงินที่ใช้บนเว็บ ไม่ใช่ BitCoin",
             point_d1: "สามารถใช้คะแนนสะสมตามรายการด้านล่างเพื่อจ่ายแทนเงินสดได้",
@@ -670,7 +670,9 @@ function toggleLang() {
         document.getElementById('vip_li_5').innerHTML = t.vip_li5;
         
         // หมายเหตุและ Coin Description
-        document.querySelectorAll('#label_note_1, #label_note_2').forEach(el => el.innerText = t.note_label);
+        document.querySelectorAll('#label_note_1, #label_note_2').forEach(el => {
+            if (el) el.innerText = t.note_label;
+        });
         document.querySelectorAll('#note_coin_1, #note_coin_2').forEach(el => {
             if (el) el.innerHTML = t.note_coin;
         });

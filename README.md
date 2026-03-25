@@ -1,5 +1,5 @@
 # เติม VIP หรือ Coin
-[กดตรงนี้เลย เมี๊ยว ≽^•⩊•^≼](index.html)
+[กดตรงนี้เลย เมี๊ยว ≽^•⩊•^≼](https://meawtopup.github.io/)
 
 # สคริปทำเกษตร
 ใช้กับ TamperMonkey <br>

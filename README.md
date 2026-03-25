@@ -3,4 +3,4 @@
 
 # สคริปทำเกษตร
 ก็อปสคริปไปวางใน TamperMonkey Extension ได้เลย
-
+สคริปตัวนี้ > meawtopup.gihub.io/

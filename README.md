@@ -1,10 +1,10 @@
 # เติม VIP หรือ Coin
-กดลิ้ง meawtopup.github.io ได้เลย
+[กดตรงนี้เลย เมี๊ยว ≽^•⩊•^≼](meawtopup.github.io)
 
 # สคริปทำเกษตร
-TamperMonkey Extensions สำหรับ [Chrome กดดาวโหลดตรงนี้](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en-US&utm_source=ext_sidebar)
-TamperMonkey Extensions สำหรับ [Firefox กดดาวโหลดตรงนี้](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/)
-สคริปเกษตร [Script 4.0](clickfarm4_0.txt)
+TamperMonkey Extensions สำหรับ [Chrome กดดาวโหลดตรงนี้](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en-US&utm_source=ext_sidebar) <br>
+TamperMonkey Extensions สำหรับ [Firefox กดดาวโหลดตรงนี้](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/) <br>
+สคริปเกษตร [Script 4.0](clickfarm4_0.txt) <br>
 
 # วิธีติดตั้งสคริป
 1. เมื่อติดตั้ง Extensions แล้วให้กดที่ Icon TamperMonkey <img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo">

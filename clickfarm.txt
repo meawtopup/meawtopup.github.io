@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Click Farm | TDDFarm
+// @name         Click Farm 4.0 | TDDFarm
 // @namespace    http://tampermonkey.net/
 // @version      4.0
 // @description  ทำเกษตรกันเถอะ

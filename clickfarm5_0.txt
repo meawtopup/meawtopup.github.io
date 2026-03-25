@@ -1,0 +1,109 @@
+// ==UserScript==
+// @name         Click Farm 5.0 | TDDFarm (Fixed Season Loop)
+// @namespace    http://tampermonkey.net/
+// @version      5.0
+// @description  ทำเกษตร
+// @author       MobyEX
+// @match        https://www.torrentdd.com/farm.php*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // เช็คแปลงที่พร้อมเก็บ (มีลิงก์ action=store)
+    function getHarvestableIDs() {
+        return Array.from(document.querySelectorAll('a[onclick*="action=store"]'))
+            .map(el => {
+                const match = el.getAttribute('onclick').match(/ground=(\d+)/);
+                return match ? match[1] : null;
+            }).filter(id => id !== null);
+    }
+
+    // เช็คแปลงที่พร้อมปลูก (มีปุ่ม action=seed)
+    function getPlantableIDs() {
+        return Array.from(document.querySelectorAll('button[onclick*="action=seed"]'))
+            .map(el => {
+                const match = el.getAttribute('onclick').match(/ground=(\d+)/);
+                return match ? match[1] : null;
+            }).filter(id => id !== null);
+    }
+
+    // ฟังก์ชันส่งคำสั่งไปยังเซิร์ฟเวอร์
+    async function processActions(ids, actionType) {
+        for (let id of ids) {
+            await fetch(`?action=${actionType}&ground=${id}`);
+            console.log(`Action: ${actionType} on Plot: ${id} Done.`);
+        }
+    }
+
+    const cardBody = document.querySelector('.card-body');
+
+    if (cardBody) {
+        const container = document.createElement('div');
+        container.style = 'margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; width: 100%; border-bottom: 1px solid #eee; padding-bottom: 15px;';
+
+        const hIdsInitial = getHarvestableIDs();
+        const pIdsInitial = getPlantableIDs();
+
+        const btnStyle = 'padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;';
+
+        // 1. ปุ่มปลูกทั้งหมด
+        const pBtn = document.createElement('button');
+        pBtn.innerHTML = '🌱 ปลูกทั้งหมด';
+        pBtn.style = btnStyle + `background: ${pIdsInitial.length > 0 ? '#28a745' : '#dc3545'};`;
+        pBtn.onclick = async () => {
+            if (pIdsInitial.length === 0) return alert('❌ ไม่มีแปลงว่างให้ปลูก');
+            pBtn.disabled = true;
+            await processActions(pIdsInitial, 'seed');
+            window.location.reload();
+        };
+
+        // 2. ปุ่มเก็บทั้งหมด
+        const hBtn = document.createElement('button');
+        hBtn.innerHTML = '🌾 เก็บทั้งหมด';
+        hBtn.style = btnStyle + `background: ${hIdsInitial.length > 0 ? '#28a745' : '#dc3545'};`;
+        hBtn.onclick = async () => {
+            if (hIdsInitial.length === 0) return alert('❌ ไม่มีผลผลิตให้เก็บ');
+            hBtn.disabled = true;
+            await processActions(hIdsInitial, 'store');
+            window.location.reload();
+        };
+
+        // 3. ปุ่มเริ่มฤดูกาลใหม่ (Fixed)
+        const nBtn = document.createElement('button');
+        nBtn.innerHTML = '♻️ เริ่มฤดูกาลใหม่';
+        nBtn.style = btnStyle + 'background: #17a2b8;';
+        nBtn.onclick = async () => {
+            const hIds = getHarvestableIDs();
+            const pIds = getPlantableIDs();
+
+            if (hIds.length === 0 && pIds.length === 0) {
+                return alert('❌ ไม่พบแปลงที่พร้อมเก็บหรือปลูก');
+            }
+
+            nBtn.disabled = true;
+            nBtn.innerHTML = '⏳ กำลังทำงาน...';
+
+            // ขั้นตอนที่ 1: เก็บเกี่ยวแปลงที่สุกแล้ว
+            if (hIds.length > 0) {
+                await processActions(hIds, 'store');
+                // รอเซิร์ฟเวอร์เคลียร์สถานะแป๊บเดียว
+                await new Promise(r => setTimeout(r, 500));
+            }
+
+            // ขั้นตอนที่ 2: ปลูกใหม่ (รวมแปลงที่ว่างอยู่แล้ว + แปลงที่เพิ่งเก็บเสร็จ)
+            const allToPlant = [...new Set([...pIds, ...hIds])];
+            if (allToPlant.length > 0) {
+                await processActions(allToPlant, 'seed');
+            }
+
+            window.location.reload();
+        };
+
+        container.appendChild(pBtn);
+        container.appendChild(hBtn);
+        container.appendChild(nBtn);
+        cardBody.insertBefore(container, cardBody.firstChild);
+    }
+})();

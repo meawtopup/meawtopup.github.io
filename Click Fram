@@ -1,0 +1,118 @@
+// ==UserScript==
+// @name         Click Farm | TDDFarm
+// @namespace    http://tampermonkey.net/
+// @version      4.0
+// @description  ทำเกษตรกันเถอะ
+// @author       MobyEX
+// @match        https://www.torrentdd.com/farm.php*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // ฟังก์ชันหา ID แปลงที่พร้อมเก็บเกี่ยว (คืนค่าเป็น Array ของ ID)
+    function getHarvestableIDs() {
+        let ids = [];
+        for (let i = 1; i <= 9; i++) {
+            if (document.querySelector(`a[onclick*="action=store"][onclick*="ground=${i}"]`)) {
+                ids.push(i);
+            }
+        }
+        return ids;
+    }
+
+    // ฟังก์ชันหา ID แปลงที่พร้อมปลูก (คืนค่าเป็น Array ของ ID)
+    function getPlantableIDs() {
+        let ids = [];
+        for (let i = 1; i <= 9; i++) {
+            if (document.querySelector(`button[onclick*="action=seed"][onclick*="ground=${i}"]`)) {
+                ids.push(i);
+            }
+        }
+        return ids;
+    }
+
+    // ฟังก์ชันหลักในการทำงาน (Fetch)
+    async function processActions(ids, actionType) {
+        for (let id of ids) {
+            await fetch(`?action=${actionType}&ground=${id}`);
+            console.log(`ดำเนินการ ${actionType} แปลงที่ ${id} เรียบร้อย`);
+        }
+    }
+
+    const cardBody = document.querySelector('.card-body');
+
+    if (cardBody) {
+        const container = document.createElement('div');
+        container.style = 'margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; width: 100%; border-bottom: 1px solid #eee; padding-bottom: 15px;';
+
+        const harvestIds = getHarvestableIDs();
+        const plantIds = getPlantableIDs();
+
+        const btnStyle = 'padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;';
+
+        // 1. ปุ่มปลูกทั้งหมด (ซื้อเมล็ด)
+        const pBtn = document.createElement('button');
+        pBtn.innerHTML = '🌱 ปลูกทั้งหมด';
+        pBtn.style = btnStyle + `background: ${plantIds.length > 0 ? '#28a745' : '#dc3545'};`;
+        pBtn.onclick = async () => {
+            const currentPlantIds = getPlantableIDs();
+            if (currentPlantIds.length === 0) {
+                alert('❌ ยังไม่มีแปลงว่างสำหรับปลูกในขณะนี้');
+                return;
+            }
+            pBtn.disabled = true;
+            pBtn.innerHTML = '⏳ กำลังปลูก...';
+            await processActions(currentPlantIds, 'seed');
+            window.location.reload();
+        };
+
+        // 2. ปุ่มเก็บผลผลิต
+        const hBtn = document.createElement('button');
+        hBtn.innerHTML = '🌾 เก็บทั้งหมด';
+        hBtn.style = btnStyle + `background: ${harvestIds.length > 0 ? '#28a745' : '#dc3545'};`;
+        hBtn.onclick = async () => {
+            const currentHarvestIds = getHarvestableIDs();
+            if (currentHarvestIds.length === 0) {
+                alert('❌ ยังไม่มีผลผลิตที่สุกพอจะเก็บเกี่ยวได้');
+                return;
+            }
+            hBtn.disabled = true;
+            hBtn.innerHTML = '⏳ กำลังเก็บ...';
+            await processActions(currentHarvestIds, 'store');
+            window.location.reload();
+        };
+
+        // 3. ปุ่มเริ่มฤดูกาลใหม่ (เก็บ + ปลูก)
+        const nBtn = document.createElement('button');
+        nBtn.innerHTML = '♻️ เริ่มฤดูกาลใหม่';
+        nBtn.style = btnStyle + 'background: #17a2b8;';
+        nBtn.onclick = async () => {
+            const currentHarvestIds = getHarvestableIDs();
+            const currentPlantIds = getPlantableIDs();
+
+            if (currentHarvestIds.length === 0 && currentPlantIds.length === 0) {
+                alert('❌ ไม่มีแปลงไหนพร้อมให้ ปลูก หรือ เก็บเกี่ยว เลยในขณะนี้');
+                return;
+            }
+
+            nBtn.disabled = true;
+            nBtn.innerHTML = '⏳ กำลังดำเนินการ...';
+
+            if (currentHarvestIds.length > 0) await processActions(currentHarvestIds, 'store');
+            if (currentHarvestIds.length > 0 && currentPlantIds.length > 0) await new Promise(r => setTimeout(r, 1000));
+
+            // ตรวจสอบการปลูกอีกครั้งหลังจากเก็บเกี่ยวเสร็จ (เผื่อมีที่ว่างเพิ่มขึ้น)
+            const afterHarvestPlantIds = getPlantableIDs();
+            if (afterHarvestPlantIds.length > 0) await processActions(afterHarvestPlantIds, 'seed');
+
+            window.location.reload();
+        };
+
+        container.appendChild(pBtn);
+        container.appendChild(hBtn);
+        container.appendChild(nBtn);
+        cardBody.insertBefore(container, cardBody.firstChild);
+    }
+})();

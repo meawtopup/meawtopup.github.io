@@ -6,8 +6,8 @@
 TamperMonkey Extensions สำหรับ [Chrome กดดาวโหลดตรงนี้](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en-US&utm_source=ext_sidebar) <br>
 TamperMonkey Extensions สำหรับ [Firefox กดดาวโหลดตรงนี้](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/) <br>
 สคริปทำเกษตร [Script 5.0](clickfarm5_0.txt) กดมืออย่างเดียว<br>
-สคริปทำเกษตร [Script 7.1](clickfarm7_1.txt) แบบมีระบบออโต้<br>
-**หมายเหตุ:** Script 7.1 ต้องเปิดหน้าเว็บแบบ Windows เอาไว้ใน Tab มีโอกาสบอทหลับได้
+สคริปทำเกษตร [Script 7.2](clickfarm7_2.txt) แบบมีระบบออโต้<br>
+**หมายเหตุ:** Script 7.2 ต้องเปิดหน้าเว็บแบบ Windows เอาไว้แทปแรก <br>และห้ามย่อหน้าต่างหรือเปิดหน้าต่างอื่นทับเพราะมีโอกาสบอทหลับได้
 
 # ฟังก์ชั่น
 <picture><img src="assets/farmbutton_7_1.jpg" width="398" height="41" alt="Farm Button"></picture><br>

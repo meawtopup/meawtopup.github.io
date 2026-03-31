@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Click Farm 7.1 | TDDFarm
+// @name         Click Farm 7.2 | TDDFarm
 // @namespace    http://tampermonkey.net/
-// @version      7.1
-// @description  เพิ่มระบบออโต้ ใช้กับ New Windows เท่านั้นไม่งั้นบอทหลับ
+// @version      7.2
+// @description  เพิ่มระบบออโต้ ใช้กับ New Windows เท่านั้น
 // @author       MobyEX
 // @match        https://www.torrentdd.com/farm.php*
 // @grant        none
@@ -141,17 +141,19 @@
                 }
             });
 
-            const TARGET_SECONDS = 6 * 3600; // 6 ชั่วโมง (21600 วินาที)
+            const TARGET_SECONDS = 6 * 3600; // 6 ชั่วโมง
             let remainingSeconds = 0;
+            let actionWhenDone = 'reload'; // ค่าเริ่มต้นเมื่อนับถอยหลังจบ คือให้รีเฟรชหน้าเว็บ
 
-            if (maxElapsedSeconds === -1 && (hIdsInitial.length > 0 || pIdsInitial.length > 0)) {
-                // ถ้าไม่เจอเวลา แต่มีปุ่มให้เก็บ/ปลูกโผล่มาแล้ว ให้ดีเลย์ 30 วิ แล้วกดเริ่มฤดูกาล
+            if (hIdsInitial.length > 0 || pIdsInitial.length > 0) {
+                // ถ้ามีแปลงพร้อมเก็บ/ปลูกโผล่มาแล้ว ให้ดีเลย์ 30 วิ แล้ว "กดปุ่มเริ่มฤดูกาล"
                 remainingSeconds = 30;
+                actionWhenDone = 'run';
             } else if (maxElapsedSeconds >= TARGET_SECONDS) {
-                // เกิน 6 ชม. แล้ว ให้บวกอีก 30 วินาทีตามที่ต้องการ
+                // เกิน 6 ชม. แล้ว ให้บวก 30 วิแล้วรีเฟรช
                 remainingSeconds = 30;
             } else if (maxElapsedSeconds >= 0) {
-                // ยังไม่ถึง 6 ชม. คิดเวลาที่เหลือ + 30 วินาที
+                // ยังไม่ถึง 6 ชม. คิดเวลาที่เหลือ + 30 วิ แล้วรีเฟรช
                 remainingSeconds = (TARGET_SECONDS - maxElapsedSeconds) + 30;
             } else {
                 // กรณีไม่มีแปลงปลูกเลย
@@ -160,31 +162,61 @@
                 return;
             }
 
-            // แสดงนับถอยหลังในปุ่มออโต้
-            const updateTimerDisplay = () => {
-                if (remainingSeconds <= 0) {
-                    autoBtn.innerHTML = '🤖 กำลังสั่งเริ่มฤดูกาลใหม่...';
-                    return;
-                }
-                const h = Math.floor(remainingSeconds / 3600);
-                const m = Math.floor((remainingSeconds % 3600) / 60);
-                const s = remainingSeconds % 60;
-                autoBtn.innerHTML = `🤖 ออโต้: รออีก ${h} ชม. ${m} น. ${s} วิ.`;
-            };
-
-            updateTimerDisplay(); // อัปเดตครั้งแรกทันที
+            // แก้ปัญหาบราวเซอร์หลับ โดยใช้นาฬิกาเครื่อง (Date.now) เป็นตัวเทียบ
+            const targetTimeMs = Date.now() + (remainingSeconds * 1000);
 
             const timerInterval = setInterval(() => {
-                remainingSeconds--;
-                updateTimerDisplay();
+                // คำนวณเวลาที่เหลือจากนาฬิกาเครื่องจริงๆ
+                const currentRemaining = Math.max(0, Math.round((targetTimeMs - Date.now()) / 1000));
 
-                if (remainingSeconds <= 0) {
+                if (currentRemaining <= 0) {
                     clearInterval(timerInterval);
-                    runNewSeason(); // สั่งปุ่มเริ่มฤดูกาลใหม่ทำงาน
+                    if (actionWhenDone === 'run') {
+                        autoBtn.innerHTML = '🤖 กำลังสั่งเริ่มฤดูกาลใหม่...';
+                        runNewSeason();
+                    } else {
+                        autoBtn.innerHTML = '🤖 กำลังรีเฟรชหน้าเว็บเพื่ออัปเดตสถานะ...';
+                        window.location.reload();
+                    }
+                } else {
+                    const h = Math.floor(currentRemaining / 3600);
+                    const m = Math.floor((currentRemaining % 3600) / 60);
+                    const s = currentRemaining % 60;
+                    autoBtn.innerHTML = `🤖 ออโต้: รออีก ${h} ชม. ${m} น. ${s} วิ.`;
                 }
             }, 1000);
         } else {
             autoBtn.innerHTML = '🤖 ออโต้: ปิด';
         }
     }
+    // ==========================================
+    // ระบบป้องกันการสลีป (Wake Lock)
+    // ==========================================
+    let wakeLock = null;
+
+    async function requestWakeLock() {
+        try {
+            if ('wakeLock' in navigator && document.visibilityState === 'visible') {
+                wakeLock = await navigator.wakeLock.request('screen');
+                console.log('✅ ระบบป้องกันการสลีปทำงานแล้ว');
+
+                wakeLock.addEventListener('release', () => {
+                    console.log('⚠️ Wake Lock หลุด (อาจเพราะพับจอหรือสลับแท็บ)');
+                    wakeLock = null;
+                });
+            }
+        } catch (err) {
+            console.error(`Wake Lock Error: ${err.name}, ${err.message}`);
+        }
+    }
+
+    requestWakeLock();
+
+    // ขอ Wake Lock ใหม่ทุกครั้งที่สลับแท็บกลับมาหน้านี้
+    document.addEventListener('visibilitychange', () => {
+        if (wakeLock === null && document.visibilityState === 'visible') {
+            requestWakeLock();
+        }
+    });
 })();
+

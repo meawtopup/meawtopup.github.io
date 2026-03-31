@@ -11,7 +11,6 @@
 (function() {
     'use strict';
 
-    // เช็คแปลงที่พร้อมเก็บ (มีลิงก์ action=store)
     function getHarvestableIDs() {
         return Array.from(document.querySelectorAll('a[onclick*="action=store"]'))
             .map(el => {
@@ -20,7 +19,6 @@
             }).filter(id => id !== null);
     }
 
-    // เช็คแปลงที่พร้อมปลูก (มีปุ่ม action=seed)
     function getPlantableIDs() {
         return Array.from(document.querySelectorAll('button[onclick*="action=seed"]'))
             .map(el => {
@@ -29,7 +27,6 @@
             }).filter(id => id !== null);
     }
 
-    // ฟังก์ชันส่งคำสั่งไปยังเซิร์ฟเวอร์
     async function processActions(ids, actionType) {
         for (let id of ids) {
             await fetch(`?action=${actionType}&ground=${id}`);
@@ -48,7 +45,6 @@
 
         const btnStyle = 'padding: 5px 10px; font-size: 14px; white-space: nowrap; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: normal; transition: 0.3s;';
 
-        // 1. ปุ่มปลูกทั้งหมด
         const pBtn = document.createElement('button');
         pBtn.innerHTML = '🌱 ปลูก';
         pBtn.style = btnStyle + `background: ${pIdsInitial.length > 0 ? '#28a745' : '#dc3545'};`;
@@ -59,7 +55,6 @@
             window.location.reload();
         };
 
-        // 2. ปุ่มเก็บทั้งหมด
         const hBtn = document.createElement('button');
         hBtn.innerHTML = '🌾 เก็บ';
         hBtn.style = btnStyle + `background: ${hIdsInitial.length > 0 ? '#28a745' : '#dc3545'};`;
@@ -70,7 +65,6 @@
             window.location.reload();
         };
 
-        // 3. ปุ่มเริ่มฤดูกาลใหม่ (Fixed)
         const nBtn = document.createElement('button');
         nBtn.innerHTML = '♻️ เริ่มฤดูกาลใหม่';
         nBtn.style = btnStyle + 'background: #17a2b8;';
@@ -101,7 +95,6 @@
         };
         nBtn.onclick = runNewSeason;
 
-        // 4. ปุ่มเปิดปิดระบบออโต้
         const isAuto = localStorage.getItem('tdFarmAuto') === 'true';
         const autoBtn = document.createElement('button');
         autoBtn.style = btnStyle + `background: ${isAuto ? '#ff9800' : '#6c757d'}; color: ${isAuto ? '#000' : '#fff'};`;
@@ -111,21 +104,16 @@
             window.location.reload();
         };
 
-        // นำปุ่มมาเรียงกัน (Auto อยู่ขวาของเริ่มฤดูกาลใหม่)
-        container.appendChild(pBtn);
+          container.appendChild(pBtn);
         container.appendChild(hBtn);
         container.appendChild(nBtn);
         container.appendChild(autoBtn);
         cardBody.insertBefore(container, cardBody.firstChild);
 
-        // ==========================================
-        // ระบบออโต้ (ตัวนับเวลาถอยหลัง + ตรวจจับเวลา 9 แปลง)
-        // ==========================================
         if (isAuto) {
             let maxElapsedSeconds = -1;
             const timeElements = document.querySelectorAll('.f10');
 
-            // หาแปลงที่ใช้เวลาปลูกไปนานที่สุด (ใกล้ 6 ชม. มากที่สุด)
             timeElements.forEach(el => {
                 const text = el.innerText.trim();
                 const match = text.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);
@@ -141,32 +129,26 @@
                 }
             });
 
-            const TARGET_SECONDS = 6 * 3600; // 6 ชั่วโมง
+            const TARGET_SECONDS = 6 * 3600;
             let remainingSeconds = 0;
-            let actionWhenDone = 'reload'; // ค่าเริ่มต้นเมื่อนับถอยหลังจบ คือให้รีเฟรชหน้าเว็บ
+            let actionWhenDone = 'reload';
 
             if (hIdsInitial.length > 0 || pIdsInitial.length > 0) {
-                // ถ้ามีแปลงพร้อมเก็บ/ปลูกโผล่มาแล้ว ให้ดีเลย์ 30 วิ แล้ว "กดปุ่มเริ่มฤดูกาล"
                 remainingSeconds = 30;
                 actionWhenDone = 'run';
             } else if (maxElapsedSeconds >= TARGET_SECONDS) {
-                // เกิน 6 ชม. แล้ว ให้บวก 30 วิแล้วรีเฟรช
                 remainingSeconds = 30;
             } else if (maxElapsedSeconds >= 0) {
-                // ยังไม่ถึง 6 ชม. คิดเวลาที่เหลือ + 30 วิ แล้วรีเฟรช
                 remainingSeconds = (TARGET_SECONDS - maxElapsedSeconds) + 30;
             } else {
-                // กรณีไม่มีแปลงปลูกเลย
                 autoBtn.innerHTML = '🤖 รอแปลงผลผลิต (รีเฟรชใน 60 วิ)';
                 setTimeout(() => window.location.reload(), 60000);
                 return;
             }
 
-            // แก้ปัญหาบราวเซอร์หลับ โดยใช้นาฬิกาเครื่อง (Date.now) เป็นตัวเทียบ
             const targetTimeMs = Date.now() + (remainingSeconds * 1000);
 
             const timerInterval = setInterval(() => {
-                // คำนวณเวลาที่เหลือจากนาฬิกาเครื่องจริงๆ
                 const currentRemaining = Math.max(0, Math.round((targetTimeMs - Date.now()) / 1000));
 
                 if (currentRemaining <= 0) {
@@ -189,9 +171,7 @@
             autoBtn.innerHTML = '🤖 ออโต้: ปิด';
         }
     }
-    // ==========================================
-    // ระบบป้องกันการสลีป (Wake Lock)
-    // ==========================================
+
     let wakeLock = null;
 
     async function requestWakeLock() {
@@ -212,7 +192,6 @@
 
     requestWakeLock();
 
-    // ขอ Wake Lock ใหม่ทุกครั้งที่สลับแท็บกลับมาหน้านี้
     document.addEventListener('visibilitychange', () => {
         if (wakeLock === null && document.visibilityState === 'visible') {
             requestWakeLock();

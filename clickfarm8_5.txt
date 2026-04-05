@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Click Farm 8.4 | TDDFarm
+// @name         Click Farm 8.5 | TDDFarm
 // @namespace    http://tampermonkey.net/
-// @version      8.4
+// @version      8.5
 // @description  TDDFarm
-// @author       MobyEX
+// @author       MobyEX & Al
 // @match        https://www.torrentdd.com/farm.php*
 // @match        https://www.torrentdd.com/chat.php*
 // @grant        none
@@ -105,7 +105,6 @@
 
         const nBtn = document.createElement('button');
         nBtn.innerHTML = '♻️ เริ่มฤดูกาลใหม่';
-
         nBtn.style = btnStyle + `background: ${isReady ? '#28a745' : '#dc3545'};`;
 
         const runNewSeason = async (triggerBtn) => {
@@ -138,7 +137,6 @@
 
         const isAuto = localStorage.getItem('tdFarmAuto') === 'true';
         const autoBtn = document.createElement('button');
-
         autoBtn.style = btnStyle + `background: ${isAuto ? '#ff9800' : '#6c757d'}; color: #fff;`;
         autoBtn.innerHTML = isAuto ? '🤖 ออโต้ : เปิด' : '🤖 ออโต้ : ปิด';
 
@@ -169,14 +167,16 @@
             document.body.appendChild(container);
         }
 
-        let maxElapsedSeconds = -1;
+        let initialSeconds = -1;
+        const startTime = Date.now();
+
         const timeElements = farmDoc.querySelectorAll('.f10');
         timeElements.forEach(el => {
             const text = el.innerText.trim();
             const match = text.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);
             if (match) {
                 const totalSeconds = (parseInt(match[1]) * 86400) + (parseInt(match[2]) * 3600) + (parseInt(match[3]) * 60) + parseInt(match[4]);
-                if (totalSeconds > maxElapsedSeconds) maxElapsedSeconds = totalSeconds;
+                if (totalSeconds > initialSeconds) initialSeconds = totalSeconds;
             }
         });
 
@@ -184,10 +184,13 @@
         let countdownToAuto = 30;
 
         timerInterval = setInterval(() => {
+            const realElapsedSinceStart = Math.floor((Date.now() - startTime) / 1000);
+            const currentElapsed = initialSeconds + realElapsedSinceStart;
+
             if (isReady) {
                 timeSpan.innerHTML = 'ผลผลิตพร้อมเก็บแล้ว';
-            } else if (maxElapsedSeconds >= 0) {
-                const remaining = Math.max(0, TARGET_SECONDS - maxElapsedSeconds);
+            } else if (initialSeconds >= 0) {
+                const remaining = Math.max(0, TARGET_SECONDS - currentElapsed);
                 if (remaining <= 0) {
                     timeSpan.innerHTML = 'ผลผลิตพร้อมเก็บแล้ว';
                     if (!isReady) {
@@ -199,7 +202,6 @@
                     const m = Math.floor((remaining % 3600) / 60).toString().padStart(2, '0');
                     const s = (remaining % 60).toString().padStart(2, '0');
                     timeSpan.innerHTML = `เวลาคงเหลือ:${h}:${m}:${s}`;
-                    maxElapsedSeconds++;
                 }
             } else {
                 timeSpan.innerHTML = 'เวลา:--:--:--';
@@ -216,6 +218,10 @@
                 }
             }
         }, 1000);
+        setTimeout(() => {
+            console.log('🔄 ครบ 30 นาที: กำลังอัปเดตข้อมูลจากเซิร์ฟเวอร์แบบ Background...');
+            initBot();
+        }, 30 * 60 * 1000);
     }
 
     async function requestWakeLock() {

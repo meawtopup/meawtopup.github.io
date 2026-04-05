@@ -41,7 +41,8 @@ Click ที่เวอร์ชั่น Script เพื่อดูราย
 <details><summary>Chat Mods 4.0</summary>
 1. บังคับปรับขนาดความสูงช่องแสดงข้อความเป็น 700px<br>
 2. มีปุ่ม ซ่อน/แสดง รายชื่อ User Online<br>
-3. มีปุ่ม ปิด/เปิด วิทยุ (สถานะเริ่มต้นคือ:ปิด)</details>
+3. มีปุ่ม ปิด/เปิด วิทยุ (สถานะเริ่มต้นคือ:ปิด)
+4. แก้ปัญหา UI วิทยุเอ๋อบน Firefox ได้บ้าง</details>
 
 # วิธีติดตั้งสคริป
 1. เมื่อติดตั้ง Extensions แล้วให้กดที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name          Chat Mods 4.0 | TDDChat
+// @name          Chat Mods 4.3 | TDDChat
 // @namespace     http://tampermonkey.net/
-// @version       4.0
+// @version       4.3
 // @description   บังคับความสูงแชท, เพิ่มปุ่มซ่อนรายชื่อ และระบบควบคุมวิทยุ
 // @author        MObyEX
 // @match         https://www.torrentdd.com/chat.php*
@@ -11,7 +11,7 @@
 
 /* global $ */
 
-(function() {
+(function () {
     'use strict';
 
     const FIXED_HEIGHT = '700px';
@@ -60,7 +60,19 @@
             border-radius: 3px !important; background-color: #ff4757 !important; color: white !important;
             border: none !important; cursor: pointer !important; vertical-align: middle !important;
         }
-        #al-toggle-btn { margin: 5px !important; }
+
+        #audio {
+            display: none !important;
+            width: auto !important;
+            max-width: 300px !important;
+            vertical-align: middle !important;
+        }
+        #al-toggle-btn {
+            margin-left: 10px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+        }
+
         .chat-container { height: auto !important; }
         .hd-1 { display: block !important; width: auto !important; }
     `;
@@ -89,7 +101,7 @@
         if (!radioVideo || !toggleBtn) return;
 
         if (isRadioOn) {
-            radioVideo.style.display = 'block';
+            radioVideo.style.setProperty('display', 'inline-block', 'important');
             if (radioStatus) radioStatus.style.display = 'block';
             if (requestBtn) requestBtn.style.display = 'inline-block';
             toggleBtn.innerHTML = '📻 ปิดวิทยุ';
@@ -98,13 +110,13 @@
             if (!radioVideo.src || radioVideo.src.includes('about:blank') || radioVideo.src === window.location.href) {
                 radioVideo.src = RADIO_URL + "?t=" + Date.now();
                 radioVideo.load();
-                radioVideo.play().catch(() => {});
+                radioVideo.play().catch(() => { });
             }
         } else {
             radioVideo.pause();
             radioVideo.src = "";
             radioVideo.load();
-            radioVideo.style.display = 'none';
+            radioVideo.style.setProperty('display', 'none', 'important');
             if (radioStatus) radioStatus.style.display = 'none';
             if (requestBtn) requestBtn.style.display = 'none';
             toggleBtn.innerHTML = '📻 เปิดวิทยุ';
@@ -117,7 +129,7 @@
             const target = $('.hd-1');
             if (target.length) {
                 const btn = $('<button id="custom-toggle-btn">ซ่อน/แสดง รายชื่อ</button>');
-                btn.on('click', function(e) {
+                btn.on('click', function (e) {
                     e.preventDefault();
                     $('.chat-box-list').toggleClass('hide-column');
                     $('.chat-box').toggleClass('expand-chat');
@@ -128,8 +140,8 @@
         }
 
         if (!$('#al-toggle-btn').length) {
-            const requestBtn = document.querySelector('a[href*="request_song_widget.php"]');
-            if (requestBtn) {
+            const radioVideo = document.getElementById('audio');
+            if (radioVideo) {
                 const btn = document.createElement('button');
                 btn.id = 'al-toggle-btn';
                 btn.type = 'button';
@@ -138,7 +150,7 @@
                     isRadioOn = !isRadioOn;
                     applyRadioState();
                 };
-                requestBtn.parentNode.insertBefore(btn, requestBtn.nextSibling);
+                radioVideo.parentNode.insertBefore(btn, radioVideo.nextSibling);
                 applyRadioState();
             }
         }
@@ -159,7 +171,7 @@
         setup();
         const body = document.querySelector('body');
         if (body) observer.observe(body, { childList: true, subtree: true });
-    }, 1000);
+    }, 500);
 
     $(window).on('resize', forceLayout);
     $(document).ready(setup);

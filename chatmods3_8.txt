@@ -5,6 +5,7 @@
 // @description   บังคับความสูงแชทและเพิ่มปุ่มซ่อนรายชื่อเพื่อขยายหน้าจอแชท
 // @author        MObyEX
 // @match         https://www.torrentdd.com/chat.php*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
 // @grant         none
 // ==/UserScript==
 

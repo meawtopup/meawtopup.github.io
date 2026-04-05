@@ -1,0 +1,109 @@
+// ==UserScript==
+// @name         Chat Mods 3.1 | TDDChat
+// @namespace    http://tampermonkey.net/
+// @version      3.1
+// @description  บังคับความสูงแชทและเพิ่มปุ่มซ่อนรายชื่อเพื่อขยายหน้าจอแชท
+// @author       MObyEX
+// @match        https://www.torrentdd.com/chat.php*
+// @grant        none
+// ==/UserScript==
+
+/* global $ */
+
+(function() {
+    'use strict';
+
+    const FIXED_HEIGHT = '700px';
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+        /* 1. บังคับความสูงและระบบ Scroll */
+        .chat-screen, .chat-userlist, .slimScrollDiv {
+            height: ${FIXED_HEIGHT} !important;
+            max-height: ${FIXED_HEIGHT} !important;
+            min-height: ${FIXED_HEIGHT} !important;
+            overflow-y: auto !important;
+        }
+
+        /* 2. การจัดการคอลัมน์ (ซ่อน/ขยาย) */
+        .chat-box-list.hide-column {
+            display: none !important;
+        }
+        .chat-box.expand-chat {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+            float: none !important;
+        }
+
+        /* 3. สไตล์ปุ่ม Toggle ในส่วนหัว hd-1 */
+        #custom-toggle-btn {
+            display: inline-block !important;
+            margin-left: 10px !important;
+            padding: 0px 8px !important;
+            font-size: 11px !important;
+            height: 22px !important;
+            line-height: 22px !important;
+            border-radius: 3px !important;
+            background-color: #ff4757 !important;
+            color: white !important;
+            border: none !important;
+            cursor: pointer !important;
+            vertical-align: middle !important;
+            font-weight: normal !important;
+        }
+        #custom-toggle-btn:hover { background-color: #ff6b81 !important; }
+
+        /* ปรับแต่งโครงสร้างหลักอื่นๆ */
+        .chat-container, .chat-box-screen { height: auto !important; }
+        .slimScrollBar, .slimScrollRail { display: none !important; }
+        .hd-1 { display: block !important; width: auto !important; }
+    `;
+    document.head.appendChild(style);
+
+    function forceLayout() {
+        $('.chat-screen, .chat-userlist, .slimScrollDiv').css('height', FIXED_HEIGHT);
+        $('.chat-box, .chat-box-screen').css('height', 'auto');
+    }
+
+    function initUserToggle() {
+        // ป้องกันการสร้างปุ่มซ้ำ
+        if ($('#custom-toggle-btn').length) return;
+
+        const target = $('.hd-1');
+        if (target.length) {
+            const btn = $('<button id="custom-toggle-btn">ซ่อน/แสดง รายชื่อ</button>');
+
+            btn.on('click', function(e) {
+                e.preventDefault();
+                $('.chat-box-list').toggleClass('hide-column');
+                $('.chat-box').toggleClass('expand-chat');
+                forceLayout();
+            });
+
+            target.append(btn);
+        }
+    }
+
+    function setup() {
+        initUserToggle();
+        forceLayout();
+    }
+
+    // เฝ้าดูการเปลี่ยนแปลงของหน้าเว็บ (เผื่อเว็บรีเฟรชส่วนประกอบ)
+    const observer = new MutationObserver(() => {
+        if (!$('#custom-toggle-btn').length) initUserToggle();
+        forceLayout();
+    });
+
+    // เริ่มทำงานหลังจากโหลดหน้าเว็บ
+    setTimeout(() => {
+        setup();
+        const body = document.querySelector('body');
+        if (body) observer.observe(body, { childList: true, subtree: true });
+    }, 1000);
+
+    $(window).on('resize', forceLayout);
+    $(document).ready(setup);
+
+})();

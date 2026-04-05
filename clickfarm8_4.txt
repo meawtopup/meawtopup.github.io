@@ -1,21 +1,20 @@
 // ==UserScript==
-// @name         Click Farm 8.4 | TDDFarm (Blinking Reload Countdown)
+// @name         Click Farm 8.4 | TDDFarm
 // @namespace    http://tampermonkey.net/
 // @version      8.4
-// @description  ย้ายตำแหน่งปุ่ม
-// @author       MobyEX & Al
+// @description  TDDFarm
+// @author       MobyEX
 // @match        https://www.torrentdd.com/farm.php*
 // @match        https://www.torrentdd.com/chat.php*
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
     let timerInterval = null;
     let wakeLock = null;
 
-    // เพิ่ม CSS สำหรับการกระพริบ
     const style = document.createElement('style');
     style.innerHTML = `
         @keyframes tddBlink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
@@ -62,7 +61,6 @@
         }
     }
 
-    // ฟังก์ชันนับถอยหลังรีโหลด 10 วินาที
     function startReloadCountdown() {
         if (timerInterval) clearInterval(timerInterval);
         const container = document.getElementById('tdd-farm-bot-item-content');
@@ -107,7 +105,7 @@
 
         const nBtn = document.createElement('button');
         nBtn.innerHTML = '♻️ เริ่มฤดูกาลใหม่';
-        // เขียว (พร้อม) / แดง (ไม่พร้อม) มาใช้
+
         nBtn.style = btnStyle + `background: ${isReady ? '#28a745' : '#dc3545'};`;
 
         const runNewSeason = async (triggerBtn) => {
@@ -134,13 +132,13 @@
                 await processActions(allToPlant, 'seed');
             }
 
-            startReloadCountdown(); // แทนที่ location.reload()
+            startReloadCountdown();
         };
         nBtn.onclick = () => runNewSeason(nBtn);
 
         const isAuto = localStorage.getItem('tdFarmAuto') === 'true';
         const autoBtn = document.createElement('button');
-        // เปลี่ยนส้มเป็นตัวดำ, เทาเป็นตัวขาว)
+
         autoBtn.style = btnStyle + `background: ${isAuto ? '#ff9800' : '#6c757d'}; color: #fff;`;
         autoBtn.innerHTML = isAuto ? '🤖 ออโต้ : เปิด' : '🤖 ออโต้ : ปิด';
 
@@ -156,14 +154,11 @@
         content.appendChild(autoBtn);
         content.appendChild(timeSpan);
 
-        // ตำแหน่งวางปุ่ม
         const menuToggler = document.querySelector('button.navbar-toggler[data-toggle="minimize"]');
 
         if (menuToggler) {
-            // วางต่อจากปุ่ม Menu Toggler ทันที
             menuToggler.parentNode.insertBefore(container, menuToggler.nextSibling);
         } else {
-            // Fallback กรณีหาไม่เจอ ให้วางที่มุมขวาล่างเหมือนเดิม
             container.style.position = 'fixed';
             container.style.bottom = '10px';
             container.style.right = '10px';
@@ -230,9 +225,10 @@
                 console.log('✅ ระบบป้องกันการสลีปทำงานแล้ว');
                 wakeLock.addEventListener('release', () => {
                     console.log('⚠️ Wake Lock หลุด (อาจเพราะพับจอหรือสลับแท็บ)');
-                    wakeLock = null; });
+                    wakeLock = null;
+                });
             }
-        } catch (err) {}
+        } catch (err) { }
     }
 
     initBot();

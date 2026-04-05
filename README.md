@@ -37,6 +37,13 @@ Click ที่เวอร์ชั่น Script เพื่อดูราย
 # วิธีติดตั้งสคริป
 1. เมื่อติดตั้ง Extensions แล้วให้กดที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 2. เลือกเมนู +Create a new script...
-3. Copy Script มาวาง แล้วกด Save (File > 💾Save)
+3. Copy Script มาวาง แล้วกด Save (File> 💾Save)
 4. สำหรับ **Chrome** คลิกขวาที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture> เลือก Manage Extension แล้วติ๊กเปิด Allow User Scripts <br>
 5. ไปหน้าทำเกษตร ถ้าปุ่มไม่ขึ้นให้กดรีเฟรชใหม่
+
+# วิธีอัพเดทสคริป/เปลี่ยนเวอร์ชั่น
+1. กดที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
+2. เลือก ⚙️Dashboard
+3. กดที่ Tab> Installed Userscripts แล้วกดที่ชื่อสคริปที่ต้องการเปลี่ยน เช่น "Click Farm 7.2 | TDDFarm"
+4. กดที่ Tab> Edit> Select All
+5. Copy Script มาวางทับ แล้วกด Save (File> 💾Save)

@@ -1,0 +1,243 @@
+// ==UserScript==
+// @name         Click Farm 8.4 | TDDFarm (Blinking Reload Countdown)
+// @namespace    http://tampermonkey.net/
+// @version      8.4
+// @description  ย้ายตำแหน่งปุ่ม
+// @author       MobyEX & Al
+// @match        https://www.torrentdd.com/farm.php*
+// @match        https://www.torrentdd.com/chat.php*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    let timerInterval = null;
+    let wakeLock = null;
+
+    // เพิ่ม CSS สำหรับการกระพริบ
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes tddBlink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
+        .tdd-reloading-msg {
+            animation: tddBlink 0.8s infinite;
+            color: #ffeb3b;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+    `;
+    document.head.appendChild(style);
+
+    async function fetchFarmDoc() {
+        try {
+            const res = await fetch('/farm.php');
+            const text = await res.text();
+            return new DOMParser().parseFromString(text, 'text/html');
+        } catch (e) {
+            console.error('TDDFarm: Failed to fetch farm.php', e);
+            return document;
+        }
+    }
+
+    function getHarvestableIDs(doc) {
+        return Array.from(doc.querySelectorAll('a[onclick*="action=store"]'))
+            .map(el => {
+                const match = el.getAttribute('onclick').match(/ground=(\d+)/);
+                return match ? match[1] : null;
+            }).filter(id => id !== null);
+    }
+
+    function getPlantableIDs(doc) {
+        return Array.from(doc.querySelectorAll('button[onclick*="action=seed"]'))
+            .map(el => {
+                const match = el.getAttribute('onclick').match(/ground=(\d+)/);
+                return match ? match[1] : null;
+            }).filter(id => id !== null);
+    }
+
+    async function processActions(ids, actionType) {
+        for (let id of ids) {
+            await fetch(`/farm.php?action=${actionType}&ground=${id}`);
+            console.log(`Action: ${actionType} on Plot: ${id} Done.`);
+        }
+    }
+
+    // ฟังก์ชันนับถอยหลังรีโหลด 10 วินาที
+    function startReloadCountdown() {
+        if (timerInterval) clearInterval(timerInterval);
+        const container = document.getElementById('tdd-farm-bot-item-content');
+        if (!container) { location.reload(); return; }
+
+        let seconds = 10;
+        const updateCountdown = () => {
+            container.innerHTML = `<span class="tdd-reloading-msg">⚠️ กำลังจะรีโหลดหน้าใหม่ ใน ${seconds} ⚠️</span>`;
+            if (seconds <= 0) {
+                location.reload();
+            } else {
+                seconds--;
+                setTimeout(updateCountdown, 1000);
+            }
+        };
+        updateCountdown();
+    }
+
+    async function initBot() {
+        if (timerInterval) clearInterval(timerInterval);
+
+        const oldContainer = document.getElementById('tdd-farm-bot-item');
+        if (oldContainer) oldContainer.remove();
+
+        const isFarmPage = window.location.pathname.includes('farm.php');
+        const farmDoc = isFarmPage ? document : await fetchFarmDoc();
+
+        const container = document.createElement('li');
+        container.id = 'tdd-farm-bot-item';
+        container.className = 'nav-item d-flex align-items-center';
+
+        const content = document.createElement('div');
+        content.id = 'tdd-farm-bot-item-content';
+        content.style = 'display: flex; align-items: center; gap: 6px; margin-right: 8px; font-size: 12px; color: #fff;';
+        container.appendChild(content);
+
+        const hIdsInitial = getHarvestableIDs(farmDoc);
+        const pIdsInitial = getPlantableIDs(farmDoc);
+        const isReady = (hIdsInitial.length > 0 || pIdsInitial.length > 0);
+
+        const btnStyle = 'padding: 3px 8px; font-size: 11px; white-space: nowrap; color: white; border: none; border-radius: 4px; cursor: pointer; transition: 0.3s;';
+
+        const nBtn = document.createElement('button');
+        nBtn.innerHTML = '♻️ เริ่มฤดูกาลใหม่';
+        // เขียว (พร้อม) / แดง (ไม่พร้อม) มาใช้
+        nBtn.style = btnStyle + `background: ${isReady ? '#28a745' : '#dc3545'};`;
+
+        const runNewSeason = async (triggerBtn) => {
+            const currentFarmDoc = isFarmPage ? document : await fetchFarmDoc();
+            const hIds = getHarvestableIDs(currentFarmDoc);
+            const pIds = getPlantableIDs(currentFarmDoc);
+
+            if (hIds.length === 0 && pIds.length === 0) {
+                return alert('❌ ไม่พบแปลงที่พร้อมเก็บหรือปลูก');
+            }
+
+            if (triggerBtn) {
+                triggerBtn.disabled = true;
+                triggerBtn.innerHTML = '⏳ กำลังทำงาน...';
+            }
+
+            if (hIds.length > 0) {
+                await processActions(hIds, 'store');
+                await new Promise(r => setTimeout(r, 500));
+            }
+
+            const allToPlant = [...new Set([...pIds, ...hIds])];
+            if (allToPlant.length > 0) {
+                await processActions(allToPlant, 'seed');
+            }
+
+            startReloadCountdown(); // แทนที่ location.reload()
+        };
+        nBtn.onclick = () => runNewSeason(nBtn);
+
+        const isAuto = localStorage.getItem('tdFarmAuto') === 'true';
+        const autoBtn = document.createElement('button');
+        // เปลี่ยนส้มเป็นตัวดำ, เทาเป็นตัวขาว)
+        autoBtn.style = btnStyle + `background: ${isAuto ? '#ff9800' : '#6c757d'}; color: #fff;`;
+        autoBtn.innerHTML = isAuto ? '🤖 ออโต้ : เปิด' : '🤖 ออโต้ : ปิด';
+
+        autoBtn.onclick = () => {
+            localStorage.setItem('tdFarmAuto', !isAuto);
+            initBot();
+        };
+
+        const timeSpan = document.createElement('span');
+        timeSpan.style = 'color: #eee; font-weight: bold; margin-left: 5px;';
+
+        content.appendChild(nBtn);
+        content.appendChild(autoBtn);
+        content.appendChild(timeSpan);
+
+        // ตำแหน่งวางปุ่ม
+        const menuToggler = document.querySelector('button.navbar-toggler[data-toggle="minimize"]');
+
+        if (menuToggler) {
+            // วางต่อจากปุ่ม Menu Toggler ทันที
+            menuToggler.parentNode.insertBefore(container, menuToggler.nextSibling);
+        } else {
+            // Fallback กรณีหาไม่เจอ ให้วางที่มุมขวาล่างเหมือนเดิม
+            container.style.position = 'fixed';
+            container.style.bottom = '10px';
+            container.style.right = '10px';
+            container.style.background = 'rgba(0,0,0,0.7)';
+            container.style.padding = '8px';
+            container.style.borderRadius = '8px';
+            container.style.zIndex = '9999';
+            document.body.appendChild(container);
+        }
+
+        let maxElapsedSeconds = -1;
+        const timeElements = farmDoc.querySelectorAll('.f10');
+        timeElements.forEach(el => {
+            const text = el.innerText.trim();
+            const match = text.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);
+            if (match) {
+                const totalSeconds = (parseInt(match[1]) * 86400) + (parseInt(match[2]) * 3600) + (parseInt(match[3]) * 60) + parseInt(match[4]);
+                if (totalSeconds > maxElapsedSeconds) maxElapsedSeconds = totalSeconds;
+            }
+        });
+
+        const TARGET_SECONDS = 6 * 3600;
+        let countdownToAuto = 30;
+
+        timerInterval = setInterval(() => {
+            if (isReady) {
+                timeSpan.innerHTML = 'ผลผลิตพร้อมเก็บแล้ว';
+            } else if (maxElapsedSeconds >= 0) {
+                const remaining = Math.max(0, TARGET_SECONDS - maxElapsedSeconds);
+                if (remaining <= 0) {
+                    timeSpan.innerHTML = 'ผลผลิตพร้อมเก็บแล้ว';
+                    if (!isReady) {
+                        clearInterval(timerInterval);
+                        startReloadCountdown();
+                    }
+                } else {
+                    const h = Math.floor(remaining / 3600).toString().padStart(2, '0');
+                    const m = Math.floor((remaining % 3600) / 60).toString().padStart(2, '0');
+                    const s = (remaining % 60).toString().padStart(2, '0');
+                    timeSpan.innerHTML = `เวลาคงเหลือ:${h}:${m}:${s}`;
+                    maxElapsedSeconds++;
+                }
+            } else {
+                timeSpan.innerHTML = 'เวลา:--:--:--';
+            }
+
+            if (isAuto && isReady) {
+                autoBtn.innerHTML = `🤖 ออโต้ : เปิด (จะทำงานในอีก ${countdownToAuto})`;
+                autoBtn.style.background = '#28a745';
+                autoBtn.style.color = '#fff';
+                countdownToAuto--;
+                if (countdownToAuto < 0) {
+                    clearInterval(timerInterval);
+                    runNewSeason(autoBtn);
+                }
+            }
+        }, 1000);
+    }
+
+    async function requestWakeLock() {
+        try {
+            if ('wakeLock' in navigator && document.visibilityState === 'visible') {
+                wakeLock = await navigator.wakeLock.request('screen');
+                console.log('✅ ระบบป้องกันการสลีปทำงานแล้ว');
+                wakeLock.addEventListener('release', () => {
+                    console.log('⚠️ Wake Lock หลุด (อาจเพราะพับจอหรือสลับแท็บ)');
+                    wakeLock = null; });
+            }
+        } catch (err) {}
+    }
+
+    initBot();
+    requestWakeLock();
+    document.addEventListener('visibilitychange', () => {
+        if (wakeLock === null && document.visibilityState === 'visible') requestWakeLock();
+    });
+})();

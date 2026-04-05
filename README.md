@@ -1,13 +1,14 @@
 # เติม VIP หรือ Coin
 <picture><img src="assets/star.gif" width="15" height="15" alt="Star"></picture> [กดตรงนี้เลย เมี๊ยว ≽^•⩊•^≼](https://meawtopup.github.io/)<picture> <img src="assets/star.gif" width="15" height="15" alt="Star"></picture>
 
-# สคริปทำเกษตร
+# สคริปท
 ใช้กับ TamperMonkey <br>
 TamperMonkey Extensions สำหรับ [Chrome กดดาวโหลดตรงนี้](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en-US&utm_source=ext_sidebar) <br>
 TamperMonkey Extensions สำหรับ [Firefox กดดาวโหลดตรงนี้](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/) <br>
 สคริปทำเกษตร [Script Click Farm 5.0](clickfarm5_0.txt) กดมืออย่างเดียว<br>
 สคริปทำเกษตร [Script Click Farm 7.2](clickfarm7_2.txt) แบบมีระบบออโต้<br>
 สคริปทำเกษตร [Script Click Farm 8.5](clickfarm8_5.txt) ระบบออโต้ แต่รันบนหน้า Chat<br>
+สคริปแชท [Script Chat Mods 3.1](chatmods3_1.txt) แก้ไขหน้าแชทให้กว้างขึ้น Chat<br>
 **หมายเหตุ:** 
 - Script Click Farm 7.2 ต้องเปิดหน้า Farm ทิ้งไว้ และย่อหน้าต่างหรือเปิดหน้าต่างอื่นทับไว้บอทไม่ทำงาน
 - Script Click Farm 8.5 ต้องเปิดหน้า Chat ทิ้งไว้ ไม่จำเป็นต้องเปิดหน้า Farm (รันสคริปเกษตร+ลอยคอคอยเหรียญ)
@@ -34,6 +35,9 @@ Click ที่เวอร์ชั่น Script เพื่อดูราย
 3. แสดงเวลาคงเหลือที่จะพร้อมเก็บใกล้ที่สุด
 
 **หมายเหตุ:** เมื่อเก็บผลผลิตเสร็จสิ้น ⚠️**จำเป็น**ต้องรีโหลดหน้าเว็บใหม่เพื่อเคลียเมมโมรี⚠️ สคริปจะทำการรีโหลดอัตโนมัติ</details>
+<details><summary>Script Chat Mods 3.1</summary>
+1. บังคับปรับขนาดความสูงช่องแสดงข้อความเป็น 700px<br>
+2. มีปุ่ม ซ่อน/แสดง รายชื่อ User Online</details>
 
 # วิธีติดตั้งสคริป
 1. เมื่อติดตั้ง Extensions แล้วให้กดที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>

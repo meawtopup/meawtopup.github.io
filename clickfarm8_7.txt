@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Click Farm 8.5 | TDDFarm
+// @name         Click Farm 8.7 | TDDFarm
 // @namespace    http://tampermonkey.net/
-// @version      8.5
+// @version      8.7
 // @description  TDDFarm
-// @author       MobyEX & Al
+// @author       MobyEX
 // @match        https://www.torrentdd.com/farm.php*
 // @match        https://www.torrentdd.com/chat.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
@@ -193,10 +193,17 @@
             } else if (initialSeconds >= 0) {
                 const remaining = Math.max(0, TARGET_SECONDS - currentElapsed);
                 if (remaining <= 0) {
-                    timeSpan.innerHTML = 'ผลผลิตพร้อมเก็บแล้ว';
                     if (!isReady) {
                         clearInterval(timerInterval);
-                        startReloadCountdown();
+                        let delay = 20;
+                        const delayInterval = setInterval(() => {
+                            timeSpan.innerHTML = `กำลังเช็คแปลงในอีก ${delay}`;
+                            if (delay <= 0) {
+                                clearInterval(delayInterval);
+                                initBot();
+                            }
+                            delay--;
+                        }, 1000);
                     }
                 } else {
                     const h = Math.floor(remaining / 3600).toString().padStart(2, '0');
@@ -220,8 +227,20 @@
             }
         }, 1000);
         setTimeout(() => {
-            console.log('🔄 ครบ 30 นาที: กำลังอัปเดตข้อมูลจากเซิร์ฟเวอร์แบบ Background...');
-            initBot();
+            if (isAuto && isReady) return;
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            let delay = 20;
+            const checkInterval = setInterval(() => {
+                timeSpan.innerHTML = `กำลังเช็คแปลงในอีก ${delay}`;
+                if (delay <= 0) {
+                    clearInterval(checkInterval);
+                    console.log('🔄 ครบ 30 นาที: กำลังอัปเดตข้อมูลจากเซิร์ฟเวอร์...');
+                    initBot();
+                }
+                delay--;
+            }, 1000);
         }, 30 * 60 * 1000);
     }
 

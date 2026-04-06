@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Click Farm 8.8 | TDDFarm
+// @name         Click Farm 8.9 | TDDFarm
 // @namespace    http://tampermonkey.net/
-// @version      8.8
+// @version      8.9
 // @description  TDDFarm
 // @author       MobyEX
 // @match        https://www.torrentdd.com/farm.php*
@@ -110,6 +110,25 @@
 
         const runNewSeason = async (triggerBtn) => {
             const currentFarmDoc = isFarmPage ? document : await fetchFarmDoc();
+            const moneyEl = currentFarmDoc.getElementById('money');
+            let currentZen = 0;
+            if (moneyEl) {
+                currentZen = parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0;
+            }
+            if (currentZen < 25000) {
+                timeSpan.innerHTML = '⚠️ Zen ไม่พอซื้อเมล็ดพันธุ์';
+                timeSpan.style.color = '#ffeb3b';
+                if (triggerBtn && triggerBtn.innerHTML.includes('ออโต้')) {
+                    localStorage.setItem('tdFarmAuto', 'false');
+                    triggerBtn.style.background = '#6c757d';
+                    triggerBtn.innerHTML = '🤖 ออโต้ : ปิด';
+                } else if (triggerBtn) {
+                    triggerBtn.disabled = false;
+                    triggerBtn.innerHTML = '♻️ เริ่มฤดูกาลใหม่';
+                }
+                alert('❌ Zen ไม่พอซื้อเมล็ดพันธุ์ (ต้องมีอย่างน้อย 25,000 Zen)');
+            }
+
             const hIds = getHarvestableIDs(currentFarmDoc);
             const pIds = getPlantableIDs(currentFarmDoc);
 

@@ -232,6 +232,7 @@
                 }
             } else {
                 timeSpan.innerHTML = 'สถานะ: ไม่พร้อมใช้งาน';
+                timeSpan.style.color = '#ffeb3b';
             }
 
             if (isAuto && isReady) {

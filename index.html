@@ -364,8 +364,8 @@
     </div>
 
     <div class="header-section">
-        <img src="assets/meawbanner.png" alt="MEAW TOPUP" style="display: block; margin: 0 auto; width: 300px; height: 216px;">
-        <p class="important" id="alert_msg">⚠️ ส่งหลักฐานการชำระเงินทาง Line เท่านั้น ⚠️</p>
+        <img src="assets/meawbanner.png" alt="MEAW TOPUP" style="display: block; margin: 0 auto 20px auto; width: 300px; height: 216px;">
+        <p class="important" id="alert_msg">⚠️ส่งหลักฐานการชำระเงินทาง Line เท่านั้น⚠️<br>‼️ช่องทางนี้ ไม่ใช่เติมอัตโนมัติ ควรทักไลน์ก่อนโอน‼️</p>
         
         <div id="contact_info">
             <p>
@@ -557,7 +557,7 @@
         en: {
             title: "MEAW TOPUP",
             subtitle: "VIP/Coin Donation TorrentDD",
-            alert: "⚠️ Must send slip via Line ONLY ⚠️",
+            alert: "⚠️Must send slip via Line ONLY⚠️<br>‼️Not Auto: Contact Line before payment.‼️",
             label_contact: "Contact:",
             no_at: "(No @ sign)",
             btn_add_line: "Add friend via Line",
@@ -620,7 +620,7 @@
         th: {
             title: "MEAW TOPUP",
             subtitle: "VIP/Coin Donation TorrentDD",
-            alert: "⚠️ ส่งหลักฐานการชำระเงินทาง Line เท่านั้น ⚠️",
+            alert: "⚠️ส่งหลักฐานการชำระเงินทาง Line เท่านั้น⚠️<br>‼️ช่องทางนี้ ไม่ใช่เติมอัตโนมัติ ควรทักไลน์ก่อนโอน‼️",
             label_contact: "ช่องทางติดต่อ:",
             no_at: "(ไม่ต้องมี @)",
             btn_add_line: "เพิ่มเพื่อนผ่าน Line",
@@ -687,9 +687,7 @@ function toggleLang() {
         const t = translations[currentLang];
 
         // ส่วนหัวและข้อความแจ้งเตือน
-        document.getElementById('title').innerText = t.title;
-        document.getElementById('subtitle').innerText = t.subtitle;
-        document.getElementById('alert_msg').innerText = t.alert;
+        document.getElementById('alert_msg').innerHTML = t.alert;
 
         // ข้อมูลติดต่อและเวลา
         document.getElementById('label_contact').innerText = t.label_contact;
@@ -758,10 +756,8 @@ function toggleLang() {
 
         // เพิ่มส่วนนี้เพื่อเปลี่ยนภาษาปุ่มบันทึก QR
         const btnSave = document.getElementById('btn_save_qr');
-        const qrHint = document.getElementById('qr_hint');
     
         if (btnSave) btnSave.innerText = t.btn_save_qr;
-        if (qrHint) qrHint.innerText = t.qr_hint;
     }
 </script>
 

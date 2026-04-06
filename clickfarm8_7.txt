@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Click Farm 8.7 | TDDFarm
+// @name         Click Farm 8.8 | TDDFarm
 // @namespace    http://tampermonkey.net/
-// @version      8.7
+// @version      8.8
 // @description  TDDFarm
 // @author       MobyEX
 // @match        https://www.torrentdd.com/farm.php*
@@ -182,7 +182,7 @@
         });
 
         const TARGET_SECONDS = 6 * 3600;
-        let countdownToAuto = 30;
+        let countdownToAuto = 10;
 
         timerInterval = setInterval(() => {
             const realElapsedSinceStart = Math.floor((Date.now() - startTime) / 1000);

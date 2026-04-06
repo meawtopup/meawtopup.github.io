@@ -512,7 +512,7 @@
     <div class="qr-section">
         <h3 id="label_qr">QR สำหรับชำระเงิน</h3>
         <p id="qr_desc">รองรับแอปธนาคารและทรูวอลเลต</p>
-        <p class="important" id="footer_note">⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ พร้อมแจ้ง VIP/Coin ที่ต้องการ ⚠️</p>
+        <p class="important" id="footer_note"  style="line-height: 1.5;">⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ พร้อมแจ้ง VIP/Coin ที่ต้องการ ⚠️</p>
         <div class="img-placeholder" style="width: 350px; height: 506px; margin-bottom: 10px">
             <img src="assets/qr2026v1.jpg" alt="QR Code" class="point-qrcode"></div>
         <a href="assets/qr2026v1.jpg" download="Meaw_QR_Payment.jpg" class="btn-download" id="btn_save_qr">
@@ -569,7 +569,7 @@
             point_label: "Pay with Points (Click to view)",
             qr_label: "QR Payment",
             qr_desc: "Supports Bank Apps and TRUE Wallet",
-            footer_note: "⚠️ Send slip via Line ⚠️<br>⚠️ And specify VIP/Coin amount ⚠️",
+            : "⚠️ Send slip via Line ⚠️<br>⚠️ And specify VIP/Coin amount ⚠️",
             th_price: "Price (THB)",
             th_vip_rec: "Privileges",
             th_coin_rec: "Coins Received",
@@ -632,7 +632,7 @@
             point_label: "จ่ายด้วยพอยท์ (คลิกเพื่อดู)",
             qr_label: "QR สำหรับชำระเงิน",
             qr_desc: "รองรับแอปธนาคารและทรูวอลเลต",
-            footer_note: "⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ พร้อมแจ้ง VIP/Coin ที่ต้องการ ⚠️",
+            : "⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ พร้อมแจ้ง VIP/Coin ที่ต้องการ ⚠️",
             th_price: "ราคา (บาท)",
             th_vip_rec: "สิทธิพิเศษ",
             th_coin_rec: "Coin ที่จะได้รับ",
@@ -752,7 +752,7 @@ function toggleLang() {
         // ส่วน QR และ Footer
         document.getElementById('label_qr').innerText = t.qr_label;
         document.getElementById('qr_desc').innerText = t.qr_desc;
-        document.getElementById('footer_note').innerHTML = t.footer_note;
+        document.getElementById('').innerHTML = t.;
 
         // เพิ่มส่วนนี้เพื่อเปลี่ยนภาษาปุ่มบันทึก QR
         const btnSave = document.getElementById('btn_save_qr');

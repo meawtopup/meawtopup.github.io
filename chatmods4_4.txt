@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name          Chat Mods 4.3 | TDDChat
+// @name          Chat Mods 4.4 | TDDChat
 // @namespace     http://tampermonkey.net/
-// @version       4.3
+// @version       4.4
 // @description   บังคับความสูงแชท, เพิ่มปุ่มซ่อนรายชื่อ และระบบควบคุมวิทยุ
 // @author        MObyEX
 // @match         https://www.torrentdd.com/chat.php*
@@ -63,14 +63,17 @@
 
         #audio {
             display: none !important;
-            width: auto !important;
-            max-width: 300px !important;
+            width: 300px !important;
+            height: 30px !important;
             vertical-align: middle !important;
+            margin-right: 5px !important;
+            border-radius: 4px;
         }
         #al-toggle-btn {
-            margin-left: 10px !important;
             display: inline-block !important;
             vertical-align: middle !important;
+            height: 30px !important; 
+            line-height: 1 !important;
         }
 
         .chat-container { height: auto !important; }

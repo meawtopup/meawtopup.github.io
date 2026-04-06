@@ -519,7 +519,7 @@
         💾 บันทึกรูป QR ลงเครื่อง</a>
     </div>
     <div style="text-align: center; margin-top: 20px; font-size: 14px; opacity: 0.6;">
-    <p id="footer-info">v1.2.4 © 2026 | Made by Meaw 😺 | Mobile Friendly</p>
+    <p id="footer-info">v1.2.5 © 2026 | Made by Meaw 😺 | Mobile Friendly</p>
     </div>
 </div>
 
@@ -555,8 +555,6 @@
     let currentLang = 'th';
     const translations = {
         en: {
-            title: "MEAW TOPUP",
-            subtitle: "VIP/Coin Donation TorrentDD",
             alert: "⚠️Must send slip via Line ONLY⚠️<br>‼️Not Auto: Contact Line before payment.‼️",
             label_contact: "Contact:",
             no_at: "(No @ sign)",
@@ -569,7 +567,7 @@
             point_label: "Pay with Points (Click to view)",
             qr_label: "QR Payment",
             qr_desc: "Supports Bank Apps and TRUE Wallet",
-            : "⚠️ Send slip via Line ⚠️<br>⚠️ And specify VIP/Coin amount ⚠️",
+            footer_note: "⚠️ Send slip via Line ⚠️<br>⚠️ And specify VIP/Coin amount ⚠️",
             th_price: "Price (THB)",
             th_vip_rec: "Privileges",
             th_coin_rec: "Coins Received",
@@ -618,8 +616,6 @@
             btn_save_qr: "💾 Save QR Image"
         },
         th: {
-            title: "MEAW TOPUP",
-            subtitle: "VIP/Coin Donation TorrentDD",
             alert: "⚠️ส่งหลักฐานการชำระเงินทาง Line เท่านั้น⚠️<br>‼️ช่องทางนี้ ไม่ใช่เติมอัตโนมัติ ควรทักไลน์ก่อนโอน‼️",
             label_contact: "ช่องทางติดต่อ:",
             no_at: "(ไม่ต้องมี @)",
@@ -632,7 +628,7 @@
             point_label: "จ่ายด้วยพอยท์ (คลิกเพื่อดู)",
             qr_label: "QR สำหรับชำระเงิน",
             qr_desc: "รองรับแอปธนาคารและทรูวอลเลต",
-            : "⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ พร้อมแจ้ง VIP/Coin ที่ต้องการ ⚠️",
+            footer_note: "⚠️ อย่าลืมส่งสลิปทาง Line ⚠️<br>⚠️ พร้อมแจ้ง VIP/Coin ที่ต้องการ ⚠️",
             th_price: "ราคา (บาท)",
             th_vip_rec: "สิทธิพิเศษ",
             th_coin_rec: "Coin ที่จะได้รับ",
@@ -752,7 +748,7 @@ function toggleLang() {
         // ส่วน QR และ Footer
         document.getElementById('label_qr').innerText = t.qr_label;
         document.getElementById('qr_desc').innerText = t.qr_desc;
-        document.getElementById('').innerHTML = t.;
+        document.getElementById('footer_note').innerHTML = t.footer_note;
 
         // เพิ่มส่วนนี้เพื่อเปลี่ยนภาษาปุ่มบันทึก QR
         const btnSave = document.getElementById('btn_save_qr');

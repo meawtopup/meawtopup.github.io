@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Click Farm 8.9 | TDDFarm
+// @name         Click Farm 9.0 | TDDFarm
 // @namespace    http://tampermonkey.net/
-// @version      8.9
+// @version      9.0
 // @description  TDDFarm
 // @author       MobyEX
 // @match        https://www.torrentdd.com/farm.php*
@@ -83,11 +83,11 @@
     async function initBot() {
         if (timerInterval) clearInterval(timerInterval);
 
-        const oldContainer = document.getElementById('tdd-farm-bot-item');
-        if (oldContainer) oldContainer.remove();
-
         const isFarmPage = window.location.pathname.includes('farm.php');
         const farmDoc = isFarmPage ? document : await fetchFarmDoc();
+
+        const oldContainer = document.getElementById('tdd-farm-bot-item');
+        if (oldContainer) oldContainer.remove();
 
         const container = document.createElement('li');
         container.id = 'tdd-farm-bot-item';
@@ -231,7 +231,7 @@
                     timeSpan.innerHTML = `เวลาคงเหลือ:${h}:${m}:${s}`;
                 }
             } else {
-                timeSpan.innerHTML = 'เวลา:--:--:--';
+                timeSpan.innerHTML = 'ไม่มีแปลงไหนพร้อม';
             }
 
             if (isAuto && isReady) {

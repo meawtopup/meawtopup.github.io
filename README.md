@@ -6,12 +6,12 @@
 TamperMonkey Extensions สำหรับ [Chrome กดดาวโหลดตรงนี้](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en-US&utm_source=ext_sidebar) <br>
 TamperMonkey Extensions สำหรับ [Firefox กดดาวโหลดตรงนี้](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/) <br>
 สคริป ทำเกษตร : [Script Click Farm 5.0](clickfarm5_0.txt) | กดมืออย่างเดียว<br>
-สคริป ทำเกษตร : [Script Click Farm 8.9](clickfarm8_9.txt) | ระบบออโต้ แต่รันบนหน้า Chat<br>
+สคริป ทำเกษตร : [Script Click Farm 9.0](clickfarm9_0.txt) | ระบบออโต้ แต่รันบนหน้า Chat<br>
 สคริป แชท : [Script Chat Mods 4.4](chatmods4_4.txt) | แก้ไขแชทให้กว้างและควบคุมวิทยุ<br>
 สคริป วิทยุ : [Script Radio 1.9](radio1_9.txt) | ควบคุมวิทยุแบบสลับสถานะเพื่อความเสถียร<br>
 **หมายเหตุ :** 
-- Click Farm 8.9 ต้องเปิดหน้า Chat ทิ้งไว้ ไม่จำเป็นต้องเปิดหน้า Farm (รันสคริปเกษตร+ลอยคอคอยเหรียญ)
-- Click Farm 8.9 ควรติดตั้งคู่กับ Chat Mods 4.4 หรือ Radio 1.9 เพื่อไม่ให้วิทยุทำงานเองหลังเก็บผลผลิต
+- Click Farm 9.0 ต้องเปิดหน้า Chat ทิ้งไว้ ไม่จำเป็นต้องเปิดหน้า Farm (รันสคริปเกษตร+ลอยคอคอยเหรียญ)
+- Click Farm 9.0 ควรติดตั้งคู่กับ Chat Mods 4.4 หรือ Radio 1.9 เพื่อไม่ให้วิทยุทำงานเองหลังเก็บผลผลิต
 
 # ฟังก์ชั่นที่สคริปมี
 Click ที่เวอร์ชั่น Script เพื่อดูรายละเอียด<br>
@@ -22,12 +22,13 @@ Click ที่เวอร์ชั่น Script เพื่อดูราย
 3. ปุ่ม เริ่มฤดูกาลใหม่ : สำหรับเก็บผลผลิตแล้วปลูกเมล็ด ให้ในคลิกเดียว
 <br>
 <hr></details>
-<details><summary>Click Farm 8.9</summary>
+<details><summary>Click Farm 9.0</summary>
 <picture><img src="assets/farmbutton_8_4.jpg" width="326" height="33" alt="Farm Button"></picture><br>
 1. ปุ่ม เริ่มฤดูกาลใหม่ : สำหรับเก็บผลผลิตแล้วปลูกเมล็ด ให้ในคลิกเดียว<br>
 2. ปุ่ม ออโต้ : สำหรับทำฟาร์มอัตโนมัติเมื่อครบเวลา เมื่อใช้ให้กดเปิดจะเริ่มนับเวลาถอยหลัง<br>
 3. แสดงเวลาคงเหลือที่จะพร้อมเก็บใกล้ที่สุด
-4. มีระบบเช็คยอด Zen คงเหลือ
+4. ระบบเช็คยอด Zen คงเหลือ
+5. ระบบเช็คความพร้อมของแปลง
 
 **หมายเหตุ :** <br>
 - เมื่อเก็บผลผลิตเสร็จสิ้น ⚠️**จำเป็น**ต้องรีโหลดหน้าเว็บใหม่เพื่อเคลียเมมโมรี⚠️ สคริปจะทำการรีโหลดอัตโนมัติ<br>
@@ -36,14 +37,14 @@ Click ที่เวอร์ชั่น Script เพื่อดูราย
 <hr></details>
 <details><summary>Chat Mods 4.4</summary>
 1. บังคับปรับขนาดความสูงช่องแสดงข้อความเป็น 700px<br>
-2. มีปุ่ม ซ่อน/แสดง รายชื่อ User Online<br>
-3. มีปุ่ม ปิด/เปิด วิทยุ (สถานะเริ่มต้นคือ:ปิด)<br>
+2. ปุ่ม ซ่อน/แสดง รายชื่อ User Online<br>
+3. ปุ่ม ปิด/เปิด วิทยุ (สถานะเริ่มต้นคือ:ปิด)<br>
 4. แก้ปัญหา UI วิทยุบน Firefox ให้เสถียรขึ้น
 <br>
 <hr></details>
 <details><summary>Radio 1.9</summary>
 1. จะปิดวิทยุไว้ตอนเข้าหน้าแชท<br>
-2. มีปุ่ม เปิด/ปิด วิทยุ<br>
+2. ปุ่ม เปิด/ปิด วิทยุ<br>
 3. แก้ปัญหา UI วิทยุบน Firefox ให้เสถียรขึ้น</details>
 
 # วิธีติดตั้งสคริป

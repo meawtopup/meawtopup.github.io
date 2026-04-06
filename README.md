@@ -46,8 +46,7 @@ Click ที่เวอร์ชั่น Script เพื่อดูราย
 2. มีปุ่ม เปิด/ปิด วิทยุ<br>
 3. แก้ปัญหา UI วิทยุบน Firefox ให้เสถียรขึ้น</details>
 
-# วิธีติดตั้ง TamperMonkey
-**เครื่องที่มี Extension อยู่แล้วข้ามไปข้อ 2 ได้เลย**
+# วิธีติดตั้ง Script
 1. เมื่อติดตั้ง Extensions แล้วให้กดที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 2. เลือกเมนู +Create a new script...
 3. Copy Script มาวาง แล้วกด Save (File> 💾Save)

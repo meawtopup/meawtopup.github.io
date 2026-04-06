@@ -231,7 +231,7 @@
                     timeSpan.innerHTML = `เวลาคงเหลือ:${h}:${m}:${s}`;
                 }
             } else {
-                timeSpan.innerHTML = 'ไม่มีแปลงไหนพร้อม';
+                timeSpan.innerHTML = 'สถานะ: ไม่พร้อมใช้งาน';
             }
 
             if (isAuto && isReady) {

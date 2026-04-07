@@ -14,7 +14,7 @@
    แล้วกด OK
 3. คลิกที่ Outbound Rules
 4. มองทางขวาตรง Actions ให้คลิกที่ New Rule...
-5. ติ๊ก Program แล้วกด Next>
+5. ติ๊ก Program แล้วกด Next
 6. ช่อง This program path ให้กด Browse... หาโปรแกรมบราวเซอร์ที่ใช้
    หรือก็อป Path ข้างล่าง (สำหรับค่าเริ่มต้นเท่านั้น)
    **Chrome**
@@ -29,9 +29,9 @@
    ```
    C:\Program Files\Mozilla Firefox\firefox.exe
    ```
-   จากนั้นกด Next>
-7. ติ๊ก Block the connection แล้วกด Next>
-8. ติ๊ก Domain,Private,Public (จะติ๊กให้อยู่แล้ว) จากนั้นกด Next>
+   จากนั้นกด Next
+7. ติ๊ก Block the connection แล้วกด Next
+8. ติ๊ก Domain,Private,Public (จะติ๊กให้อยู่แล้ว) จากนั้นกด Next
 9. ช่อง Name ให้พิมพ์ Block IPv6 (ชื่อแอป) เช่น Block IPv6 Chromeจากนั้นกด Finish
 10. ดับเบิ้ลคลิกที่ Rules ที่เราตั้ง เช่น Block IPv6 Chrome
 11. เลือกแทป Scope

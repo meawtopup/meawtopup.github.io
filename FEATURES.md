@@ -1,4 +1,4 @@
-[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**DOWNLOAD**](README.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
+[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**DOWNLOAD**](DOWNLOAD.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
 # ฟังก์ชันการทำงาน
 **Click Farm 5.0**  

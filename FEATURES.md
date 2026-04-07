@@ -1,4 +1,4 @@
-[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**DOWNLOAD**](DOWNLOAD.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
+[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
 # Click Farm 5.0
 <picture><img src="assets/farmbutton.jpg" width="497" height="60" alt="Farm Button"></picture>  

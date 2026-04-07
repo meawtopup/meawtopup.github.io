@@ -9,3 +9,6 @@
 3. ปรับแต่งแชท: [Script Chat Mods 4.4](js/chatmods4_4.txt) | แก้ไขแชทให้กว้างและควบคุมวิทยุ  
 4. ปรับแต่งวิทยุ: [Script Radio 1.9](js/radio1_9.txt) | ควบคุมวิทยุแบบสลับสถานะเพื่อความเสถียร
 5. แก้ปัญหา IPv6: [Script IPv6 TDD v1.0](tools/IPv6_TDD_v1_0.bat) | สำหรับเน็ต 3BB CloudFlare: Error code 524
+
+คู่มือติดตั้งสคริป: [MANUAL](MANUAL.md)
+ฟังก์ชันการทำงาน: [FEATURE](FEATURES.md)

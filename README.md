@@ -5,11 +5,11 @@
 <picture><img src="assets/star.gif" width="15" height="15" alt="Star"></picture> [กดตรงนี้เลย เมี๊ยว ≽^•⩊•^≼](https://meawtopup.github.io/)<picture> <img src="assets/star.gif" width="15" height="15" alt="Star"></picture>
 
 # Manual for Tampermonkey
-- วิธีติดตั้ง Extensions: Tampermonkey
+- วิธีติดตั้ง Extensions: Tampermonkey  
   [View Here](MANUAL.md#extensions-installation)
-- วิธีติดตั้ง Script
+- วิธีติดตั้ง Script  
   [View Here](MANUAL.md#script-installation)
-- วิธี Update Script
+- วิธี Update Script  
   [View Here](MANUAL.md#update-script-version)
 
 # Script Tampermonkey

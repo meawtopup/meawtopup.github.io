@@ -1,3 +1,5 @@
+[**README**](README.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md) | [**LICENSE**](LICENSE)
+
 # ฟังก์ชันการทำงาน
 **Click Farm 5.0**  
 <picture><img src="assets/farmbutton.jpg" width="497" height="60" alt="Farm Button"></picture>  

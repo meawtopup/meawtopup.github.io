@@ -1,7 +1,6 @@
 [**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**DOWNLOAD**](DOWNLOAD.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
-# ฟังก์ชันการทำงาน
-**Click Farm 5.0**  
+# Click Farm 5.0
 <picture><img src="assets/farmbutton.jpg" width="497" height="60" alt="Farm Button"></picture>  
 1. ปุ่ม ปลูกทั้งหมด : สำหรับปลูกเมล็ดอย่างเดียว  
 2. ปุ่ม เก็บทั้งหมด : สำหรับเก็บผลผลิตอย่างเดียว  
@@ -10,10 +9,7 @@
 **หมายเหตุ :** 
 - เมื่อกดแล้วจะต้องรอจนกว่ารีโหลดหน้าใหม่ ใช้เวลาราวๆ 5-10 วินาที  
 - แสดงผลเฉพาะหน้า Farm เท่านั้น
-  
-<hr>
-
-**Click Farm 9.0**  
+# Click Farm 9.0  
 <picture><img src="assets/farmbutton_8_4.jpg" width="326" height="33" alt="Farm Button"></picture>
 1. ปุ่ม เริ่มฤดูกาลใหม่ : สำหรับเก็บผลผลิตแล้วปลูกเมล็ด ให้ในคลิกเดียว  
 2. ปุ่ม ออโต้ สำหรับทำฟาร์มอัตโนมัติเมื่อครบเวลา เมื่อใช้ให้กดเปิดจะเริ่มนับเวลาถอยหลัง  
@@ -26,9 +22,7 @@
 - ควรติดตั้ง Chat Mods 4.4 หรือ Radio 1.9 เพื่อไม่ให้วิทยุทำงานเองหลังเก็บผลผลิต
 - แสดงผลที่หน้า Chat และ Farm
 
-<hr>
-
-**Chat Mods 4.4**  
+# Chat Mods 4.4
 1. บังคับปรับความสูงช่องแสดงข้อความเป็น 700px แบบคงที่  
 2. ปุ่ม ซ่อน/แสดง รายชื่อ User Online  
 3. ปุ่ม ปิด/เปิด วิทยุ (สถานะเริ่มต้นคือ:ปิด)  
@@ -36,18 +30,14 @@
 
 **หมายเหตุ :** แสดงผลเฉพาะหน้า Chat เท่านั้น 
 
-<hr>
-
-**Radio 1.9**
+# Radio 1.9
 1. จะปิดวิทยุไว้ตอนเข้าหน้าแชท  
 2. ปุ่ม เปิด/ปิด วิทยุ  
 3. แก้ปัญหา UI วิทยุบน Firefox ให้เสถียรขึ้น
 
 **หมายเหตุ :** แสดงผลเฉพาะหน้า Chat เท่านั้น 
 
-<hr>
-
-**IPv6 TDD v1.0**
+# IPv6 TDD v1.0
 1. แก้ปัญหาผู้ใช้ 3BB ที่เข้าเว็บ TDD แล้วติด CloudFlare: Error code 524  
    (เกิดจาก IPv6 ของ 3BB เข้า CloudFlare ไม่ได้)  
 2. Script จะตั้ง Outbound Rules ใน Windows Defender Firewall เพื่อ Block IPv6  

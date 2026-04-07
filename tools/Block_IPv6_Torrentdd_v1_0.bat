@@ -20,7 +20,7 @@ echo ==================================================
 echo  [1] Block IPv6 (Add Rules)
 echo  [2] Unblock IPv6 (Delete Rules)
 echo ==================================================
-echo  Created by: MObyEX
+echo  Created by: MObyEX v.1.0
 echo ==================================================
 set /p choice="Select an option (1-2): "
 
@@ -74,4 +74,3 @@ echo.
 echo [Status] Unblock Complete. (All rules removed)
 pause
 exit
-:: MObyEX v.1.0

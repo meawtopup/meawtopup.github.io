@@ -14,7 +14,7 @@
 
 # Get Batch File
 มี 2 วิธี ในการดาวโหลด IPv6_TDD_v1_0.bat
-1. โหลดจาก GitHub: [Download ](tools/IPv6_TDD_v1_0.bat?download=true)
+1. โหลดจาก GitHub: [Download ](tools/IPv6_TDD_v1_0.bat?download=true)  
    (ต้อง Login GitHub ก่อน หรืออยากเช็คโค้ด [IPv6 TDD V1.0](tools/IPv6_TDD_v1_0.bat) )  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/aqtbt3h03m09ao6/IPv6_TDD_v1_0.bat/file)
 

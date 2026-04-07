@@ -1,4 +1,4 @@
-# Features
+# ฟังก์ชันการทำงาน
 **Click Farm 5.0**  
 <picture><img src="assets/farmbutton.jpg" width="497" height="60" alt="Farm Button"></picture>  
 1. ปุ่ม ปลูกทั้งหมด : สำหรับปลูกเมล็ดอย่างเดียว  

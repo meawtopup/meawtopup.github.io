@@ -5,9 +5,9 @@
 <picture><img src="assets/star.gif" width="15" height="15" alt="Star"></picture> [กดตรงนี้เลย เมี๊ยว ≽^•⩊•^≼](https://meawtopup.github.io/)<picture> <img src="assets/star.gif" width="15" height="15" alt="Star"></picture>
 
 # Manual for Tampermonkey
-- วิธีติดตั้ง Extensions: Tampermonkey [กดที่นี่](MANUAL.md#extensions-installation)
-- วิธีติดตั้ง Script [กดที่นี่](MANUAL.md#script-installation)
-- วิธี Update Script [กดที่นี่](MANUAL.md#update-script-version)
+- วิธีติดตั้ง Extensions: Tampermonkey [View Here](MANUAL.md#extensions-installation)
+- วิธีติดตั้ง Script [View Here](MANUAL.md#script-installation)
+- วิธี Update Script [View Here](MANUAL.md#update-script-version)
 
 # Script Tampermonkey
 - Click Farm 5.0 | กดมืออย่างเดียว  
@@ -21,6 +21,6 @@
 
 # Tools
 - IPv6 TDD v1.0 | แก้ปัญหาเน็ต 3BB เข้าเว็บ TDD แล้ว CloudFlare: Error code 524  
-  [View Here](IPV6TDD.md) | [Feature](FEATURES.md#ipv6-tdd-v10)
+  [View Here](IPV6TDD.md) | [Self-Configuration](CONFIGRULES.md) | [Feature](FEATURES.md#ipv6-tdd-v10)
 
 

@@ -42,3 +42,16 @@
 3. แก้ปัญหา UI วิทยุบน Firefox ให้เสถียรขึ้น
 
 **หมายเหตุ :** แสดงผลเฉพาะหน้า Chat เท่านั้น 
+
+<hr>
+
+**IPv6 TDD v1.0**
+1. แก้ปัญหาผู้ใช้ 3BB ที่เข้าเว็บ TDD แล้วติด CloudFlare: Error code 524  
+   (เกิดจาก IPv6 ของ 3BB เข้า CloudFlare ไม่ได้)  
+2. Script จะตั้ง Outbound Rules ใน Windows Defender Firewal เพื่อ Block IPv6 ของเว็บ TDD  
+   (เมื่อบราวเซอร์อ่าน IPv6 ไม่ได้ ก็ทำจะเลือกใช้งาน IPv4 ที่ไม่มีปัญหาแทน)  
+3. มีฟังชั่น Unblock เพื่อเคลีย Rules ที่เคยตั้งไว้
+
+**หมายเหตุ :** 
+- มีผลเฉพาะบราวเซอร์ Chrome/Edge/Firefox เท่านั้น
+- มีผลกับเว็บ TDD เท่านั้น (ทั้ง com และ net)

@@ -27,21 +27,21 @@
 5. Copy Script มาวางทับ แล้วกด Save (File> 💾Save)  
 **หมายเหตุ** ถ้า Script ไหนไม่ใช้ก็ลบทิ้งในหน้า ⚙️Dashboard ได้เลย
 <br><br>
-# วิธีดาวโหลดและใช้งาน<br>IPv6 TorrentDD Management Script
+# วิธีดาวโหลดและใช้งาน<br>IPv6_TDD_v1_0.bat
 1. เมื่อกดลิ้งไปที่ไฟล์แล้ว ให้กดปุ่ม Download raw file  
    (ปุ่มจะอยู่ข้างขวาบนของส่วนแสดงโค้ด ข้างๆ Icon ดินสอ)
 2. ให้ไปที่โฟเดอร์ดาวโหลดของบราวเซอร์ที่ตั้งค่าไว้
-3. คลิกขวาที่ไฟล์ Block_IPv6_Torrentdd_v1_0.bat เลือก Run as administrator
+3. คลิกขวาที่ไฟล์ IPv6_TDD_v1_0.bat เลือก Run as administrator
 4. บางเครื่องอาจจะมี Security Warning ให้เลือก Run
 5. หน้าต่าง CMD จะเปิดขึ้นมา ถ้าทำงานได้จะมีข้อความแบบนี้  
    ```
    ==================================================
-    IPv6 TorrentDD Management Script
+     IPv6 TDD v1.0
    ==================================================
-    [1] Block IPv6 (Add Rules)
-    [2] Unblock IPv6 (Delete Rules)
+     [1] Block IPv6 (Add Rules)
+     [2] Unblock IPv6 (Delete Rules)
    ==================================================
-    Created by: MObyEX
+     Created by: MObyEX
    ==================================================
    Select an option (1-2):
    ```  

@@ -1,3 +1,5 @@
+[**README**](README.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md) | [**LICENSE**](LICENSE)
+
 # วิธีติดตั้ง Extension: Tampermonkey
 1. กดลิ้งเพื่อโหลด Extensions<br>
    Chrome: [Chrome Web Store](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en-US&utm_source=ext_sidebar)   

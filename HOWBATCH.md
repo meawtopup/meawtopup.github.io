@@ -12,6 +12,10 @@
 - Edge
 - Firefox
 
+**คำเตือน**
+- ให้ใช้แล้ววินโดมีอาการผิดปกติใดๆ ผู้เขียนสคริปไม่ขอรับผิดชอบ
+- หากไม่มั่นใจในสคริป สามารถตั้งค่าด้วยตนเองได้ [อ่านวิธีตั้งค่าด้วยตอนเองที่นี่](CONFIGRULES.md)
+
 # Get Batch File
 มี 2 วิธี ในการดาวโหลด IPv6_TDD_v1_0.bat
 1. โหลดจาก GitHub: [Download ](https://github.com/meawtopup/meawtopup.github.io/releases/download/v1.0/IPv6_TDD_v1_0.bat)  

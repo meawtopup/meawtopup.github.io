@@ -1,6 +1,6 @@
 [**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**DOWNLOAD**](DOWNLOAD.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
-# วิธีติดตั้ง Extension: Tampermonkey
+# Extension Installation
 1. กดลิ้งเพื่อโหลด Extensions<br>
    Chrome: [Chrome Web Store](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en-US&utm_source=ext_sidebar)   
    Edge: [Microsoft Edge Addons](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd)   
@@ -12,7 +12,7 @@
    คลิกขวาที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture> เลือก Manage extension
 5. มองหา Allow User Scripts แล้วติ๊กเปิดใช้งาน
 <br><br>
-# วิธีติดตั้ง Script: Tampermonkey
+# Script Installation
 1. คลิกซ้ายที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 2. เลือกเมนู +Create a new script...
 3. Copy Script มาวาง แล้วกด Save (File> 💾Save)
@@ -20,7 +20,7 @@
    - Script Click Farm จะทำงานที่หน้า Chat และ Farm เข้าหน้าไหนก็ได้
    - Script Chat Mods/Radio จะทำงานแค่ที่หน้า Chat
 <br><br>
-# วิธีอัพเดท/เปลี่ยนเวอร์ชั่น Script 
+# Update Script Version
 1. กดที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 2. เลือก ⚙️Dashboard
 3. กดที่ Tab> Installed Userscripts แล้วกดที่ชื่อสคริปที่ต้องการเปลี่ยน<br>
@@ -29,7 +29,7 @@
 5. Copy Script มาวางทับ แล้วกด Save (File> 💾Save)  
 **หมายเหตุ** ถ้า Script ไหนไม่ใช้ก็ลบทิ้งในหน้า ⚙️Dashboard ได้เลย
 <br><br>
-# วิธีดาวโหลดและใช้งาน<br>IPv6_TDD_v1_0.bat  
+# Get & Run Batch
 *สามารถเปิดใช้งานได้บน*  
 - Windows 7  
 - Windows 8/8.1  

@@ -1,7 +1,5 @@
 [**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**DOWNLOAD**](DOWNLOAD.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
-**IPv6 TDD 1.0**
-
 # System Compatibility
 ฺ**สามารถเปิดใช้ได้บน**
 - Windows 7  

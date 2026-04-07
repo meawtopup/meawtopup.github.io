@@ -11,4 +11,4 @@
 # Table of Contents
 1. เติมเงิน: [TOPUP](https://meawtopup.github.io/)
 2. ฟังก์ชันการทำงาน: [Features](FEATURES.md)
-3. คู่มือติดตั้ง: [Manual](MANUALmd)
+3. คู่มือติดตั้ง: [Manual](MANUAL.md)

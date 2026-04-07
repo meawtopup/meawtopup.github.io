@@ -1,4 +1,4 @@
-[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**DOWNLOAD**](DOWNLOAD.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
+[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
 # System Compatibility
 ฺ**สามารถเปิดใช้ได้บน**
@@ -14,7 +14,7 @@
 
 **คำเตือน**
 - หากใช้แล้ววินโดมีอาการผิดปกติใดๆ ผู้เขียนสคริปไม่มีส่วนรับผิดชอบ [LICENSE](LICENSE)
-- หากไม่มั่นใจในสคริป สามารถตั้งค่าด้วยตนเองได้ [อ่านวิธีตั้งค่าด้วยตอนเองที่นี่](CONFIGRULES.md)
+- หากไม่มั่นใจในสคริป สามารถตั้งค่าด้วยตนเองได้ [Self-Configuration](CONFIGRULES.md)
 
 # Get Batch File
 มี 2 วิธี ในการดาวโหลด IPv6_TDD_v1_0.bat

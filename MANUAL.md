@@ -1,4 +1,4 @@
-[**README**](README.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md) | [**LICENSE**](LICENSE)
+[**HOME**](README.md) | [**README**](README.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
 # วิธีติดตั้ง Extension: Tampermonkey
 1. กดลิ้งเพื่อโหลด Extensions<br>

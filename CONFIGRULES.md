@@ -5,7 +5,7 @@
 
 # Setting Rules
 **วิธีกำหนด Outbound Rules ด้วยตนเอง (Windows)**  
-1. ให้ปิด VPN และบราวเซอร์ที่จะตั้งค่า เช่น Chrome
+1. ปิดบราวเซอร์ ปิด VPN ที่ใช้งานอยู่
 2. เปิด Windows Defender Firewall with Advanced Security  
    หรือใช้คำสั่ง RUN (WIN+R) แล้วพิมพ์ลงไปในช่อง OPEN 
    ```

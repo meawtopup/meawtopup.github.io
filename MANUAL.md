@@ -20,7 +20,7 @@
    - Script Click Farm จะทำงานที่หน้า Chat และ Farm เข้าหน้าไหนก็ได้
    - Script Chat Mods/Radio จะทำงานแค่ที่หน้า Chat
 <br><br>
-# วิธีอัพเดท/เปลี่ยนเวอร์ชั่น Script  
+# วิธีอัพเดท/เปลี่ยนเวอร์ชั่น Script 
 1. กดที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 2. เลือก ⚙️Dashboard
 3. กดที่ Tab> Installed Userscripts แล้วกดที่ชื่อสคริปที่ต้องการเปลี่ยน<br>
@@ -30,6 +30,11 @@
 **หมายเหตุ** ถ้า Script ไหนไม่ใช้ก็ลบทิ้งในหน้า ⚙️Dashboard ได้เลย
 <br><br>
 # วิธีดาวโหลดและใช้งาน<br>IPv6_TDD_v1_0.bat
+0. สามารถรันได้บน  
+- Windows 7  
+- Windows 8/8.1  
+- Windows 10 (ทดสอบโดยผู้เขียน)  
+- Windows 11  
 1. เมื่อกดลิ้งไปที่ไฟล์แล้ว ให้กดปุ่ม Download raw file  
    (ปุ่มจะอยู่ข้างขวาบนของส่วนแสดงโค้ด ข้างๆ Icon ดินสอ)
 2. ให้ไปที่โฟเดอร์ดาวโหลดของบราวเซอร์ที่ตั้งค่าไว้

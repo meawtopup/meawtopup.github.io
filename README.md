@@ -1,7 +1,7 @@
 # เติม VIP หรือ Coin
 <picture><img src="assets/star.gif" width="15" height="15" alt="Star"></picture> [กดตรงนี้เลย เมี๊ยว ≽^•⩊•^≼](https://meawtopup.github.io/)<picture> <img src="assets/star.gif" width="15" height="15" alt="Star"></picture>
 
-# Script
+# Scripts
 1. ทำเกษตร: [Script Click Farm 5.0](js/clickfarm5_0.txt) | กดมืออย่างเดียว  
 2. ทำเกษตร: [Script Click Farm 9.0](js/clickfarm9_0.txt) | ระบบออโต้ แต่รันบนหน้า Chat  
 3. ปรับแต่งแชท: [Script Chat Mods 4.4](js/chatmods4_4.txt) | แก้ไขแชทให้กว้างและควบคุมวิทยุ  

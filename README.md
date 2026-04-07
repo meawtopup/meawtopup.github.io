@@ -1,14 +1,26 @@
-[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**DOWNLOAD**](DOWNLOAD.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
+[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**FEATURE**](FEATURES.md)
 
-# เติม VIP หรือ Coin
+# TOPUP
+**เติม VIP หรือ Coin ผ่านแมว**
 <picture><img src="assets/star.gif" width="15" height="15" alt="Star"></picture> [กดตรงนี้เลย เมี๊ยว ≽^•⩊•^≼](https://meawtopup.github.io/)<picture> <img src="assets/star.gif" width="15" height="15" alt="Star"></picture>
 
-# Scripts
-1. ทำเกษตร: [Script Click Farm 5.0](js/clickfarm5_0.txt) | กดมืออย่างเดียว  
-2. ทำเกษตร: [Script Click Farm 9.0](js/clickfarm9_0.txt) | ระบบออโต้ แต่รันบนหน้า Chat  
-3. ปรับแต่งแชท: [Script Chat Mods 4.4](js/chatmods4_4.txt) | แก้ไขแชทให้กว้างและควบคุมวิทยุ  
-4. ปรับแต่งวิทยุ: [Script Radio 1.9](js/radio1_9.txt) | ควบคุมวิทยุแบบสลับสถานะเพื่อความเสถียร
-5. แก้ปัญหา IPv6: [Script IPv6 TDD v1.0](tools/IPv6_TDD_v1_0.bat) | สำหรับเน็ต 3BB CloudFlare: Error code 524
+# Manual for Tampermonkey
+- วิธีติดตั้ง Extensions: Tampermonkey [กดที่นี่](MANUAL.md#extensions-installation)
+- วิธีติดตั้ง Script [กดที่นี่](MANUAL.md#script-installation)
+- วิธี Update Script [กดที่นี่](MANUAL.md#update-script-version)
 
-คู่มือติดตั้งสคริป: [MANUAL](MANUAL.md)  
-ฟังก์ชันการทำงาน: [FEATURE](FEATURES.md)  
+# Script Tampermonkey
+- Click Farm 5.0 | กดมืออย่างเดียว
+  [View Here](js/clickfarm5_0.txt) [Feature](FEATURES.md#click-farm-50)
+- Click Farm 9.0 | ระบบออโต้ ทำงานบนหน้า Chat
+  [View Here](js/clickfarm9_0.txt) [Feature](FEATURES.md#click-farm-90)
+- Chat Mods 4.4 | แก้ไขแชทให้กว้างแบบคงที่ และควบคุมวิทยุแบบสลับสถานะ
+  [View Here](js/chatmods4_4.txt) [Feature](FEATURES.md#chat-mods-44)
+- Radio 1.9 | ควบคุมวิทยุแบบสลับสถานะเพื่อความเสถียร
+  [View Here](js/radio1_9.txt) [Feature](FEATURES.md#radio-19)
+
+# Tools
+- IPv6 TDD v1.0 | แก้ปัญหาเน็ต 3BB เข้าเว็บ TDD แล้ว CloudFlare: Error code 524
+  [View Here](IPV6TDD.md) [Feature](FEATURES.md#ipv6-tdd-v10)
+
+

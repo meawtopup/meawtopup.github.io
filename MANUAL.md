@@ -37,7 +37,8 @@
    ให้ลบทิ้งทั้งหมด  
 3. Copy Script ที่จะใช้มาวางแทนที่ข้อ 2
 4. กด Save (File> 💾Save)
-5. ไปที่หน้าเว็บที่ Script ทำงาน ให้ทำการ Refresh(F5)
+5. ไปที่หน้าเว็บที่ Script ทำงาน ให้ทำการ Refresh(F5)  
+**หมายเหตุ**
 - Script Click Farm จะทำงานที่หน้า Chat และ Farm เข้าหน้าไหนก็ได้
 - Script Chat Mods/Radio จะทำงานแค่ที่หน้า Chat
 

@@ -18,9 +18,10 @@
 
 # Get Batch File
 มี 2 วิธี ในการดาวโหลด IPv6_TDD_v1_0.bat
-1. โหลดจาก GitHub: [Download ](https://github.com/meawtopup/meawtopup.github.io/releases/download/v1.0/IPv6_TDD_v1_0.bat)  
-   (ต้อง Login GitHub ก่อน หรืออยากเช็คโค้ด [IPv6 TDD V1.0](tools/IPv6_TDD_v1_0.bat) )  
+1. โหลดจาก GitHub: [Download ](https://github.com/meawtopup/meawtopup.github.io/releases/download/BatchFile/IPv6_TDD_v1_0.bat)  
+   (หรือตรวจสอบโค้ดได้ที่ > [IPv6 TDD V1.0](tools/IPv6_TDD_v1_0.bat))  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/aqtbt3h03m09ao6/IPv6_TDD_v1_0.bat/file)
+   (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)
 
 # Run Batch File
 1. ให้ไปที่โฟเดอร์ดาวโหลดของบราวเซอร์ที่ตั้งค่าไว้

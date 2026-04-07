@@ -1,5 +1,8 @@
 [**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**DOWNLOAD**](DOWNLOAD.md) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
+**คำเตือน**
+- หากตั้งค่าแล้ววินโดมีอาการผิดปกติใดๆ ผู้เขียนสคริปไม่ขอรับผิดชอบ [LICENSE](LICENSE)
+
 # วิธีกำหนด Outbound Rules ด้วยตนเอง (Windows)
 1. ให้ปิด VPN และบราวเซอร์ที่จะตั้งค่า เช่น Chrome
 2. เปิด Windows Defender Firewall with Advanced Security  

@@ -15,12 +15,12 @@ set "FIREFOX_PATH=C:\Program Files\Mozilla Firefox\firefox.exe"
 set "EDGE_PATH=C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 echo ==================================================
-echo  IPv6 TorrentDD Management Script
+echo  IPv6 TDD v1.0
 echo ==================================================
 echo  [1] Block IPv6 (Add Rules)
 echo  [2] Unblock IPv6 (Delete Rules)
 echo ==================================================
-echo  Created by: MObyEX v.1.0
+echo  Created by: MObyEX
 echo ==================================================
 set /p choice="Select an option (1-2): "
 

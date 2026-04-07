@@ -48,7 +48,7 @@
 **IPv6 TDD v1.0**
 1. แก้ปัญหาผู้ใช้ 3BB ที่เข้าเว็บ TDD แล้วติด CloudFlare: Error code 524  
    (เกิดจาก IPv6 ของ 3BB เข้า CloudFlare ไม่ได้)  
-2. Script จะตั้ง Outbound Rules ใน Windows Defender Firewall เพื่อ Block IPv6 
+2. Script จะตั้ง Outbound Rules ใน Windows Defender Firewall เพื่อ Block IPv6  
    (เมื่อบราวเซอร์อ่าน IPv6 ไม่ได้ ก็ทำจะเลือกใช้งาน IPv4 ที่ไม่มีปัญหาแทน)  
 3. มีฟังชั่น Unblock เพื่อเคลีย Rules ที่เคยตั้งไว้
 

@@ -5,7 +5,8 @@
 - Windows 7  
 - Windows 8/8.1  
 - Windows 10 (ทดสอบโดยผู้เขียน)  
-- Windows 11  
+- Windows 11
+
 **รองรับเฉพาะ**
 - Chrome
 - Edge

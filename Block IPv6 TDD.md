@@ -19,7 +19,7 @@
 
 **คำเตือน**
 - หากใช้แล้วมีอาการผิดปกติใดๆ ผู้เขียนสคริปไม่มีส่วนรับผิดชอบ [LICENSE](LICENSE)
-- หากไม่มั่นใจในสคริป สามารถตั้งค่าด้วยตนเองได้ที่ > [Self-Configuration](CONFIGRULES.md)
+- หากไม่มั่นใจในสคริป สามารถตั้งค่าด้วยตนเองได้ที่ > [Self-Configuration](<Self Config IPV6TDD.md>)
 
 # Download
 **สำหรับ Windows**  

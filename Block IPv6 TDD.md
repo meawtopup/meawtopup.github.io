@@ -12,7 +12,7 @@
 **สำหรับ Windows**
 - Chrome
 - Edge
-- Firefox
+- Firefox  
 **สำหรับ MacOS**
 - Chrome
 - Safari

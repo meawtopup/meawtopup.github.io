@@ -32,7 +32,7 @@
 มี 2 วิธี ในการดาวโหลด Block IPv6 TDD (MacOS).sh
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/ShellScript/Block.IPv6.TDD.MacOS.sh)  
    (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (MacOS)](<tools/Block IPv6 TDD (MacOS).sh>)  
-2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/5mtqy289gtr7l1r/RUN-FixIPv4+(MacOS).sh/file)
+2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/l58voedwx012r05/Block+IPv6+TDD+(MacOS).sh/file)
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)
 
 # Run Batch File

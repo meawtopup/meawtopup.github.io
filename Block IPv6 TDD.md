@@ -22,7 +22,7 @@
 - หากไม่มั่นใจในสคริป สามารถตั้งค่าด้วยตนเองได้ที่ > [Self-Configuration](CONFIGRULES.md)
 
 # Download
-**สำหรับ Windows**
+**สำหรับ Windows**  
 มี 2 วิธี ในการดาวโหลด Block IPv6 TDD (WinOS).bat
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/BatchFile/Block.IPv6.TDD.WinOS.bat)  
    (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (WinOS)](<tools/Block IPv6 TDD (WinOS).bat>)  

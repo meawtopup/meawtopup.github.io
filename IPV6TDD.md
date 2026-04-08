@@ -17,7 +17,7 @@
 - หากไม่มั่นใจในสคริป สามารถตั้งค่าด้วยตนเองได้ที่ > [Self-Configuration](CONFIGRULES.md)
 
 # Get Batch File
-มี 2 วิธี ในการดาวโหลด IPv6_TDD_v1_0.bat
+มี 2 วิธี ในการดาวโหลด IPv6_TDD_v1_1.bat
 1. โหลดจาก GitHub: [Download ](https://github.com/meawtopup/meawtopup.github.io/releases/download/BatchFile/IPv6_TDD_v1_1.bat)  
    (หรือตรวจสอบโค้ดได้ที่ > [IPv6 TDD V1.0](tools/IPv6_TDD_v1_1.bat))  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/uaaaqs0f4hnh2i3/IPv6_TDD_v1_1.bat/file)
@@ -26,12 +26,12 @@
 # Run Batch File
 1. ปิดบราวเซอร์ ปิด VPN ที่ใช้งานอยู่
 2. ไปที่โฟลเดอร์ดาวโหลดของบราวเซอร์ที่โหลดไฟล์ไว้
-3. คลิกขวาที่ไฟล์ IPv6_TDD_v1_0.bat เลือก Run as administrator
+3. คลิกขวาที่ไฟล์ IPv6_TDD_v1_1.bat เลือก Run as administrator
 4. บางเครื่องอาจจะมี Security Warning ให้เลือก Run
 5. หน้าต่าง Cmd (Command Prompt) จะเปิดขึ้นมา ถ้าทำงานได้จะมีข้อความแบบนี้
    ```
    ==================================================
-     IPv6 TDD v1.0
+     IPv6 TDD v1.1
    ==================================================
      [1] Block IPv6 (Add Rules)
      [2] Unblock IPv6 (Delete Rules)

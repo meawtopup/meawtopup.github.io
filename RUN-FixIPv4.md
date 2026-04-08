@@ -26,7 +26,7 @@
 มี 2 วิธี ในการดาวโหลด RUN-FixIPv4 (MacOS).sh
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/FixIPv4.MacOS/RUN-FixIPv4.MacOS.sh)  
    (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (MacOS)](<tools/RUN-FixIPv4 (MacOS).sh>)  
-2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/5mtqy289gtr7l1r/RUN-FixIPv4+(MacOS).sh/file)
+2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/5mtqy289gtr7l1r/RUN-FixIPv4+(MacOS).sh/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)
 
 # Run Batch File

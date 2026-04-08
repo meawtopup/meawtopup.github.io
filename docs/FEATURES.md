@@ -1,7 +1,7 @@
-[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
+[**HOME**](../README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
 # Click Farm 5.0
-<picture><img src="assets/farmbutton.jpg" width="497" height="60" alt="Farm Button"></picture>  
+<picture><img src="../assets/farmbutton.jpg" width="497" height="60" alt="Farm Button"></picture>  
 1. ปุ่ม ปลูกทั้งหมด : สำหรับปลูกเมล็ดอย่างเดียว  
 2. ปุ่ม เก็บทั้งหมด : สำหรับเก็บผลผลิตอย่างเดียว  
 3. ปุ่ม เริ่มฤดูกาลใหม่ : สำหรับเก็บผลผลิตแล้วปลูกเมล็ด ให้ในคลิกเดียว
@@ -10,7 +10,7 @@
 - เมื่อกดแล้วจะต้องรอจนกว่ารีโหลดหน้าใหม่ ใช้เวลาราวๆ 5-10 วินาที  
 - แสดงผลเฉพาะหน้า Farm เท่านั้น
 # Click Farm 9.0  
-<picture><img src="assets/farmbutton_8_4.jpg" width="326" height="33" alt="Farm Button"></picture>
+<picture><img src="../assets/farmbutton_8_4.jpg" width="326" height="33" alt="Farm Button"></picture>
 1. ปุ่ม เริ่มฤดูกาลใหม่ : สำหรับเก็บผลผลิตแล้วปลูกเมล็ด ให้ในคลิกเดียว  
 2. ปุ่ม ออโต้ สำหรับทำฟาร์มอัตโนมัติเมื่อครบเวลา เมื่อใช้ให้กดเปิดจะเริ่มนับเวลาถอยหลัง  
 3. แสดงเวลาคงเหลือที่จะพร้อมเก็บใกล้ที่สุด

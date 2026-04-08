@@ -13,7 +13,7 @@
    ด้านล่างให้เปลี่ยนจาก 
    ```Documents (*.txt)``` เป็น ```All Files (*.*)```  
    จากนั้นไปที่ตำแหน่งเก็บ hosts  
-   ``````C:\Windows\System32\drivers\etc```  
+   ```C:\Windows\System32\drivers\etc```  
    กดเลือก hosts แล้วกด Open
 4. ให้เลื่อนลงมาด้านล่างสุดแล้วเพิ่ม IPv4 ต่อไปนี้  
    ```

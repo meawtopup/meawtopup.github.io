@@ -26,8 +26,8 @@
 **แก้ปัญหาเน็ต 3BB เข้าเว็บ TDD แล้ว CloudFlare: Error code 524**  
 *(เลือกใช้อย่างใดอย่างหนึ่ง ถ้าไม่ได้คืนค่าเดิมแล้วค่อยลองอีกวิธี)*  
 - RUN-FixIPv4 by RIPMAN | ทำการแก้ hosts เพิ่มโดเมนให้ไปวิ่งหา IPv4  
-  [View Here](RUN-FixIPv4.md) | [Feature](FEATURES.md#run-fixipv4-by-ripman)  
+  [View Here](RUN-FixIPv4.md) | [Self-Configuration](<Self Config FixIPv4.md>) | [Feature](FEATURES.md#run-fixipv4-by-ripman)  
 - Block IPv6 TDD by MObyEX | เพิ่ม Outbound Rules ใน Firewall เพื่อ Block IPv6  
-  [View Here](<Block IPv6 TDD.md>) | [Self-Configuration](CONFIGRULES.md) | [Feature](FEATURES.md#block-ipv6-tdd-by-mobyex)  
+  [View Here](<Block IPv6 TDD.md>) | [Self-Configuration](<Self Config IPV6TDD.md>) | [Feature](FEATURES.md#block-ipv6-tdd-by-mobyex)  
 
 

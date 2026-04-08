@@ -35,7 +35,8 @@
 2. ไปที่โฟลเดอร์ดาวโหลดของบราวเซอร์ที่โหลดไฟล์ไว้
 3. คลิกขวาที่ไฟล์ ```RUN-FixIPv4 (WinOS).bat``` เลือก Run as administrator
 4. บางเครื่องอาจจะมี Security Warning ให้เลือก Run
-5. หน้าต่าง Cmd (Command Prompt) จะเปิดขึ้นมา ถ้าทำงานได้จะมีข้อความแบบนี้
+5. หน้าต่าง Cmd (Command Prompt) จะเปิดขึ้นมา  
+   ถ้าทำงานได้จะมีข้อความแบบนี้
    ```
     ==========================================
     RUN-FixIPv4 (WinOS) v1.0
@@ -53,10 +54,10 @@
    [Status] Requesting Administrator privileges...
    ```  
    จะขึ้นถาม Security Warning ให้เลือก Run
-6. ถ้าต้องการ Fix IPv4 ให้กด 1 ถ้าจะยกเลิกการ Fix IPv4 ให้กด 2
-7. รอจนเห็นข้อความ ```[Status] Task Completed!```
+7. ถ้าต้องการ Fix IPv4 ให้กด 1 ถ้าจะยกเลิกการ Fix IPv4 ให้กด 2
+8. รอจนเห็นข้อความ ```[Status] Task Completed!```
    กดปิด Cmd (Command Prompt) ได้เลย
-8. เปิดบราวเซอร์แล้วลองเข้า www.torrentdd.com ทดสอบดู  
+9. เปิดบราวเซอร์แล้วลองเข้า www.torrentdd.com ทดสอบดู  
    ถ้าไม่ได้ปิดบราวเซอร์แต่แรกให้ปิดสักครู่แล้วค่อยเปิด
 
 # Run Shell Script

@@ -33,7 +33,7 @@
 **สำหรับ Windows**
 1. ปิดบราวเซอร์ ปิด VPN ที่ใช้งานอยู่
 2. ไปที่โฟลเดอร์ดาวโหลดของบราวเซอร์ที่โหลดไฟล์ไว้
-3. คลิกขวาที่ไฟล์ RUN-FixIPv4 (WinOS).bat เลือก Run as administrator
+3. คลิกขวาที่ไฟล์ ```RUN-FixIPv4 (WinOS).bat``` เลือก Run as administrator
 4. บางเครื่องอาจจะมี Security Warning ให้เลือก Run
 5. หน้าต่าง Cmd (Command Prompt) จะเปิดขึ้นมา ถ้าทำงานได้จะมีข้อความแบบนี้
    ```

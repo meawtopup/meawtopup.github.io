@@ -1,7 +1,8 @@
 [**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
 **คำเตือน**
-- หากตั้งค่าแล้ววินโดมีอาการผิดปกติใดๆ ผู้เขียนสคริปไม่มีส่วนรับผิดชอบ [LICENSE](LICENSE)
+- หากตั้งค่าแล้วมีอาการผิดปกติใดๆ ผู้เขียนสคริปไม่มีส่วนรับผิดชอบ [LICENSE](LICENSE)
+- สำหรับ Windows เท่านั้น
 
 # Setting Rules
 **วิธีกำหนด Outbound Rules ด้วยตนเอง (Windows)**  

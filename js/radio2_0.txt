@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Radio 1.9 | TDDRadio
+// @name         Radio 2.0 | TDDRadio
 // @namespace    http://tampermonkey.net/
-// @version      1.9
+// @version      2.0
 // @description  ควบคุมวิทยุแบบสลับสถานะเพื่อความเสถียร
 // @author       MObyEX
 // @match        https://www.torrentdd.com/chat.php*
@@ -12,8 +12,17 @@
 (function () {
     'use strict';
 
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(method, url) {
+        if (typeof url === 'string' && url.includes("radio=true") && !window.isRadioOnReal) {
+            return; 
+        }
+        return originalOpen.apply(this, arguments);
+    };
+
     const RADIO_URL = "https://radio1.ohmi-design.com/8704/;";
     let isRadioOn = false; 
+    window.isRadioOnReal = false;
 
     const style = document.createElement('style');
     style.innerHTML = `
@@ -43,6 +52,7 @@
         if (!radioVideo || !toggleBtn) return;
 
         if (isRadioOn) {
+            window.isRadioOnReal = true;
             radioVideo.style.setProperty('display', 'inline-block', 'important'); 
             if (radioStatus) radioStatus.style.display = 'block';
             if (requestBtn) requestBtn.style.display = 'inline-block';
@@ -55,6 +65,7 @@
                 radioVideo.play().catch(() => { });
             }
         } else {
+            window.isRadioOnReal = false;
             radioVideo.pause();
             radioVideo.src = "";
             radioVideo.load();

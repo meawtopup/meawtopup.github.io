@@ -26,22 +26,23 @@
 มี 2 วิธี ในการดาวโหลด Block IPv6 TDD (WinOS).bat
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/BatchFile/Block.IPv6.TDD.WinOS.bat)  
    (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (WinOS)](<tools/Block IPv6 TDD (WinOS).bat>)  
-2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/g1mteeeizlm4f3p/Block+IPv6+TDD+(WinOS).bat/file)
-   (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)
-**สำหรับ MacOS**
+2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/g1mteeeizlm4f3p/Block+IPv6+TDD+(WinOS).bat/file)  
+   (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)  
+**สำหรับ MacOS**  
 มี 2 วิธี ในการดาวโหลด Block IPv6 TDD (MacOS).sh
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/ShellScript/Block.IPv6.TDD.MacOS.sh)  
    (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (MacOS)](<tools/Block IPv6 TDD (MacOS).sh>)  
-2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/l58voedwx012r05/Block+IPv6+TDD+(MacOS).sh/file)
+2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/l58voedwx012r05/Block+IPv6+TDD+(MacOS).sh/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)
 
 # Run Batch File
 **สำหรับ Windows**
 1. ปิดบราวเซอร์ ปิด VPN ที่ใช้งานอยู่
 2. ไปที่โฟลเดอร์ดาวโหลดของบราวเซอร์ที่โหลดไฟล์ไว้
-3. คลิกขวาที่ไฟล์ IPv6_TDD_v1_1.bat เลือก Run as administrator
+3. คลิกขวาที่ไฟล์ ```Block IPv6 TDD (WinOS)``` เลือก Run as administrator
 4. บางเครื่องอาจจะมี Security Warning ให้เลือก Run
-5. หน้าต่าง Cmd (Command Prompt) จะเปิดขึ้นมา ถ้าทำงานได้จะมีข้อความแบบนี้
+5. หน้าต่าง Cmd (Command Prompt) จะเปิดขึ้นมา  
+   ถ้าทำงานได้จะมีข้อความแบบนี้
    ```
     ==================================================
      Block IPv6 TDD (WinOS) v1.2
@@ -60,9 +61,10 @@
    ```  
    ให้ปิด Cmd (Command Prompt) แล้วกลับไปทำข้อ 3 ใหม่  
    ถ้าทำแล้วยังขึ้นเหมือนเดิมอีก แสดงว่าวินโดที่ท่านใช้ไม่มีสิทธิ์แก้ไขระดับแอดมิน
-6. ถ้าต้องการ Block IPv6 ให้กด 1 ถ้าจะยกเลิกการ Block IPv6 ให้กด 2
-7. ปิด Cmd (Command Prompt) ได้เลย
-8. เปิดบราวเซอร์แล้วลองเข้า www.torrentdd.com ทดสอบดู
+7. ถ้าต้องการ Block IPv6 ให้กด 1 ถ้าจะยกเลิกการ Block IPv6 ให้กด 2
+8. รอจนเห็นข้อความ ```[Status] Unblock Complete.```
+   กดปิด Cmd (Command Prompt) ได้เลย
+9. เปิดบราวเซอร์แล้วลองเข้า TDD ทดสอบดู  
    ถ้าไม่ได้ปิดบราวเซอร์แต่แรกให้ปิดสักครู่แล้วค่อยเปิด
 
 # Run Shell Script
@@ -85,3 +87,6 @@
    - ให้พิมพ์รหัสผ่านหน้าจอเครื่องของคุณลงไปได้เลย
    - ⚠️ **หมายเหตุ:** ตอนพิมพ์ ตัวเลขหรือดอกจันจะไม่ขึ้นโชว์ ไม่ต้องตกใจครับ พิมพ์ให้ครบแล้วกด **Enter**
 7. เลือกเมนู (1 หรือ 2) ตามที่หน้าจอแจ้งได้เลย
+8. รอจนเห็นข้อความ ```[Status] Unblock Complete.``` กดปิด Terminal ได้เลย
+9. เปิดบราวเซอร์แล้วลองเข้า TDD ทดสอบดู  
+   ถ้าไม่ได้ปิดบราวเซอร์แต่แรกให้ปิดสักครู่แล้วค่อยเปิด

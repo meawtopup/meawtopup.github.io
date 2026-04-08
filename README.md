@@ -30,9 +30,4 @@
 - Block IPv6 TDD by MObyEX | เพิ่ม Outbound Rules ใน Firewall เพื่อ Block IPv6  
   [View Here](docs/Block-IPv6-TDD.md) | [Self-Configuration](docs/Self-Config-IPV6TDD.md) | [Feature](docs/FEATURES.md#block-ipv6-tdd-by-mobyex)  
 
-<br>
-<br>
-<br>
-<br>
-*อัพเดทเมื่อ 9/4/2569*
 

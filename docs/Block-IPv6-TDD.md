@@ -1,4 +1,4 @@
-[**HOME**](README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
+[**HOME**](../README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
 **Block IPv6 TDD by MObyEX**
 
@@ -22,19 +22,19 @@
 
 **คำเตือน**
 - หากใช้แล้วมีอาการผิดปกติใดๆ ผู้เขียนสคริปไม่มีส่วนรับผิดชอบ [LICENSE](LICENSE)
-- หากไม่มั่นใจในสคริป สามารถตั้งค่าด้วยตนเองได้ที่ > [Self-Configuration](<Self Config IPV6TDD.md>)
+- หากไม่มั่นใจในสคริป สามารถตั้งค่าด้วยตนเองได้ที่ > [Self-Configuration](Self-Config-IPV6TDD.md)
 
 # Download
 **สำหรับ Windows**  
 มี 2 วิธี ในการดาวโหลด Block IPv6 TDD (WinOS).bat
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/BlockIPv6.WinOS/Block.IPv6.TDD.WinOS.bat)  
-   (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (WinOS)](<tools/Block IPv6 TDD (WinOS).bat>)  
+   (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (WinOS)](../tools/Block-IPv6-TDD-(WinOS).bat)  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/g1mteeeizlm4f3p/Block+IPv6+TDD+(WinOS).bat/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)  
 **สำหรับ MacOS**  
 มี 2 วิธี ในการดาวโหลด Block IPv6 TDD (MacOS).sh
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/BlockIPv6.MacOS/Block.IPv6.TDD.MacOS.sh)  
-   (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (MacOS)](<tools/Block IPv6 TDD (MacOS).sh>)  
+   (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (MacOS)](../tools/Block-IPv6-TDD-(MacOS).sh)  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/l58voedwx012r05/Block+IPv6+TDD+(MacOS).sh/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)
 

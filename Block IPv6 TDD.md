@@ -13,6 +13,7 @@
 - Chrome
 - Edge
 - Firefox  
+
 **สำหรับ MacOS**
 - Chrome
 - Safari

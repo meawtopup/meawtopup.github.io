@@ -47,7 +47,7 @@
 1. กดที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 2. เลือก ⚙️Dashboard
 3. กดที่ Tab> Installed Userscripts แล้วกดที่ชื่อสคริปที่ต้องการเปลี่ยน<br>
-   เช่น "Click Farm 5.0 | TDDFarm"
+   เช่น ```Click Farm 5.0 | TDDFarm```
 4. กดที่ Tab> Edit> Select All
 5. Copy Script มาวางทับ แล้วกด Save (File> 💾Save)  
 **หมายเหตุ** ถ้า Script ไหนไม่ใช้ก็ลบทิ้งในหน้า ⚙️Dashboard ได้เลย

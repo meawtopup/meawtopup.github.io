@@ -10,7 +10,7 @@
    (ถ้าไม่เห็นให้มองหา Icon รูปจิ๊กซอมุมขวาบนของบราวเซอร์ แล้วกด📌Pin)
 4. **ข้อนี้สำหรับ Chrome และ Edge**  
    คลิกขวาที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture> เลือก Manage extension
-5. มองหา Allow User Scripts แล้วติ๊กเปิดใช้งาน
+5. มองหา ```Allow User Scripts``` แล้วติ๊กเปิดใช้งาน
 
 # Script Installation
 1. คลิกซ้ายที่ Icon TamperMonkey <picture><img src="assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>

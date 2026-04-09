@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name          Chat Mods 4.5 | TDDChat
+// @name          Chat Mods 4.8 | TDDChat
 // @namespace     http://tampermonkey.net/
-// @version       4.5
-// @description   บังคับความสูงแชท, เพิ่มปุ่มซ่อนรายชื่อ และระบบควบคุมวิทยุ
+// @version       4.8
+// @description   บังคับความสูงแชท, เพิ่มปุ่มซ่อนรายชื่อ, ขยายจำนวนแชทที่แสดง และระบบควบคุมวิทยุ
 // @author        MObyEX
 // @match         https://www.torrentdd.com/chat.php*
 // @icon          https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
@@ -14,6 +14,18 @@
 (function () {
     'use strict';
 
+    const MAX_CHAT_MESSAGES = 500; // ขยายจำนวนข้อความแก้ตรงนี้
+
+    try {
+        Object.defineProperty(window, 'chat_limit', {
+            get: function() { return MAX_CHAT_MESSAGES; },
+            set: function(val) { },
+            configurable: true
+        });
+    } catch (e) {
+        window.chat_limit = MAX_CHAT_MESSAGES;
+    }
+
     const originalOpen = XMLHttpRequest.prototype.open;
     XMLHttpRequest.prototype.open = function(method, url) {
         if (typeof url === 'string' && url.includes("radio=true") && !window.isRadioOnReal) {
@@ -22,7 +34,7 @@
         return originalOpen.apply(this, arguments);
     };
 
-    const FIXED_HEIGHT = '700px';
+    const FIXED_HEIGHT = '700px'; // ขยายกรอบแสดงข้อความแก้ตรงนี้
     const RADIO_URL = "https://radio1.ohmi-design.com/8704/;";
     let isRadioOn = false; 
 
@@ -101,6 +113,16 @@
         $('.chat-screen, .chat-userlist, .main-chat-wrapper, .main-userlist-wrapper').css('height', FIXED_HEIGHT);
         $('.chat-box, .chat-box-screen').css('height', 'auto');
         $('.emo-inner-wrapper').css('height', '100%');
+
+        if (typeof window.removeTextchat === 'function' && !window.isOverridden) {
+            window.removeTextchat = function() {
+                var list = $(".chat-screen .box-msg");
+                if (list.length > MAX_CHAT_MESSAGES) {
+                    list.slice(0, list.length - MAX_CHAT_MESSAGES).remove();
+                }
+            };
+            window.isOverridden = true;
+        }
     }
 
     function applyRadioState() {

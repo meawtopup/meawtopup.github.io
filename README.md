@@ -17,7 +17,7 @@
   [View Here](js/clickfarm5_0.txt) | [Feature](docs/FEATURES.md#click-farm-50)
 - Click Farm 9.0 | ระบบออโต้ ทำงานบนหน้า Chat  
   [View Here](js/clickfarm9_0.txt) | [Feature](docs/FEATURES.md#click-farm-90)
-- Chat Mods 4.8 | แก้ไขแชทให้กว้างแบบคงที่ และควบคุมวิทยุแบบสลับสถานะ  
+- Chat Mods 4.8 | กรอบแชทกว้างแบบคงที่ จำนวนแสดงข้อความ และควบคุมวิทยุแบบสลับสถานะ  
   [View Here](js/chatmods4_8.txt) | [Feature](docs/FEATURES.md#chat-mods-48)
 - Radio 2.0 | ควบคุมวิทยุแบบสลับสถานะเพื่อความเสถียร  
   [View Here](js/radio2_0.txt) | [Feature](docs/FEATURES.md#radio-20)

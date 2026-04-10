@@ -60,11 +60,13 @@
 - Script Chat Mods/Radio จะทำงานแค่ที่หน้า Chat
 
 # Update Script Version
+**กรณีสคริปไม่ได้เขียนอัพเดทจาก URL**
 1. กดที่ Icon TamperMonkey <picture><img src="../assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 2. เลือก ⚙️Dashboard
 3. กดที่ Tab> Installed Userscripts แล้วกดที่ชื่อสคริปที่ต้องการเปลี่ยน<br>
    เช่น ```Click Farm 5.0 | TDDFarm```
 4. กดที่ Tab> Edit> Select All
-5. Copy Script มาวางทับ แล้วกด Save (File> 💾Save)  
+5. ก็อปสคริปมาวางทับ แล้วกด Save (File> 💾Save)
+6. หรือจะกดลบสคริปที่ไม่ใช้แล้ว +Create a new script... ก็ได้
 **หมายเหตุ** ถ้า Script ไหนไม่ใช้ก็ลบทิ้งในหน้า ⚙️Dashboard ได้เลย
 <br><br>

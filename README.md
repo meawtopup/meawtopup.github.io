@@ -17,7 +17,7 @@
   [View Here] | [Feature] (ยังอยู่ระหว่างทดสอบบัค)
 - Click Farm 5.0 | ทำฟาร์ม กดมืออย่างเดียว  
   [View Here](js/clickfarm5_0.txt) | [Feature](docs/FEATURES.md#click-farm-50)
-- Click Farm 9.0 | ทำฟาร์ม ระบบออโต้ 
+- Click Farm 9.0 | ทำฟาร์ม ระบบออโต้  
   [View Here](js/clickfarm9_0.txt) | [Feature](docs/FEATURES.md#click-farm-90)
 - Chat Mods 4.8 | กรอบแชทกว้างแบบคงที่ จำนวนแสดงข้อความ และควบคุมวิทยุแบบสลับสถานะ  
   [View Here](js/chatmods4_8.txt) | [Feature](docs/FEATURES.md#chat-mods-48)

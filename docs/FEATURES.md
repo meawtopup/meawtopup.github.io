@@ -1,6 +1,6 @@
 [**HOME**](../README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
-# Auto Drone 2.5
+# Auto Drone 2.7
 *อัพเดทเมื่อ 11/4/2569* ยังอยู่ระหว่างการทดสอบบัค  
 <picture><img src="../assets/autodrone2_5.jpg" width="425" height="32" alt="Farm Button"></picture>
 1. ระบบจัดการตั๋ว
@@ -11,6 +11,7 @@
    - คำนวณเวลาผักโต พร้อมเวลานับถอยหลัง
    - ระบบปลูก/เก็บออโต้
    - ระบบเช็คเงิน (ต้องมี Zen มากกว่า 25,000Zen)
+   - ระบบเช็คความเป็นเจ้าของแปลง
 3. ระบบจัดการ UI และความเสถียร
    - Safe Reload: จะมีตัวนับเวลาถอยหลังถ้าจะมีการโหลดหน้าแชทใหม่
    - Multi-Timer Cleanup: ล้างตัวจับเวลาใหม่ เพื่อความเที่ยงตรงและป้องกันบัค

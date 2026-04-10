@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Auto Drone 2.6 | TDD
+// @name         Auto Drone 2.7 | TDD 
 // @namespace    http://tampermonkey.net/
-// @version      2.6
-// @description  Fixed Ticket Manual Click & Added Safety Reset
+// @version      2.7
+// @description  Ticket & Farm
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
@@ -45,6 +45,7 @@
         if (ticketCheckTimer) clearTimeout(ticketCheckTimer);
         if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
         if (farmCheckTimer) clearTimeout(farmCheckTimer);
+        if (reloadTimer) clearInterval(reloadTimer);
         if (farmCountdownTimer) {
             clearInterval(farmCountdownTimer);
             farmCountdownTimer = null;
@@ -71,6 +72,14 @@
         let ids = [];
         for (let i = 1; i <= 9; i++) {
             if (doc.querySelector(`[onclick*="action=seed&ground=${i}"]`)) ids.push(i);
+        }
+        return ids;
+    }
+
+    function getBuyableIDs(doc) {
+        let ids = [];
+        for (let i = 1; i <= 9; i++) {
+            if (doc.querySelector(`[onclick*="action=buy&ground=${i}"]`)) ids.push(i);
         }
         return ids;
     }
@@ -332,6 +341,15 @@
                 const doc = await fetchFarmDoc();
                 const hIds = getHarvestableIDs(doc);
                 const pIds = getPlantableIDs(doc);
+                const buyIds = getBuyableIDs(doc); 
+
+                if (buyIds.length === 9) {
+                    fStatusBtn.innerHTML = '🌾 ยังไม่ได้ซื้อแปลงปลูก';
+                    applyStyle(fStatusBtn, '#6c757d');
+                    fStatusBtn.disabled = true;
+                    toggleFarmAuto(false); 
+                    return; 
+                }
                 let readyToWork = (hIds.length > 0 || pIds.length > 0);
 
                 if (readyToWork && isFarmAuto) {

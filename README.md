@@ -21,7 +21,7 @@
   [View Here](js/clickfarm9_0.txt) | [Feature](docs/FEATURES.md#click-farm-90)
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
   [View Here](js/chatmods4_8.txt) | [Feature](docs/FEATURES.md#chat-mods-48)  
-- Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งภายในให้กดได้ปกติ  
+- Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ  
   [View Here](js/Domain_Fixer1_0.txt) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - Radio 2.0 | วิทยุแบบสลับสถานะเพื่อความเสถียร  
   [View Here](js/radio2_0.txt) | [Feature](docs/FEATURES.md#radio-20)

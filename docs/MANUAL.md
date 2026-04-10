@@ -19,7 +19,7 @@
 
 **วิธีที่ 1 แบบนำเข้า .user.js**
 1. ดาวโหลดสคริปลงเครื่อง
-   - ไปที่หน้าสคริปแล้วกด ```Download raw file``` หน้าไอคอนดินสอ <picture><img src="../assets/rawicon.jpg" width="164" height="34" alt="Raw tools"></picture>  
+   - ไปที่หน้าสคริปแล้วกด ```Download raw file``` หน้าไอคอนดินสอ (<picture><img src="../assets/rawicon.jpg" width="140" height="25" alt="Raw tools"></picture> ) 
    - จะได้เป็นไฟล์ .user.js ดาวโหลดลงเครื่อง
 2. กดที่ Icon TamperMonkey <picture><img src="../assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 3. เลือก ⚙️Dashboard

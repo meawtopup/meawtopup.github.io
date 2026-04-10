@@ -5,6 +5,7 @@
 // @description  เพิ่มระบบออโต้ ใช้กับ New Windows เท่านั้น
 // @author       MobyEX
 // @match        https://www.torrentdd.com/farm.php*
+// @match        https://www.torrentdd.net/farm.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
 // @grant        none
 // ==/UserScript==

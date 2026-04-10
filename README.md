@@ -13,10 +13,10 @@
   [View Here](docs/MANUAL.md#update-script-version)
 
 # Script Tampermonkey
+- Auto Drone 2.1 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้  
+  [View Here](js/Auto-Drone-2.6.user.js) | [Feature](docs/FEATURES.md#auto-drone-21)
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
   [View Here](js/Chat-Mods-4.8.user.js) | [Feature](docs/FEATURES.md#chat-mods-48)  
-- Auto Drone 2.1 | เก็บตั๋ว+ทำฟาร์ม มีระบบออโต้ (*ยังอยู่ระหว่างการทดสอบบัค*)  
-  [View Here](js/Auto-Drone-2.6.user.js) | [Feature](docs/FEATURES.md#auto-drone-21)
 - Click Farm 5.0 | ทำฟาร์ม กดมืออย่างเดียว  
   [View Here](js/Click-Farm-5.0.user.js) | [Feature](docs/FEATURES.md#click-farm-50)
 - Click Farm 9.0 | ทำฟาร์ม ระบบออโต้  

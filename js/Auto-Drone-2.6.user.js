@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Auto Drone 2.6 | TDD (Ticket Fix)
+// @name         Auto Drone 2.6 | TDD
 // @namespace    http://tampermonkey.net/
 // @version      2.6
 // @description  Fixed Ticket Manual Click & Added Safety Reset

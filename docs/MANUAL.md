@@ -13,6 +13,19 @@
 5. มองหา ```Allow User Scripts``` แล้วติ๊กเปิดใช้งาน
 
 # Script Installation
+วิธีติดตั้งสคริปมี 2 วิธี
+**วิธีที่ 1 แบบนำเข้า .user.js**
+1. ดาวโหลดสคริปลงเครื่อง
+   - ไปที่หน้าสคริปแล้วกด ```Download raw file``` หน้าไอคอนดินสอ <picture><img src="../assets/rawicon.png" width="164" height="34" alt="Raw tools"></picture>  
+   - จะได้เป็นไฟล์ .user.js ดาวโหลดลงเครื่อง
+2. กดที่ Icon TamperMonkey <picture><img src="../assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
+3. เลือก ⚙️Dashboard
+4. กดแทป Utilities ใน TamperMonkey
+5. มองหา ```Import from file``` ให้กด Browse แล้วเลือกไฟล์ .user.js ที่ดาวโหลดไว้
+6. กด Install หรือ Reinstall จะขึ้นข้อความว่า ```Operation completed successfully```
+7. ไปที่หน้าเว็บที่ Script ทำงาน ให้ทำการ Refresh(F5)
+
+**วิธีที่ 2 แบบก็อปวาง**
 1. คลิกซ้ายที่ Icon TamperMonkey <picture><img src="../assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 2. เลือกเมนู +Create a new script...  
    จะเห็นสคริปเริ่มต้น เช่น
@@ -35,7 +48,7 @@
    })();
    ```
    ให้ลบทิ้งทั้งหมด  
-3. Copy Script ที่จะใช้มาวางแทนที่ข้อ 2
+3. ก็อปสคริปที่จะใช้มาวางแทนที่ข้อ 2
 4. กด Save (File> 💾Save)
 5. ไปที่หน้าเว็บที่ Script ทำงาน ให้ทำการ Refresh(F5)
 

@@ -2,7 +2,7 @@
 
 # Auto Drone 2.5
 *อัพเดทเมื่อ 10/4/2569* ยังอยู่ระหว่างการทดสอบบัค  
-<picture><img src="../assets/autodrone2_5.jpg" width="425" height="32" alt="Farm Button"></picture>  
+<picture><img src="../assets/autodrone2_5.jpg" width="425" height="32" alt="Farm Button"></picture>
 1. ระบบจัดการตั๋ว
    - ปุ่มเก็บตั๋วด้วยตนเอง/เช็คสถานะตั๋ว (ปุ่มเดียวกัน)
    - ระบบเก็บตั๋วออโต้

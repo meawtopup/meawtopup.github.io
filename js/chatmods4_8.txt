@@ -4,7 +4,7 @@
 // @version       4.8
 // @description   บังคับความสูงแชท, เพิ่มปุ่มซ่อนรายชื่อ, ขยายจำนวนแชทที่แสดง และระบบควบคุมวิทยุ
 // @author        MObyEX
-// @match         https://www.torrentdd.com/chat.php*
+// @include      https://www.torrentdd.*/chat.php*
 // @icon          https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
 // @grant         none
 // ==/UserScript==

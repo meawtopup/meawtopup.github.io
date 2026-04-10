@@ -13,18 +13,18 @@
   [View Here](docs/MANUAL.md#update-script-version)
 
 # Script Tampermonkey
-- Auto Drone 2.1 | เก็บตั๋ว+ทำฟาร์ม มีระบบออโต้ (*ยังอยู่ระหว่างการทดสอบบัค*)  
-  [View Here] | [Feature](docs/FEATURES.md#auto-drone-21)
-- Click Farm 5.0 | ทำฟาร์ม กดมืออย่างเดียว  
-  [View Here](js/clickfarm5_0.txt) | [Feature](docs/FEATURES.md#click-farm-50)
-- Click Farm 9.0 | ทำฟาร์ม ระบบออโต้  
-  [View Here](js/clickfarm9_0.txt) | [Feature](docs/FEATURES.md#click-farm-90)
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
-  [View Here](js/chatmods4_8.txt) | [Feature](docs/FEATURES.md#chat-mods-48)  
+  [View Here](js/Chat-Mods-4.8.user.js) | [Feature](docs/FEATURES.md#chat-mods-48)  
+- Auto Drone 2.1 | เก็บตั๋ว+ทำฟาร์ม มีระบบออโต้ (*ยังอยู่ระหว่างการทดสอบบัค*)  
+  [View Here](js/Auto-Drone-2.6.user.js) | [Feature](docs/FEATURES.md#auto-drone-21)
+- Click Farm 5.0 | ทำฟาร์ม กดมืออย่างเดียว  
+  [View Here](js/Click-Farm-5.0.user.js) | [Feature](docs/FEATURES.md#click-farm-50)
+- Click Farm 9.0 | ทำฟาร์ม ระบบออโต้  
+  [View Here](js/Click-Farm-9.0.user.js) | [Feature](docs/FEATURES.md#click-farm-90)  
 - Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ  
-  [View Here](js/Domain_Fixer1_0.txt) | [Feature](docs/FEATURES.md#domain-fixer-10)
+  [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - Radio 2.0 | วิทยุแบบสลับสถานะเพื่อความเสถียร  
-  [View Here](js/radio2_0.txt) | [Feature](docs/FEATURES.md#radio-20)
+  [View Here](js/Radio-2.0.user.js) | [Feature](docs/FEATURES.md#radio-20)
 
 # Tools
 **แก้ปัญหาเน็ต 3BB เข้าเว็บ TDD แล้ว CloudFlare: Error code 524**  

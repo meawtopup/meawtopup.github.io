@@ -22,7 +22,7 @@
 - Chat Mods 4.8 | กรอบแชทกว้างแบบคงที่ จำนวนแสดงข้อความ และควบคุมวิทยุแบบสลับสถานะ  
   [View Here](js/chatmods4_8.txt) | [Feature](docs/FEATURES.md#chat-mods-48)  
 - Domain Fixer 1.0  
-  [View Here](js/Domain_Fixer1_0.txt) | [Feature]()
+  [View Here](js/Domain_Fixer1_0.txt) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - Radio 2.0 | ควบคุมวิทยุแบบสลับสถานะเพื่อความเสถียร  
   [View Here](js/radio2_0.txt) | [Feature](docs/FEATURES.md#radio-20)
 

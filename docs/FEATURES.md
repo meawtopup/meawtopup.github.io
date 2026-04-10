@@ -1,7 +1,7 @@
 [**HOME**](../README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
 # Auto Drone 2.7
-*อัพเดทเมื่อ 11/4/2569* ยังอยู่ระหว่างการทดสอบบัค  
+*อัพเดทเมื่อ 11/4/2569*    
 <picture><img src="../assets/autodrone2_5.jpg" width="425" height="32" alt="Farm Button"></picture>
 1. ระบบจัดการตั๋ว
    - ปุ่มเก็บตั๋วด้วยตนเอง/เช็คสถานะตั๋ว (ปุ่มเดียวกัน)

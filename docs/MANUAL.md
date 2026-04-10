@@ -55,10 +55,6 @@
 4. กด Save (File> 💾Save)
 5. ไปที่หน้าเว็บที่ Script ทำงาน ให้ทำการ Refresh(F5)
 
-**หมายเหตุ**
-- Script Click Farm จะทำงานที่หน้า Chat และ Farm เข้าหน้าไหนก็ได้
-- Script Chat Mods/Radio จะทำงานแค่ที่หน้า Chat
-
 # Update Script Version
 **กรณีสคริปไม่ได้เขียนอัพเดทจาก URL**
 1. กดที่ Icon TamperMonkey <picture><img src="../assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>

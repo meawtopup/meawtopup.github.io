@@ -4,8 +4,8 @@
 // @version      9.0
 // @description  TDDFarm
 // @author       MobyEX
-// @match        https://www.torrentdd.com/farm.php*
-// @match        https://www.torrentdd.com/chat.php*
+// @include      https://www.torrentdd.*/chat.php*
+// @include      https://www.torrentdd.*/farm.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
 // @grant        none
 // ==/UserScript==

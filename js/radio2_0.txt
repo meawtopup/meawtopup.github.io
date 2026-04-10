@@ -4,7 +4,7 @@
 // @version      2.0
 // @description  ควบคุมวิทยุแบบสลับสถานะเพื่อความเสถียร
 // @author       MObyEX
-// @match        https://www.torrentdd.com/chat.php*
+// @include      https://www.torrentdd.*/chat.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
 // @grant        none
 // ==/UserScript==

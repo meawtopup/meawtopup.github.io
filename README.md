@@ -13,7 +13,7 @@
   [View Here](docs/MANUAL.md#update-script-version)
 
 # Script Tampermonkey
-- Auto Drone 2.1 | เก็บตั๋ว+ทำฟาร์ม มีระบบออโต้ *ยังอยู่ระหว่างการทดสอบบัค*  
+- Auto Drone 2.1 | เก็บตั๋ว+ทำฟาร์ม มีระบบออโต้ (*ยังอยู่ระหว่างการทดสอบบัค*)  
   [View Here] | [Feature](docs/FEATURES.md#auto-drone-21)
 - Click Farm 5.0 | ทำฟาร์ม กดมืออย่างเดียว  
   [View Here](js/clickfarm5_0.txt) | [Feature](docs/FEATURES.md#click-farm-50)

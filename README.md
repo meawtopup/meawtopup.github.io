@@ -13,7 +13,7 @@
   [View Here](docs/MANUAL.md#update-script-version)
 
 # Script Tampermonkey
-คอมโบแนะนำ Auto Drone + Radio | ต้องลง Radio เพื่อไม่ให้วิทยุเปิดเองตอนฟาร์มรีโหลดหน้าใหม่
+**คอมโบแนะนำ:** Auto Drone + Radio | ต้องลง Radio เพื่อไม่ให้วิทยุเปิดเองตอนฟาร์มรีโหลดหน้าใหม่
 - Auto Drone 2.7 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้  
   [View Here](js/Auto-Drone-2.7.user.js) | [Feature](docs/FEATURES.md#auto-drone-27)
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  

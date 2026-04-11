@@ -263,7 +263,7 @@
                         clearInterval(ticketCountdownInterval);
                         checkTicketStatus();
                     } else {
-                        tBtn.innerHTML = `🎫 เตรียมเก็บตั๋ว: ${sec}s`;
+                        tBtn.innerHTML = `🎫 เตรียมเก็บตั๋ว: ${sec}`;
                         applyStyle(tBtn, '#ff9800');
                     }
                 }, 1000);

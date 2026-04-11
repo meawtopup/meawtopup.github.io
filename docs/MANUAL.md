@@ -63,7 +63,7 @@
    เช่น ```Click Farm 5.0 | TDDFarm```
 4. กดที่ Tab> Edit> Select All
 5. ก็อปสคริปมาวางทับ แล้วกด Save (File> 💾Save)
-6. หรือจะกดลบสคริปที่ไม่ใช้แล้ว +Create a new script... ก็ได้
+6. หรือจะกดลบสคริปที่ไม่ใช้แล้วค่อยกด +Create a new script... ก็ได้
 
 **หมายเหตุ** ถ้า Script ไหนไม่ใช้ก็ลบทิ้งในหน้า ⚙️Dashboard ได้เลย
 <br><br>

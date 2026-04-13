@@ -5,6 +5,7 @@
 <picture><img src="assets/star.gif" width="15" height="15" alt="Star"></picture> [กดตรงนี้เลย เมี๊ยว ≽^•⩊•^≼](https://meawtopup.github.io/)<picture> <img src="assets/star.gif" width="15" height="15" alt="Star"></picture>
 
 # Manual for Tampermonkey
+**คำแนะนำ:** ต้องติดตั้ง Tampermonkey ที่เป็นส่วนเสริมของบราวเซอร์ก่อน ถึงจะเอาสคริปไปรันได้
 - วิธีติดตั้ง Extensions: Tampermonkey  
   [View Here](docs/MANUAL.md#extensions-installation)
 - วิธีติดตั้ง Script  

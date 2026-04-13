@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 2.7 | TDD 
+// @name         Auto Drone 2.9 | TDD 
 // @namespace    http://tampermonkey.net/
-// @version      2.7
+// @version      2.9
 // @description  Ticket & Farm
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
@@ -50,6 +50,20 @@
             clearInterval(farmCountdownTimer);
             farmCountdownTimer = null;
         }
+    }
+
+    function checkEligibility() {
+        try {
+            const badges = Array.from(document.querySelectorAll('.badge'));
+            const cnBadge = badges.find(el => el.innerText.includes('CN>3HR'));
+            if (cnBadge) {
+                const countText = cnBadge.parentElement.querySelector('.text-success');
+                if (countText) {
+                    return (parseInt(countText.innerText.replace(/\D/g, '')) || 0) >= 5;
+                }
+            }
+        } catch (e) { console.error("Eligibility check error", e); }
+        return false;
     }
 
     async function fetchFarmDoc() {
@@ -102,7 +116,7 @@
 
         let seconds = 10;
         const updateUI = () => {
-            container.innerHTML = `<span style="color:#ffeb3b; font-weight:bold;">⚠️ รีโหลดใน ${seconds} (จาก:${fromSource}) ⚠️</span>`;
+            container.innerHTML = `<span style="color:#ffeb3b; font-weight:bold;">⚠️ รีโหลดใน ${seconds} (จาก: ${fromSource}) ⚠️</span>`;
             if (seconds <= 0) {
                 clearInterval(reloadTimer);
                 location.reload();
@@ -150,6 +164,17 @@
         async function checkTicketStatus() {
             if (ticketCheckTimer) clearTimeout(ticketCheckTimer);
             if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
+            const savedNextCheck = localStorage.getItem('tdNextTicketCheck');
+            if (savedNextCheck && Date.now() < parseInt(savedNextCheck)) {
+                runTicketCountdown(parseInt(savedNextCheck));
+                return;
+            }
+
+            if (!checkEligibility()) {
+                scheduleNextTicketCheck();
+                return;
+            }
+
             applyStyle(tBtn, '#17a2b8');
             tBtn.innerHTML = '⏳ กำลังเช็คตั๋ว...';
             tBtn.disabled = true;
@@ -160,16 +185,10 @@
                 const doc = new DOMParser().parseFromString(text, 'text/html');
                 const readyBtn = doc.querySelector('button.get-ticket');
                 const infoText = doc.querySelector('.text-danger.f12');
-                let status = 'ไม่มีตั๋วให้เก็บ', canCollect = false, already = false;
 
-                if (readyBtn) {
-                    const match = readyBtn.innerText.match(/(\d+)/);
-                    canCollect = true;
-                    status = `มีตั๋วพร้อม ${match ? match[1] : ''} ชิ้น`;
-                } else if (infoText && infoText.innerText.includes('รับตั๋วสุ่มกาชาไปแล้ว')) {
-                    already = true;
-                    status = 'เก็บตั๋วไปแล้ว';
-                }
+                let canCollect = !!readyBtn;
+                let already = infoText?.innerText.includes('รับตั๋วสุ่มกาชาไปแล้ว');
+                let status = canCollect ? `มีตั๋วพร้อม ${readyBtn.innerText.match(/(\d+)/)?.[1] || ''} ชิ้น` : (already ? 'เก็บตั๋วไปแล้ว' : 'ไม่มีตั๋วให้เก็บ');
 
                 tBtn.innerHTML = `🎫 ${status}`;
                 applyStyle(tBtn, canCollect ? '#28a745' : (already ? '#6c757d' : '#dc3545'));
@@ -187,6 +206,11 @@
 
         function collectTicket() {
             if (isWorking) return;
+            if (!checkEligibility()) {
+                isWorking = false;
+                checkTicketStatus();
+                return;
+            }
 
             isWorking = true;
             tBtn.disabled = true;
@@ -212,6 +236,7 @@
 
                     if (btn) {
                         btn.click();
+                        localStorage.removeItem('tdNextTicketCheck');
                         setTimeout(() => {
                             clearTimeout(safetyTimeout);
                             isWorking = false;
@@ -231,9 +256,32 @@
             iframe.src = '/ticket.php';
         }
 
+        function runTicketCountdown(targetTimestamp) {
+            if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
+
+            ticketCountdownInterval = setInterval(() => {
+                const remaining = Math.ceil((targetTimestamp - Date.now()) / 1000);
+                if (remaining <= 0) {
+                    clearInterval(ticketCountdownInterval);
+                    checkTicketStatus();
+                } else {
+                    const m = Math.floor(remaining / 60);
+                    const s = remaining % 60;
+                    tBtn.innerHTML = `🎫 รอเช็คตั๋ว: ${m}:${s.toString().padStart(2, '0')}`;
+                    applyStyle(tBtn, '#6c757d');
+                }
+            }, 1000);
+        }
+
         function scheduleNextTicketCheck() {
             if (ticketCheckTimer) clearTimeout(ticketCheckTimer);
             if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
+            if (!checkEligibility()) {
+                const nextCheckTime = Date.now() + 900000;
+                localStorage.setItem('tdNextTicketCheck', nextCheckTime);
+                runTicketCountdown(nextCheckTime);
+                return;
+            }
 
             const now = new Date();
             let target = new Date(now);
@@ -252,7 +300,12 @@
                 checkTicketStatus();
             }
             else if (diff <= fiveMinutes) {
-                let lastSec = Math.ceil(diff / 1000);
+                if (!checkEligibility()) {
+                    tBtn.innerHTML = `🎫 เงื่อนไข 3HR ไม่ครบ`;
+                    applyStyle(tBtn, '#6c757d');
+                    ticketCheckTimer = setTimeout(scheduleNextTicketCheck, 60000);
+                    return;
+                }
 
                 ticketCountdownInterval = setInterval(() => {
                     const currentNow = new Date();
@@ -271,8 +324,13 @@
             else {
                 const h = target.getHours().toString().padStart(2, '0');
                 const m = target.getMinutes().toString().padStart(2, '0');
-                tBtn.innerHTML = `🎫 รอบถัดไป ${h}:${m}`;
-                applyStyle(tBtn, '#6c757d');
+                if (!checkEligibility()) {
+                    tBtn.innerHTML = `🎫 เงื่อนไข 3HR ไม่ครบ (รอบถัดไป ${h}:${m})`;
+                    applyStyle(tBtn, '#6c757d');
+                } else {
+                    tBtn.innerHTML = `🎫 รอบถัดไป ${h}:${m}`;
+                    applyStyle(tBtn, '#6c757d');
+                }
 
                 ticketCheckTimer = setTimeout(scheduleNextTicketCheck, diff - fiveMinutes);
             }
@@ -341,14 +399,14 @@
                 const doc = await fetchFarmDoc();
                 const hIds = getHarvestableIDs(doc);
                 const pIds = getPlantableIDs(doc);
-                const buyIds = getBuyableIDs(doc); 
+                const buyIds = getBuyableIDs(doc);
 
                 if (buyIds.length === 9) {
                     fStatusBtn.innerHTML = '🌾 ยังไม่ได้ซื้อแปลงปลูก';
                     applyStyle(fStatusBtn, '#6c757d');
                     fStatusBtn.disabled = true;
-                    toggleFarmAuto(false); 
-                    return; 
+                    toggleFarmAuto(false);
+                    return;
                 }
                 let readyToWork = (hIds.length > 0 || pIds.length > 0);
 

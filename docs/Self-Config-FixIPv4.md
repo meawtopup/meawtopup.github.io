@@ -23,6 +23,8 @@
    172.67.223.44 www.torrentdd.net
    104.21.38.138 torrentdd.net
    104.21.38.138 www.torrentdd.net
+   104.21.26.227 dedbit.com
+   104.21.26.227 www.dedbit.com
    ```
    ตัวอย่างที่ควรเป็น
    ```
@@ -34,6 +36,8 @@
    104.21.12.3 www.torrentdd.com
    104.21.38.138 torrentdd.net
    104.21.38.138 www.torrentdd.net
+   104.21.26.227 dedbit.com
+   104.21.26.227 www.dedbit.com
    ```
 5. กด Save แล้วปิด Notepad ได้เลย
 6. เปิด Cmd (Command Prompt) ด้วยสิทธิ์ Administretor  

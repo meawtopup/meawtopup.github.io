@@ -10,7 +10,7 @@ FIREFOX_PATH="/Applications/Firefox.app"
 EDGE_PATH="/Applications/Microsoft Edge.app"
 
 echo "=================================================="
-echo " Block IPv6 TDD (macOS) v1.2"
+echo " Block IPv6 TDD v1.2"
 echo "=================================================="
 echo " [1] Block IPv6 (Add Rules)"
 echo " [2] Unblock IPv6 (Delete Rules)"

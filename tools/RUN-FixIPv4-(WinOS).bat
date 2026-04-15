@@ -13,7 +13,7 @@ if %errorlevel% neq 0 (
 set HOSTFILE=%SystemRoot%\System32\drivers\etc\hosts
 
 :: เว็บที่ต้องการบังคับใช้ IPv4
-set "DOMAINS=torrentdd.com torrentdd.net"
+set "DOMAINS=torrentdd.com torrentdd.net dedbit.com"
 
 :: ===============================
 echo ==========================================

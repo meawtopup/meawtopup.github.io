@@ -18,7 +18,7 @@ set "FIREFOX_PATH=C:\Program Files\Mozilla Firefox\firefox.exe"
 set "EDGE_PATH=C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 
 echo ==================================================
-echo  Block IPv6 TDD (WinOS) v1.2
+echo  Block IPv6 (WinOS) v1.2
 echo ==================================================
 echo  [1] Block IPv6 (Add Rules)
 echo  [2] Unblock IPv6 (Delete Rules)

@@ -5,7 +5,7 @@
 # ==========================================
 
 HOSTS_FILE="/etc/hosts"
-DOMAINS=("torrentdd.com" "torrentdd.net")
+DOMAINS=("torrentdd.com" "torrentdd.net dedbit.com")
 
 echo "=========================================="
 echo " RUN-FixIPv4 (MacOS) v1.0"

@@ -21,13 +21,13 @@
 **สำหรับ Windows**  
 มี 2 วิธี ในการดาวโหลด RUN-FixIPv4 (WinOS).bat
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/FixIPv4.WinOS/RUN-FixIPv4.WinOS.bat)  
-   (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (WinOS)](../tools/RUN-FixIPv4-(WinOS).bat)  
+   (หรือตรวจสอบโค้ดได้ที่ > [RUN-FixIPv4 (WinOS)](../tools/RUN-FixIPv4-(WinOS).bat)  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/72tut9islkz4ugw/RUN-FixIPv4+(WinOS).bat/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)  
 **สำหรับ MacOS**  
 มี 2 วิธี ในการดาวโหลด RUN-FixIPv4 (MacOS).sh
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/FixIPv4.MacOS/RUN-FixIPv4.MacOS.sh)  
-   (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 TDD (MacOS)](../tools/RUN-FixIPv4-(MacOS).sh)  
+   (หรือตรวจสอบโค้ดได้ที่ > [RUN-FixIPv4 (MacOS)](../tools/RUN-FixIPv4-(MacOS).sh)  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/5mtqy289gtr7l1r/RUN-FixIPv4+(MacOS).sh/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)
 

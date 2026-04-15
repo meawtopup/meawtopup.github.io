@@ -34,7 +34,7 @@
 *(เลือกใช้อย่างใดอย่างหนึ่ง ถ้าไม่ได้คืนค่าเดิมแล้วค่อยลองอีกวิธี)*  
 - RUN-FixIPv4 by RIPMAN | ทำการแก้ hosts เพิ่มโดเมนให้ไปวิ่งหา IPv4  
   [View Here](docs/RUN-FixIPv4.md) | [Self-Configuration](docs/Self-Config-FixIPv4.md) | [Feature](docs/FEATURES.md#run-fixipv4-by-ripman)  
-- Block IPv6 TDD by MObyEX | เพิ่ม Outbound Rules ใน Firewall เพื่อ Block IPv6  
-  [View Here](docs/Block-IPv6-TDD.md) | [Self-Configuration](docs/Self-Config-IPV6TDD.md) | [Feature](docs/FEATURES.md#block-ipv6-tdd-by-mobyex)  
+- Block IPv6 by MObyEX | เพิ่ม Outbound Rules ใน Firewall เพื่อ Block IPv6  
+  [View Here](docs/Block-IPv6.md) | [Self-Configuration](docs/Self-Config-IPV6.md) | [Feature](docs/FEATURES.md#block-ipv6-by-mobyex)  
 
 

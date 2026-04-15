@@ -20,15 +20,15 @@
 # Download
 **สำหรับ Windows**  
 มี 2 วิธี ในการดาวโหลด RUN-FixIPv4 (WinOS).bat
-1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/FixIPv4.WinOS/RUN-FixIPv4.WinOS.bat)  
+1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/FixIPv4.WinOS/RUN-FixIPv4-.WinOS.bat)  
    (หรือตรวจสอบโค้ดได้ที่ > [RUN-FixIPv4 (WinOS)](../tools/RUN-FixIPv4-(WinOS).bat)  
-2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/72tut9islkz4ugw/RUN-FixIPv4+(WinOS).bat/file)  
+2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/g1lkefh6oh0cxyw/RUN-FixIPv4-%2528WinOS%2529.bat/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)  
 **สำหรับ MacOS**  
 มี 2 วิธี ในการดาวโหลด RUN-FixIPv4 (MacOS).sh
-1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/FixIPv4.MacOS/RUN-FixIPv4.MacOS.sh)  
+1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/FixIPv4.MacOS/RUN-FixIPv4-.MacOS.sh)  
    (หรือตรวจสอบโค้ดได้ที่ > [RUN-FixIPv4 (MacOS)](../tools/RUN-FixIPv4-(MacOS).sh)  
-2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/5mtqy289gtr7l1r/RUN-FixIPv4+(MacOS).sh/file)  
+2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/cbx7wz3clqqb6bs/RUN-FixIPv4-%2528MacOS%2529.sh/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)
 
 # Run Batch File

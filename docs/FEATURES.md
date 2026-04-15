@@ -80,7 +80,7 @@
 
 # RUN-FixIPv4 by RIPMAN
 *อัพเดทเมื่อ 8/4/2569*  
-1. แก้ปัญหาผู้ใช้ 3BB ที่เข้าเว็บ TDD แล้วติด CloudFlare: Error code 524  
+1. แก้ปัญหาผู้ใช้ 3BB ที่เข้าเว็บ TDD+TBT แล้วติด CloudFlare: Error code 524  
    (เกิดจาก IPv6 ของ 3BB เข้า CloudFlare ไม่ได้) 
 2. Script จะเข้าไปแก้ไข hosts เพิ่มโดเมนให้ไปวิ่งหา IPv4 โดยตรง  
    (เมื่อบราวเซอร์อ่าน IPv6 ไม่ได้ ก็ทำบังคับใช้งาน IPv4 ที่ไม่มีปัญหาแทน)  
@@ -91,9 +91,9 @@
 - มีผลเทุกบราวเซอร์
 - มีผลกับเว็บ TDD เท่านั้น (ทั้ง com และ net)
 
-# Block IPv6 TDD by MObyEX
+# Block IPv6 by MObyEX
 *อัพเดทเมื่อ 8/4/2569*  
-1. แก้ปัญหาผู้ใช้ 3BB ที่เข้าเว็บ TDD แล้วติด CloudFlare: Error code 524  
+1. แก้ปัญหาผู้ใช้ 3BB ที่เข้าเว็บ TDD+TBT แล้วติด CloudFlare: Error code 524  
    (เกิดจาก IPv6 ของ 3BB เข้า CloudFlare ไม่ได้)  
 2. Script จะตั้ง Outbound Rules ใน Windows Defender Firewall เพื่อ Block IPv6  
    (เมื่อบราวเซอร์อ่าน IPv6 ไม่ได้ ก็ทำจะเลือกใช้งาน IPv4 ที่ไม่มีปัญหาแทน)  

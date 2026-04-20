@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 3.0 | TDD
+// @name         Auto Drone 3.1 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      3.1
 // @description  Ticket & Farm
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
@@ -466,9 +466,7 @@
                 applyStyle(fStatusBtn, '#28a745');
                 isWorking = false;
 
-                setTimeout(() => {
-                    checkFarmStatus();
-                }, 3000);
+                startReloadCountdown('farm');
 
             } catch (err) {
                 console.error(err);

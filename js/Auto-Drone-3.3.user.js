@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 3.2 | TDD
+// @name         Auto Drone 3.3 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      3.2
+// @version      3.3
 // @description  Ticket & Farm
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
@@ -420,7 +420,7 @@
                 if (readyToWork && isFarmAuto) {
                     executeFarm();
                 } else {
-                    scheduleNextFarmCheck(doc);
+                    (doc);
                 }
             } catch (e) {
                 fStatusBtn.innerHTML = '🌾 ข้อผิดพลาดเช็คแปลง';
@@ -546,7 +546,12 @@
                 }, 1000);
             } else {
                 if (farmCheckTimer) clearTimeout(farmCheckTimer);
-                farmCheckTimer = setTimeout(checkFarmStatus, 10000);
+                if (farmCountdownTimer) clearInterval(farmCountdownTimer);
+
+                fStatusBtn.innerHTML = `⚠️ ไม่พบแปลง/Zen หมด (หยุดทำงาน)`;
+                applyStyle(fStatusBtn, '#dc3545');
+                fStatusBtn.disabled = false; 
+                toggleFarmAuto(false);
             }
         }
 

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 3.1 | TDD
+// @name         Auto Drone 3.2 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      3.1
+// @version      3.2
 // @description  Ticket & Farm
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
@@ -475,9 +475,11 @@
                 checkFarmStatus();
             }
         }
+        
         function scheduleNextFarmCheck(doc) {
             let maxElapsedSeconds = -1;
             const TARGET_SECONDS = (6 * 3600) + 5;
+            const CHECKPOINTS = [18000, 14400, 10800, 7200, 3600, 300]; 
 
             doc.querySelectorAll('.f10').forEach(el => {
                 const m = el.innerText.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);
@@ -494,17 +496,17 @@
                 applyStyle(fStatusBtn, '#28a745');
                 fStatusBtn.innerHTML = hIds.length > 0 ? `🌾 พร้อมเก็บ ${hIds.length} แปลง` : (pIds.length > 0 ? `🌾 พร้อมปลูก ${pIds.length} แปลง` : `🌾 ผักพร้อมแล้ว`);
                 fStatusBtn.disabled = false;
-                if (farmCountdownTimer) {
-                    clearInterval(farmCountdownTimer);
-                    farmCountdownTimer = null;
-                }
+                if (farmCountdownTimer) { clearInterval(farmCountdownTimer); farmCountdownTimer = null; }
                 return;
             }
 
             if (maxElapsedSeconds >= 0) {
                 let rem = TARGET_SECONDS - maxElapsedSeconds;
                 const targetTime = Date.now() + (rem * 1000);
-                let nextHourBoundary = Math.floor((rem - 1) / 3600) * 3600;
+                
+                if (sessionStorage.getItem('farm_prev_rem') === null) {
+                    sessionStorage.setItem('farm_prev_rem', rem.toString());
+                }
 
                 applyStyle(fStatusBtn, '#6c757d');
                 fStatusBtn.disabled = false;
@@ -512,18 +514,34 @@
                 if (farmCountdownTimer) clearInterval(farmCountdownTimer);
                 farmCountdownTimer = setInterval(() => {
                     const currentRem = Math.round((targetTime - Date.now()) / 1000);
-                    if (currentRem <= -10 || (currentRem > 0 && currentRem <= nextHourBoundary)) {
+                    const prevRem = parseInt(sessionStorage.getItem('farm_prev_rem') || currentRem);
+                    
+                    for (let cp of CHECKPOINTS) {
+                        if (prevRem > cp && currentRem <= cp) {
+                            fStatusBtn.innerHTML = `⏳ กำลัง Sync เวลาเซิร์ฟเวอร์...`; 
+                            sessionStorage.setItem('farm_prev_rem', currentRem.toString());
+                            clearInterval(farmCountdownTimer);
+                            checkFarmStatus();
+                            return;
+                        }
+                    }
+
+                    if (currentRem <= -5) {
+                        sessionStorage.removeItem('farm_prev_rem');
                         clearInterval(farmCountdownTimer);
+                        fStatusBtn.innerHTML = `⏳ กำลังเตรียมเช็คแปลง... (+${Math.abs(currentRem)}s)`;
                         checkFarmStatus();
                         return;
                     }
+
                     if (currentRem > 0) {
                         const h = Math.floor(currentRem / 3600).toString().padStart(2, '0');
                         const m = Math.floor((currentRem % 3600) / 60).toString().padStart(2, '0');
                         const s = (currentRem % 60).toString().padStart(2, '0');
                         fStatusBtn.innerHTML = `🌾 รอผักโตอีก: ${h}:${m}:${s}`;
+                        sessionStorage.setItem('farm_prev_rem', currentRem.toString());
                     } else {
-                        fStatusBtn.innerHTML = `⏳ กำลังเตรียมเช็คแปลง... (+${Math.abs(currentRem)}s)`;
+                        fStatusBtn.innerHTML = `⏳ เตรียมเก็บเกี่ยว... (${Math.abs(currentRem)}s)`;
                     }
                 }, 1000);
             } else {

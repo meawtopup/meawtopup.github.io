@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 3.3 | TDD
+// @name         Auto Drone 3.3.1 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      3.3
+// @version      3.3.1
 // @description  Ticket & Farm
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
@@ -479,7 +479,7 @@
         function scheduleNextFarmCheck(doc) {
             let maxElapsedSeconds = -1;
             const TARGET_SECONDS = (6 * 3600) + 5;
-            const CHECKPOINTS = [18000, 14400, 10800, 7200, 3600, 300]; 
+            const CHECKPOINTS = [18000, 14400, 10800, 7200, 3600]; 
 
             doc.querySelectorAll('.f10').forEach(el => {
                 const m = el.innerText.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);

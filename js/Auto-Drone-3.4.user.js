@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 3.3.1 | TDD
+// @name         Auto Drone 3.4 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      3.3.1
+// @version      3.4
 // @description  Ticket & Farm
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
@@ -21,6 +21,7 @@
     let farmCountdownTimer = null;
     let isWorking = false;
     let reloadTimer = null;
+    let farmRetryCount = 0;
 
     const BTN_BASE_STYLE = {
         padding: '3px 8px',
@@ -477,9 +478,15 @@
         }
         
         function scheduleNextFarmCheck(doc) {
+            if (!doc) {
+                fStatusBtn.innerHTML = `⏳ พบข้อผิดพลาด... (รอเช็คใหม่ 5 นาที)`;
+                setTimeout(checkFarmStatus, 300000); // 5 นาที
+                return;
+            }
+
             let maxElapsedSeconds = -1;
             const TARGET_SECONDS = (6 * 3600) + 5;
-            const CHECKPOINTS = [18000, 14400, 10800, 7200, 3600]; 
+            const CHECKPOINTS = [18000, 14400, 10800, 7200, 3600]; // 5ชม, 4ชม, 3ชม, 2ชม, 1ชม, 5นาที
 
             doc.querySelectorAll('.f10').forEach(el => {
                 const m = el.innerText.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);
@@ -492,18 +499,31 @@
             const hIds = getHarvestableIDs(doc);
             const pIds = getPlantableIDs(doc);
 
+            // ถ้าเจอข้อมูลปกติ ให้ Reset ตัวนับ Retry
+            if (hIds.length > 0 || pIds.length > 0 || maxElapsedSeconds >= 0) {
+                farmRetryCount = 0;
+            }
+
+            // เงื่อนไขพร้อมทำงาน (ปรับข้อความกลับมาละเอียดเหมือนเดิม)
             if (hIds.length > 0 || pIds.length > 0 || maxElapsedSeconds >= TARGET_SECONDS) {
                 applyStyle(fStatusBtn, '#28a745');
                 fStatusBtn.innerHTML = hIds.length > 0 ? `🌾 พร้อมเก็บ ${hIds.length} แปลง` : (pIds.length > 0 ? `🌾 พร้อมปลูก ${pIds.length} แปลง` : `🌾 ผักพร้อมแล้ว`);
                 fStatusBtn.disabled = false;
-                if (farmCountdownTimer) { clearInterval(farmCountdownTimer); farmCountdownTimer = null; }
+                if (farmCountdownTimer) {
+                    clearInterval(farmCountdownTimer);
+                    farmCountdownTimer = null;
+                }
+                if (isFarmAuto && !isWorking) {
+                    executeFarm();
+                }
                 return;
             }
 
             if (maxElapsedSeconds >= 0) {
                 let rem = TARGET_SECONDS - maxElapsedSeconds;
                 const targetTime = Date.now() + (rem * 1000);
-                
+
+                // บันทึกเวลาเริ่มต้นไว้ใน Session ครั้งแรกที่รัน เพื่อใช้เทียบการ "ข้าม" จุดตัด
                 if (sessionStorage.getItem('farm_prev_rem') === null) {
                     sessionStorage.setItem('farm_prev_rem', rem.toString());
                 }
@@ -515,10 +535,11 @@
                 farmCountdownTimer = setInterval(() => {
                     const currentRem = Math.round((targetTime - Date.now()) / 1000);
                     const prevRem = parseInt(sessionStorage.getItem('farm_prev_rem') || currentRem);
-                    
+
+                    // จุดเช็คระยะ (Hourly Sync)
                     for (let cp of CHECKPOINTS) {
                         if (prevRem > cp && currentRem <= cp) {
-                            fStatusBtn.innerHTML = `⏳ กำลัง Sync เวลาเซิร์ฟเวอร์...`; 
+                            fStatusBtn.innerHTML = `⏳ กำลัง Sync เวลาเซิร์ฟเวอร์...`; // ใช้ข้อความนี้แทนที่จุดตัดชม.
                             sessionStorage.setItem('farm_prev_rem', currentRem.toString());
                             clearInterval(farmCountdownTimer);
                             checkFarmStatus();
@@ -526,6 +547,7 @@
                         }
                     }
 
+                    // ผักโตจริงและเวลาเริ่มติดลบ (The Buffer Zone)
                     if (currentRem <= -5) {
                         sessionStorage.removeItem('farm_prev_rem');
                         clearInterval(farmCountdownTimer);
@@ -534,6 +556,7 @@
                         return;
                     }
 
+                    // สถานะนับถอยหลังปกติ
                     if (currentRem > 0) {
                         const h = Math.floor(currentRem / 3600).toString().padStart(2, '0');
                         const m = Math.floor((currentRem % 3600) / 60).toString().padStart(2, '0');
@@ -541,17 +564,24 @@
                         fStatusBtn.innerHTML = `🌾 รอผักโตอีก: ${h}:${m}:${s}`;
                         sessionStorage.setItem('farm_prev_rem', currentRem.toString());
                     } else {
+                        // ช่วง 0 ถึง -4 วินาที ให้โชว์เตรียมตัว
                         fStatusBtn.innerHTML = `⏳ เตรียมเก็บเกี่ยว... (${Math.abs(currentRem)}s)`;
                     }
                 }, 1000);
-            } else {
-                if (farmCheckTimer) clearTimeout(farmCheckTimer);
-                if (farmCountdownTimer) clearInterval(farmCountdownTimer);
-
-                fStatusBtn.innerHTML = `⚠️ ไม่พบแปลง/Zen หมด (หยุดทำงาน)`;
-                applyStyle(fStatusBtn, '#dc3545');
-                fStatusBtn.disabled = false; 
-                toggleFarmAuto(false);
+            }
+            else {
+                farmRetryCount++;
+                if (farmRetryCount <= 3) {
+                    applyStyle(fStatusBtn, '#ff9800'); // สีส้ม
+                    fStatusBtn.innerHTML = `⏳ ไม่พบข้อมูล... ลองใหม่ ${farmRetryCount}/3 (ใน 5 นาที)`;
+                    if (farmCheckTimer) clearTimeout(farmCheckTimer);
+                    farmCheckTimer = setTimeout(checkFarmStatus, 300000); // 5 นาที
+                } else {
+                    fStatusBtn.innerHTML = `⚠️ พบข้อผิดพลาด สคริปหยุดทำงาน`;
+                    applyStyle(fStatusBtn, '#dc3545'); // สีแดง
+                    toggleFarmAuto(false);
+                    farmRetryCount = 0;
+                }
             }
         }
 

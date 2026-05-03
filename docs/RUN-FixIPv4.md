@@ -24,6 +24,7 @@
    (หรือตรวจสอบโค้ดได้ที่ > [RUN-FixIPv4 (WinOS)](../tools/RUN-FixIPv4-(WinOS).bat)  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/g1lkefh6oh0cxyw/RUN-FixIPv4-%2528WinOS%2529.bat/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)  
+
 **สำหรับ MacOS**  
 มี 2 วิธี ในการดาวโหลด RUN-FixIPv4 (MacOS).sh
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/FixIPv4.MacOS/RUN-FixIPv4-.MacOS.sh)  

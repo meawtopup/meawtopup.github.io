@@ -31,6 +31,7 @@
    (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 (WinOS)](../tools/Block-IPv6-(WinOS).bat)  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/xqgvgpulxay3dv7/Block-IPv6-%2528WinOS%2529.bat/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)  
+
 **สำหรับ MacOS**  
 มี 2 วิธี ในการดาวโหลด Block IPv6 TDD (MacOS).sh
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/BlockIPv6.MacOS/Block-IPv6-.MacOS.sh)  

@@ -16,8 +16,8 @@
 # Script Tampermonkey
 **คำแนะนำ:** กด View Here เพื่อดูโค้ด | กด Feature เพื่อดูว่าสคริปทำอะไรได้บ้าง  
 **คอมโบแนะนำ:** Auto Drone + Radio เปิดแค่หน้าแชททิ้งไว้
-- Auto Drone 3.4 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้  
-  [View Here](js/Auto-Drone-3.4.user.js) | [Feature](docs/FEATURES.md#auto-drone-34)
+- Auto Drone 3.5 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้  
+  [View Here](js/Auto-Drone-3.5.user.js) | [Feature](docs/FEATURES.md#auto-drone-35)
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
   [View Here](js/Chat-Mods-4.8.user.js) | [Feature](docs/FEATURES.md#chat-mods-48)  
 - Click Farm 5.0 | ทำฟาร์ม กดมืออย่างเดียว  

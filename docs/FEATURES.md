@@ -1,10 +1,11 @@
 [**HOME**](../README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
-# Auto Drone 3.4
-*อัพเดทเมื่อ 28/4/2569*    
-<picture><img src="../assets/autodrone2_5.jpg" width="425" height="32" alt="Farm Button"></picture>
+# Auto Drone 3.5
+*อัพเดทเมื่อ 7/5/2569*    
+<picture><img src="../assets/autodrone3_5.jpg" width="570" height="30" alt="Farm Button"></picture>
 1. ระบบเก็บตั๋ว 🎫
-   - ปุ่มเก็บตั๋วด้วยตนเอง/เช็คสถานะตั๋ว (ปุ่มเดียวกัน)
+   - ปุ่มเช็คจำนวนรายการที่ครบ 3HR
+   - ปุ่มเก็บตั๋วด้วยตนเอง/รีเช็คตั๋ว (ปุ่มเดียวกัน)
    - ระบบเก็บตั๋วออโต้
    - มีระบบเช็ค 5 นาทีสุดท้ายการถึงเวลา 00:00/12:00
    - มีระบบเช็คเงื่อนไข 3HR

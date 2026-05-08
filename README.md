@@ -28,8 +28,8 @@
   [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - Radio 2.0 | วิทยุแบบสลับสถานะเพื่อความเสถียร  
   [View Here](js/Radio-2.0.user.js) | [Feature](docs/FEATURES.md#radio-20)
-- DLnSS Button 1.0 | ปุ่มดาวโหลดและปุ่มส่องSS  
-  [View Here](js/DLnSS-Button-1.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-10)
+- DLnSS Button 2.0 | ปุ่มดาวโหลด+SS+สถานะดาวโหลดไปหรือยัง
+  [View Here](js/DLnSS-Button-2.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-20)
 
 # Tools
 **แก้ปัญหาเน็ต 3BB เข้าเว็บ TDD แล้ว CloudFlare: Error code 524**  

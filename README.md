@@ -28,7 +28,7 @@
   [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - Radio 2.0 | วิทยุแบบสลับสถานะเพื่อความเสถียร  
   [View Here](js/Radio-2.0.user.js) | [Feature](docs/FEATURES.md#radio-20)
-- DLnSS Button 2.0 | ปุ่มดาวโหลด+SS+สถานะดาวโหลดไปหรือยัง
+- DLnSS Button 2.0 | ปุ่มดาวโหลด+SS+สถานะดาวโหลดไปหรือยัง  
   [View Here](js/DLnSS-Button-2.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-20)
 
 # Tools

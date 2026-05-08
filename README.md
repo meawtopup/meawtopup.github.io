@@ -16,8 +16,8 @@
 # Script Tampermonkey
 **คำแนะนำ:** กด View Here เพื่อดูโค้ด | กด Feature เพื่อดูว่าสคริปทำอะไรได้บ้าง  
 **คอมโบแนะนำ:** Auto Drone + Radio เปิดแค่หน้าแชททิ้งไว้
-- Auto Drone 3.5 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้  
-  [View Here](js/Auto-Drone-3.5.user.js) | [Feature](docs/FEATURES.md#auto-drone-35)
+- Auto Drone 3.6 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้  
+  [View Here](js/Auto-Drone-3.6.user.js) | [Feature](docs/FEATURES.md#auto-drone-36)
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
   [View Here](js/Chat-Mods-4.8.user.js) | [Feature](docs/FEATURES.md#chat-mods-48)  
 - Click Farm 5.0 | ทำฟาร์ม กดมืออย่างเดียว  
@@ -28,7 +28,7 @@
   [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - Radio 2.0 | วิทยุแบบสลับสถานะเพื่อความเสถียร  
   [View Here](js/Radio-2.0.user.js) | [Feature](docs/FEATURES.md#radio-20)
-- BB DLnSS Button 1.0 | ปุ่มดาวโหลดและปุ่มส่องSS  
+- DLnSS Button 1.0 | ปุ่มดาวโหลดและปุ่มส่องSS  
   [View Here](js/BB-DLnSS-Button-1.0.user.js) | [Feature](docs/FEATURES.md#bb-dlnss-button-10)
 
 # Tools

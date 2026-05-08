@@ -82,7 +82,7 @@
 
 # DLnSS Button 2.0
 *อัพเดทเมื่อ 8/5/2569*  
-<picture><img src="../assets/DLnSS_2_0.jpg" width="83" height="22" alt="DLnSS Button"></picture>  
+<picture><img src="../assets/DLnSS_2_0.jpg" width="83" height="22" alt="DLnSS Button"></picture> 
 <picture><img src="../assets/DLnSS_2_0_now.jpg" width="51" height="26" alt="DLnSS Button"></picture>  
 1. ปุ่มดาวโหลด แบบกด Thank ให้เลย
 2. ปุ่มส่อง Screen Shot

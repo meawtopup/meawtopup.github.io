@@ -2,7 +2,7 @@
 // @name         Auto Drone 3.6 | TDD
 // @namespace    http://tampermonkey.net/
 // @version      3.6
-// @description  เช็คเวลาล่าสุด
+// @description  ticket + farm
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com

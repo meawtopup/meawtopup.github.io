@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name          BB DLnSS Button 1.0
+// @name          DLnSS Button 1.0 | BB
 // @namespace     http://tampermonkey.net/
 // @version       1.0
 // @description   ปุ่ม Download & SS Popup

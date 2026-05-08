@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Auto Drone 3.5 | TDD
+// @name         Auto Drone 3.6 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      3.5
-// @description  เก็บตั๋ว ทำฟาร์ม
+// @version      3.6
+// @description  เช็คเวลาล่าสุด
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
@@ -140,6 +140,7 @@
         content.style = 'display: flex; align-items: center; gap: 6px; margin-right: 8px; font-size: 12px; color: #fff;';
         container.appendChild(content);
 
+
         const hrBtn = document.createElement('button');
         const tBtn = document.createElement('button');
         const tAutoBtn = document.createElement('button');
@@ -181,6 +182,17 @@
             if (isTicketAuto) checkTicketStatus();
         };
 
+        function getLastCollectionTime(doc) {
+            try {
+                const rows = doc.querySelectorAll('.table-responsive table tbody tr');
+                if (rows.length > 1) {
+                    const timeStr = rows[1].querySelectorAll('td')[2]?.innerText.trim();
+                    if (timeStr) return new Date(timeStr.replace(/-/g, '/')).getTime();
+                }
+            } catch (e) { console.error("❌ Parse Table Error:", e); }
+            return 0;
+        }
+
         async function checkTicketStatus() {
             if (ticketCheckTimer) clearTimeout(ticketCheckTimer);
             if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
@@ -210,13 +222,12 @@
             }
 
             tBtn.disabled = true;
-            tBtn.innerHTML = '⏳ เช็คตั๋ว...';
+            tBtn.innerHTML = '⏳ เช็คประวัติ...';
 
             try {
                 const res = await fetch('/ticket.php');
                 const text = await res.text();
                 const doc = new DOMParser().parseFromString(text, 'text/html');
-                const readyBtn = doc.querySelector('button.get-ticket');
                 const infoText = doc.querySelector('.text-danger.f12');
                 let already = infoText?.innerText.includes('รับตั๋วสุ่มกาชาไปแล้ว');
 
@@ -225,14 +236,27 @@
                     applyStyle(tBtn, '#6c757d');
                     tBtn.disabled = false;
                     await scheduleNextTicketCheck(true);
-                } else {
-                    let status = readyBtn ? `พร้อมเก็บ ${readyBtn.innerText.match(/(\d+)/)?.[1] || ''} ชิ้น` : 'ไม่มีตั๋วให้เก็บ';
-                    tBtn.innerHTML = `🎫 ${status}`;
-                    applyStyle(tBtn, readyBtn ? '#28a745' : '#dc3545');
-                    tBtn.setAttribute('data-ready', readyBtn ? 'true' : 'false');
-                    tBtn.disabled = false;
-                    if (readyBtn && isTicketAuto && !isWorking) collectTicket();
+                    return;
                 }
+
+                const lastTime = getLastCollectionTime(doc);
+                const cooldownMs = 3 * 60 * 60 * 1000;
+                const nextAvailable = lastTime + cooldownMs;
+                if (Date.now() < nextAvailable) {
+                    tBtn.innerHTML = '🎫 ติดคูลดาวน์ 3 ชม.';
+                    applyStyle(tBtn, '#6c757d');
+                    localStorage.setItem('tdNextTicketCheck', nextAvailable);
+                    runTicketCountdown(nextAvailable, "คูลดาวน์ 3 ชม.");
+                    return;
+                }
+
+                const readyBtn = doc.querySelector('button.get-ticket');
+                let status = readyBtn ? `พร้อมเก็บ ${readyBtn.innerText.match(/(\d+)/)?.[1] || ''} ชิ้น` : 'ไม่มีตั๋วให้เก็บ';
+                tBtn.innerHTML = `🎫 ${status}`;
+                applyStyle(tBtn, readyBtn ? '#28a745' : '#dc3545');
+                tBtn.setAttribute('data-ready', readyBtn ? 'true' : 'false');
+                tBtn.disabled = false;
+                if (readyBtn && isTicketAuto && !isWorking) collectTicket();
             } catch (e) {
                 tBtn.innerHTML = '🎫 ข้อผิดพลาด';
                 applyStyle(tBtn, '#dc3545');
@@ -294,13 +318,17 @@
                     localStorage.removeItem('tdNextTicketCheck');
                     checkTicketStatus();
                 } else {
-                    const m = Math.floor(remaining / 60);
+                    const h = Math.floor(remaining / 3600);
+                    const m = Math.floor((remaining % 3600) / 60);
                     const s = remaining % 60;
+                    let timeStr = h > 0
+                        ? `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
+                        : `${m}:${s.toString().padStart(2, '0')}`;
                     if (label.includes("เตรียม")) {
                         tBtn.innerHTML = `🎫 ${label}: ${remaining}s`;
                         applyStyle(tBtn, '#ff9800');
                     } else {
-                        tBtn.innerHTML = `🎫 ${label}: ${m}:${s.toString().padStart(2, '0')}`;
+                        tBtn.innerHTML = `🎫 ${label}: ${timeStr}`;
                         applyStyle(tBtn, '#6c757d');
                     }
                     tBtn.disabled = false;
@@ -313,7 +341,7 @@
             if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
 
             if (isAlreadyCollected === false) {
-                collectTicket();
+                checkTicketStatus();
                 return;
             }
 
@@ -540,7 +568,7 @@
             else {
                 farmRetryCount++;
                 if (farmRetryCount <= 3) {
-                    applyStyle(fStatusBtn, '#ff9800'); // สีส้ม
+                    applyStyle(fStatusBtn, '#ff9800');
                     fStatusBtn.innerHTML = `⏳ ไม่พบข้อมูล... ลองใหม่ ${farmRetryCount}/3 (ใน 5 นาที)`;
                     if (farmCheckTimer) clearTimeout(farmCheckTimer);
                     farmCheckTimer = setTimeout(checkFarmStatus, 300000);

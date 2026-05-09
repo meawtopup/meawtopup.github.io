@@ -30,7 +30,7 @@
   [View Here](js/Radio-2.0.user.js) | [Feature](docs/FEATURES.md#radio-20)
 - DLnSS Button 2.0 | ปุ่มดาวโหลด+SS+สถานะดาวโหลดไปหรือยัง  
   [View Here](js/DLnSS-Button-2.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-20)  
-- Bookmark Edit 1.0 | ปุ่มเดียวกด 2 ครั้ง (หมวดอนิเมะ)
+- Bookmark Edit 1.0 | ปุ่มเดียวกด 2 ครั้ง (หมวดอนิเมะ)  
   [View Here](js/Bookmark-Edit-1.0.json) | [Feature](docs/FEATURES.md#Bookmark-Edit-10)  
 
 # Tools

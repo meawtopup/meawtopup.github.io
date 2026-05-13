@@ -22,8 +22,8 @@
   [View Here](js/Chat+-1.0.user.js) | [Feature](docs/FEATURES.md#chat-10)  
 - Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ  
   [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
-- DLnSS Button 2.0 | ปุ่มดาวโหลด+SS+สถานะดาวโหลดไปหรือยัง  
-  [View Here](js/DLnSS-Button-2.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-20)  
+- DLnSS Button 3.0 | DL-Now/SS+/สถานะดาวโหลดแล้ว 
+  [View Here](js/DLnSS-Button-3.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-30)  
 <!--
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
   [View Here](js/Chat-Mods-4.8.user.js) | [Feature](docs/FEATURES.md#chat-mods-48)  

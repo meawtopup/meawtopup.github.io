@@ -103,7 +103,7 @@
 -->
 # DLnSS Button 3.0
 *อัพเดทเมื่อ 13/5/2569*  
-<picture><img src="../assets/DLnSS_2_0.jpg" width="83" height="22" alt="DLnSS Button"></picture> 
+<picture><img src="../assets/DLnSS_3_0.jpg" width="174" height="30" alt="DLnSS Button"></picture>  
 <picture><img src="../assets/DLnSS_2_0_now.jpg" width="51" height="26" alt="DLnSS Button"></picture>  
 1. ปุ่มดาวโหลด DL-Now แบบกด Thank ให้เลย
 2. ปุ่มรูป SS+ (คลิกซ้ายเปิดแบบ Popup/คลิกขวาเลือก Open link ได้)

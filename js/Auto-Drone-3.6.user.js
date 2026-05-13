@@ -5,7 +5,7 @@
 // @description  ticket + farm
 // @author       MobyEX
 // @include      https://www.torrentdd.*/chat.php*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
+// @icon         https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
 // @grant        none
 // ==/UserScript==
 

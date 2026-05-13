@@ -16,13 +16,13 @@
 # Script Tampermonkey
 **คำแนะนำ:** กด View Here เพื่อดูโค้ด | กด Feature เพื่อดูว่าสคริปทำอะไรได้บ้าง  
 **คอมโบแนะนำ:** Auto Drone กับ Chat+ เปิดแค่หน้าแชททิ้งไว้
-- Auto Drone 3.6 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้  
+- Auto Drone 3.6 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้ - TDD  
   [View Here](js/Auto-Drone-3.6.user.js) | [Feature](docs/FEATURES.md#auto-drone-36)  
-- Chat+ 1.0 | ฟังชั่นสำหรับหน้าแชท  
+- Chat+ 1.0 | ฟังชั่นสำหรับหน้าแชท - TDD  
   [View Here](js/Chat+-1.0.user.js) | [Feature](docs/FEATURES.md#chat-10)  
-- Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ  
+- Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ - TDD  
   [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
-- DLnSS Button 3.0 | DL-Now/SS+/สถานะดาวโหลดแล้ว  
+- DLnSS Button 3.0 | DL-Now/SS+/สถานะดาวโหลดแล้ว - BB  
   [View Here](js/DLnSS-Button-3.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-30)  
 <!--
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  

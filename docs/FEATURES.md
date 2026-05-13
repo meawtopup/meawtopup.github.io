@@ -2,7 +2,7 @@
 
 # Auto Drone 3.5
 *อัพเดทเมื่อ 7/5/2569*    
-<picture><img src="../assets/autodrone3_5.jpg" width="570" height="30" alt="Farm Button"></picture>
+<picture><img src="../assets/autodrone3_5.jpg" width="570" height="30" alt="Auto Drone"></picture>
 1. ระบบเก็บตั๋ว 🎫
    - ปุ่มเช็คจำนวนรายการที่ครบ 3HR
    - ปุ่มเก็บตั๋วด้วยตนเอง/รีเช็คตั๋ว (ปุ่มเดียวกัน)
@@ -65,6 +65,27 @@
 
 **หมายเหตุ :** แสดงผล***เฉพาะหน้า Chat เท่านั้น***  
 -->
+# Chat+ 1.0
+*อัพเดทเมื่อ 13/5/2569*  
+<picture><img src="../assets/chat+button1_0.jpg" width="93" height="42" alt="Chat+"></picture>  
+เมนู  
+<picture><img src="../assets/chat+menu1_0.jpg" width="232" height="303" alt="Chat+ Menu"></picture>  
+วิทยุแบบใหม่  
+<picture><img src="../assets/chat+radio1_0.jpg" width="213" height="28" alt="Chat+ Radio"></picture>  
+1. Chat layout: Default/Fixed เพื่อปรับ Layout Height เอง
+2. Layout Height กำหนดความสูงเอง ระหว่าง 150-4000 px (ในโหมด Fixed)
+3. Max Lines กำหนดจำนวนบรรทัดข้อความที่จะแสดงเอง ระหว่าง 10-1000 บรรทัด (Default=100)
+4. User Online: Show/Hide เพื่อเปิดหรือปิดตารางรายชื่อผู้ใช้ออนไลน์
+5. Quote Button: Default/Expanded เพื่อขยายขนาดปุ่ม Quote หน้าข้อความ
+6. Radio: On/Off เครื่องเล่นวิทยุแบบใหม่ เพื่อแก้บัคให้บางบราวเซอร์วิทยุหาย
+7. Apply changes & Refresh ปุ่มเพื่อยืนยันค่าที่เปลี่ยนแล้วรีเฟรชหน้าแชทใหม่
+
+**หมายเหตุ :**  
+- เมื่อปรับแล้วหน้าแชทจะเปลี่ยนเมื่อทำการรีเฟรชหน้าแชทใหม่เท่านั้น
+- ถ้าไม่กด Apply changes & Refresh สามารถกดเองก็ได้
+- ตำแหน่งปุ่มอยู่ขวาบนหน้าปุ่ม Donation
+- สคริปแสดงผล***เฉพาะหน้า Chat เท่านั้น***  
+
 # Domain Fixer 1.0
 *อัพเดทเมื่อ 10/4/2569*
 1. สำหรับผู้ใช้ที่เข้าใช้งาน www.torrentdd.net

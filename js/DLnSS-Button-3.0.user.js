@@ -111,7 +111,7 @@
             if (vipBtn) vipBtn.remove();
 
             const dlBtn = document.createElement('a');
-            dlBtn.innerHTML = '<div style="display:flex; align-items:center; gap:4px;"><span style="margin-top:-2px;">📥</span><span style="line-height:1;">DL-Now</span></div>';
+            dlBtn.innerHTML = '<div style="display:flex; align-items:center; gap:4px;"><span style="margin-top:-6px;">📥</span><span style="line-height:1;">DL-Now</span></div>';
             dlBtn.setAttribute('data-original-html', dlBtn.innerHTML);
             dlBtn.setAttribute('data-original-color', '#000');
             dlBtn.style = 'display: inline-flex; align-items: center; justify-content: center; background: #ffffff; border: 1px solid #dbdbdb; border-radius: 20px; padding: 0 12px; color: #000; text-decoration: none; font-size: 11px; font-weight: bold; margin-right: 8px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 26px; vertical-align: middle; box-sizing: border-box;';

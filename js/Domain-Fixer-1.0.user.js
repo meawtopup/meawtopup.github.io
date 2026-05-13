@@ -5,7 +5,7 @@
 // @description  เปลี่ยนลิงก์หรือข้อความ .com ให้เป็น .net ภายในหน้าเว็บ
 // @author       MObyEX
 // @match        *://*.torrentdd.net/*
-// @icon          https://www.google.com/s2/favicons?sz=64&domain=torrentdd.com
+// @icon          https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
 // @grant        none
 // @run-at       document-end
 // ==/UserScript==

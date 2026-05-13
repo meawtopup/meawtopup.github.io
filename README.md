@@ -15,23 +15,27 @@
 
 # Script Tampermonkey
 **คำแนะนำ:** กด View Here เพื่อดูโค้ด | กด Feature เพื่อดูว่าสคริปทำอะไรได้บ้าง  
-**คอมโบแนะนำ:** Auto Drone + Radio เปิดแค่หน้าแชททิ้งไว้
+**คอมโบแนะนำ:** Auto Drone กับ Chat+ เปิดแค่หน้าแชททิ้งไว้
 - Auto Drone 3.6 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้  
-  [View Here](js/Auto-Drone-3.6.user.js) | [Feature](docs/FEATURES.md#auto-drone-36)
+  [View Here](js/Auto-Drone-3.6.user.js) | [Feature](docs/FEATURES.md#auto-drone-36)  
+- Chat+ 1.0 | ฟังชั่นสำหรับหน้าแชท  
+  [View Here](js/Chat+-1.0.user.js) | [Feature](docs/FEATURES.md#chat-10)  
+- Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ  
+  [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
+- DLnSS Button 2.0 | ปุ่มดาวโหลด+SS+สถานะดาวโหลดไปหรือยัง  
+  [View Here](js/DLnSS-Button-2.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-20)  
+<!--
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
   [View Here](js/Chat-Mods-4.8.user.js) | [Feature](docs/FEATURES.md#chat-mods-48)  
 - Click Farm 5.0 | ทำฟาร์ม กดมืออย่างเดียว  
   [View Here](js/Click-Farm-5.0.user.js) | [Feature](docs/FEATURES.md#click-farm-50)
 - Click Farm 9.0 | ทำฟาร์ม ระบบออโต้  
   [View Here](js/Click-Farm-9.0.user.js) | [Feature](docs/FEATURES.md#click-farm-90)  
-- Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ  
-  [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - Radio 2.0 | วิทยุแบบสลับสถานะเพื่อความเสถียร  
   [View Here](js/Radio-2.0.user.js) | [Feature](docs/FEATURES.md#radio-20)
-- DLnSS Button 2.0 | ปุ่มดาวโหลด+SS+สถานะดาวโหลดไปหรือยัง  
-  [View Here](js/DLnSS-Button-2.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-20)  
 - Bookmark Edit 1.0 | ปุ่มเดียวกด 2 ครั้ง (หมวดอนิเมะ)  
-  [View Here](js/Bookmark-Edit-1.0.js) | [Feature](docs/FEATURES.md#Bookmark-Edit-10)  
+  [View Here](js/Bookmark-Edit-1.0.js) | [Feature](docs/FEATURES.md#Bookmark-Edit-10)
+  -->
 
 # Tools
 **แก้ปัญหาเน็ต 3BB เข้าเว็บ TDD แล้ว CloudFlare: Error code 524**  

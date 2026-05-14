@@ -4,8 +4,7 @@
 // @version      1.0
 // @description  Chat+ Modifyer
 // @author       MObyEX
-// @match        *://*.torrentdd.com/chat.php*
-// @match        *://*.torrentdd.net/chat.php*
+// @include      *://*.torrentdd.*/chat.php*
 // @run-at       document-start
 // @icon         https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
 // @grant        none

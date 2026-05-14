@@ -101,7 +101,7 @@
 
 **หมายเหตุ :** แสดงผล***เฉพาะหน้า Chat เท่านั้น***  
 -->
-# DLnSS Button 3.0
+# DLnSS Button BB 3.0
 *อัพเดทเมื่อ 13/5/2569*  
 <picture><img src="../assets/DLnSS_3_0.jpg" width="174" height="30" alt="DLnSS Button"></picture>  
 <picture><img src="../assets/DLnSS_2_0_now.jpg" width="51" height="26" alt="DLnSS Button"></picture>  
@@ -112,7 +112,16 @@
 **หมายเหตุ :**  
 - หน้า Browse ปุ่มจะอยู่หน้าปุ่ม Bookmark
 - หน้า Details จะมีแค่ปุ่มดาวโหลดอยู่ใต้คำว่า Donwloads
-- สำหรับเว็บที่คุณก็รู้ว่าเว็บไหน แต่***ไม่ใช่***เว็บ TDD นะ
+- สำหรับเว็บที่คุณก็รู้ว่าเว็บไหน
+
+# DLnSS Button TDD 1.0
+*อัพเดทเมื่อ 15/5/2569*  
+1. ปุ่มรูป SS+ (คลิกซ้ายเปิดแบบ Popup/คลิกขวาเลือก Open link ได้)
+2. ปุ่มเช็คสถานะว่าดาวโหลดไปแล้วหรือยัง
+
+**หมายเหตุ :**  
+- หน้า Browse ปุ่มจะอยู่หน้าปุ่มรูปสกีนช็อต
+- สำหรับเว็บ TDD  
 <!--
 # Bookmark Edit 1.0
 *อัพเดทเมื่อ 9/5/2569*  

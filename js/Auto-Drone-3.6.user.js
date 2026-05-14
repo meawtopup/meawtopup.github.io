@@ -4,7 +4,7 @@
 // @version      3.6
 // @description  ticket + farm
 // @author       MobyEX
-// @include      https://www.torrentdd.*/chat.php*
+// @include      *://*.torrentdd.*/chat.php*
 // @icon         https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
 // @grant        none
 // ==/UserScript==

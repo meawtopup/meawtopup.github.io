@@ -22,8 +22,10 @@
   [View Here](js/Chat+-1.0.user.js) | [Feature](docs/FEATURES.md#chat-10)  
 - Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ - TDD  
   [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
-- DLnSS Button 3.0 | DL-Now/SS+/สถานะดาวโหลดแล้ว - BB  
-  [View Here](js/DLnSS-Button-3.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-30)  
+- DLnSS Button BB 3.0 | DL-Now/SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - BB  
+  [View Here](js/DLnSS-Button-BB-3.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-BB-30)  
+- DLnSS Button TDD 3.0 | SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - TDD  
+  [View Here](js/DLnSS-Button-TDD-1.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-TDD-10)  
 <!--
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
   [View Here](js/Chat-Mods-4.8.user.js) | [Feature](docs/FEATURES.md#chat-mods-48)  

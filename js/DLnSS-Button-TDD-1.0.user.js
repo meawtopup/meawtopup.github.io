@@ -4,12 +4,9 @@
 // @version        1.0
 // @description    Download/SS+/Status-DL for TorrentDD
 // @author         MObyEX
-// @match          https://www.torrentdd.com/browse.php*
-// @match          https://www.torrentdd.com/browse18.php*
-// @match          https://www.torrentdd.com/details.php*
-// @match          https://www.torrentdd.net/browse.php*
-// @match          https://www.torrentdd.net/browse18.php*
-// @match          https://www.torrentdd.net/details.php*
+// @include      *://*.torrentdd.*/browse.php*
+// @include      *://*.torrentdd.*/browse18.php*
+// @include      *://*.torrentdd.*/details.php*
 // @icon           https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
 // @grant          none
 // ==/UserScript==

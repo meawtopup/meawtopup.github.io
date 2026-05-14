@@ -4,9 +4,9 @@
 // @version        3.0
 // @description    Download/SS+/Status-DL
 // @author         MObyEX
-// @match          https://bearbit.org/viewno18sbx.php*
-// @match          https://bearbit.org/viewbrsb.php*
-// @match          https://bearbit.org/details.php*
+// @include        *://bearbit.*/viewno18sbx.php*
+// @include        *://bearbit.*/viewbrsb.php*
+// @include        *://bearbit.*/details.php*
 // @icon           https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/iconbb48.png?raw=true
 // @grant          none
 // ==/UserScript==

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name           DLnSS Button 3.1 | BB
+// @name           DLnSS Button 3.2 | BB
 // @namespace      http://tampermonkey.net/
-// @version        3.1
+// @version        3.2
 // @description    Download/SS+/Status-DL
 // @author         MObyEX
 // @include        *://bearbit.*/viewno18sbx.php*
@@ -64,7 +64,7 @@
         };
     }
 
-    function checkDownloaded(torrentId, container, bookmarkBtn) {
+    function checkDownloaded(torrentId, container, bookmarkBtn, ssBtn) {
         if (container.querySelector(`.status-check-${torrentId}`)) return;
         fetch(`https://bearbit.org/details.php?id=${torrentId}`)
             .then(response => response.arrayBuffer())
@@ -78,6 +78,13 @@
                     statusIcon.title = 'คุณเคยดาวน์โหลดไฟล์นี้แล้ว';
                     statusIcon.style = 'display: inline-flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #fff; border-radius: 20px; padding: 0 12px; color: #fff; text-decoration: none; font-size: 11px; font-weight: bold; margin-right: 8px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 26px; vertical-align: middle; box-sizing: border-box; line-height: 1;';
                     container.insertBefore(statusIcon, bookmarkBtn);
+                }
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const ssTitleTd = Array.from(doc.querySelectorAll('td.rowhead')).find(td => td.innerText.includes('ScreenShot'));
+                const imgUrl = ssTitleTd?.nextElementSibling?.querySelector('a[href]')?.getAttribute('href');
+                if (imgUrl && ssBtn) {
+                    ssBtn.href = imgUrl;
                 }
             })
             .catch(err => console.log('Status check error:', err));
@@ -110,64 +117,24 @@
             ssBtn.innerHTML = 'Screenshot';
             ssBtn.target = '_blank';
             ssBtn.style = 'display: inline-flex; align-items: center; justify-content: center; background: #487dee; border: 1px solid #487dee; border-radius: 20px; padding: 0 12px; color: #fff; text-decoration: none; font-size: 11px; font-weight: bold; margin-right: 8px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 26px; vertical-align: middle; box-sizing: border-box; line-height: 1;';
-            ssBtn.onmouseenter = () => {
-                if (ssBtn.href && ssBtn.href !== window.location.href) return;
-
-                fetch(`https://bearbit.org/details.php?id=${torrentId}`)
-                    .then(res => res.text())
-                    .then(html => {
-                        const doc = new DOMParser().parseFromString(html, 'text/html');
-                        const ssTitleTd = Array.from(doc.querySelectorAll('td.rowhead')).find(td => td.innerText.includes('ScreenShot'));
-                        const imgUrl = ssTitleTd?.nextElementSibling?.querySelector('a[href]')?.getAttribute('href');
-                        if (imgUrl) {
-                            ssBtn.href = imgUrl;
-                        }
-                    });
-            };
 
             const handleSSClick = (e) => {
                 const isLeftClick = e.button === 0 && !e.ctrlKey && !e.shiftKey && !e.metaKey;
                 if (!isLeftClick) return;
+
                 e.preventDefault();
-                ssBtn.innerHTML = ' ⏳ ';
 
-                fetch(`https://bearbit.org/details.php?id=${torrentId}`)
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        const tds = Array.from(doc.querySelectorAll('td.rowhead'));
-                        const ssTitleTd = tds.find(td => td.innerText.includes('ScreenShot'));
-
-                        if (ssTitleTd) {
-                            const targetTd = ssTitleTd.nextElementSibling;
-                            const imgLink = targetTd ? targetTd.querySelector('a[href]') : null;
-
-                            if (imgLink) {
-                                const imgUrl = imgLink.getAttribute('href');
-                                if (isLeftClick) {
-                                    showSSPopup(imgUrl);
-                                } else {
-                                    window.open(imgUrl, '_blank');
-                                }
-                            } else {
-                                alert("ไม่พบลิงก์ในแถว ScreenShot");
-                            }
-                        } else {
-                            alert("ไม่พบหัวข้อ ScreenShot ในหน้านี้");
-                        }
-                        ssBtn.innerHTML = 'Screenshot';
-                    })
-                    .catch(() => {
-                        alert("Error loading image");
-                        ssBtn.innerHTML = 'Screenshot';
-                    });
+                if (ssBtn.href && ssBtn.href !== window.location.href) {
+                    showSSPopup(ssBtn.href);
+                } else {
+                    window.open(`https://bearbit.org/details.php?id=${torrentId}`, '_blank');
+                }
             };
 
             ssBtn.addEventListener('click', handleSSClick);
             container.insertBefore(dlBtn, bookmarkBtn);
             container.insertBefore(ssBtn, bookmarkBtn);
-            checkDownloaded(torrentId, container, bookmarkBtn);
+            checkDownloaded(torrentId, container, bookmarkBtn, ssBtn);
         });
     }
 

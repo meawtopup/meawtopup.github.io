@@ -101,13 +101,14 @@
 
 **หมายเหตุ :** แสดงผล***เฉพาะหน้า Chat เท่านั้น***  
 -->
-# DLnSS Button BB 3.0
-*อัพเดทเมื่อ 13/5/2569*  
-<picture><img src="../assets/DLnSS_3_0.jpg" width="174" height="30" alt="DLnSS Button"></picture>  
-<picture><img src="../assets/DLnSS_2_0_now.jpg" width="51" height="26" alt="DLnSS Button"></picture>  
+# DLnSS Button BB 3.1
+*อัพเดทเมื่อ 15/5/2569*  
+<picture><img src="../assets/DLnSS_3_1.jpg" width="222" height="33" alt="DLnSS Button"></picture>  
+<picture><img src="../assets/DLnSS_3_1_now.jpg" width="75" height="33" alt="DLnSS Button"></picture>  
 1. ปุ่มดาวโหลด DL-Now แบบกด Thank ให้เลย
 2. ปุ่มรูป SS+ (คลิกซ้ายเปิดแบบ Popup/คลิกขวาเลือก Open link ได้)
 3. ปุ่มเช็คสถานะว่าดาวโหลดไปแล้วหรือยัง
+4. ลบปุ่มเดิมนอกจากปุ่ม Bookmark
 
 **หมายเหตุ :**  
 - หน้า Browse ปุ่มจะอยู่หน้าปุ่ม Bookmark

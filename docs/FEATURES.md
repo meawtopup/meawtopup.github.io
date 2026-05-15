@@ -101,7 +101,7 @@
 
 **หมายเหตุ :** แสดงผล***เฉพาะหน้า Chat เท่านั้น***  
 -->
-# DLnSS Button BB 3.1
+# DLnSS Button BB 3.2
 *อัพเดทเมื่อ 15/5/2569*  
 <picture><img src="../assets/DLnSS_3_1.jpg" width="222" height="33" alt="DLnSS Button"></picture>  
 1. ปุ่มดาวโหลด DL-Now แบบกด Thank ให้เลย

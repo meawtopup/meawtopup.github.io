@@ -104,7 +104,6 @@
 # DLnSS Button BB 3.1
 *อัพเดทเมื่อ 15/5/2569*  
 <picture><img src="../assets/DLnSS_3_1.jpg" width="222" height="33" alt="DLnSS Button"></picture>  
-<picture><img src="../assets/DLnSS_3_1_now.jpg" width="75" height="33" alt="DLnSS Button"></picture>  
 1. ปุ่มดาวโหลด DL-Now แบบกด Thank ให้เลย
 2. ปุ่มรูป SS+ (คลิกซ้ายเปิดแบบ Popup/คลิกขวาเลือก Open link ได้)
 3. ปุ่มเช็คสถานะว่าดาวโหลดไปแล้วหรือยัง

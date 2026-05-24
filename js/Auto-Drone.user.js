@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.3.4 | TDD
+// @name         Auto Drone 4.3.5 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.3.4
+// @version      4.3.5
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -366,7 +366,7 @@
             const minRemaining = remainingTimes.length > 0 ? Math.min(...remainingTimes) : 0;
             let statusParts = [];
             if (hIds.length > 0) statusParts.push(`✔️พร้อมเก็บ ${hIds.length}`);
-            if (minRemaining > 0) statusParts.push(`รอโตอีก ${formatTime(minRemaining)}`);
+            if (minRemaining > 0) statusParts.push(`❌รอโตอีก ${formatTime(minRemaining)}`);
             
             UI.fStatus.innerText = statusParts.length > 0 ? `🌾: ${statusParts.join('/')}` : '🌾: พร้อมใช้งาน';
 
@@ -429,9 +429,9 @@
             
             if (hasHarvest) {
                 const harvestPart = currentStatus.split('/')[0];
-                UI.fStatus.innerText = `${harvestPart}/รอโตอีก ${timeStr}`;
+                UI.fStatus.innerText = `${harvestPart}/❌รอโตอีก ${timeStr}`;
             } else {
-                UI.fStatus.innerText = `🌾: รอโตอีก ${timeStr}`;
+                UI.fStatus.innerText = `🌾: ❌รอโตอีก ${timeStr}`;
             }
         };
         tick();

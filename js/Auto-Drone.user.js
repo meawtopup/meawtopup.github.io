@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Auto Drone 4.1 | TDD
+// @name         Auto Drone 4.2 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.1
-// @description  ticket + farm parallel processing with fetch
+// @version      4.2
+// @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
 // @icon         https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
@@ -160,6 +160,22 @@
         return `${h}:${m}:${s}`;
     }
 
+    function clearTicketTimers() {
+        if (STATE.ticket.interval) {
+            clearInterval(STATE.ticket.interval);
+            clearTimeout(STATE.ticket.interval);
+            STATE.ticket.interval = null;
+        }
+    }
+
+    function clearFarmTimers() {
+        if (STATE.farm.interval) {
+            clearInterval(STATE.farm.interval);
+            clearTimeout(STATE.farm.interval);
+            STATE.farm.interval = null;
+        }
+    }
+
     function toggleTicketAuto() {
         STATE.ticket.autoMode = !STATE.ticket.autoMode;
         localStorage.setItem('tdd_ticket_auto', STATE.ticket.autoMode);
@@ -176,7 +192,7 @@
 
     async function checkTicketLoop() {
         if (STATE.ticket.isWorking) return;
-        clearInterval(STATE.ticket.interval);
+        clearTicketTimers();
         UI.tStatus.innerText = '🎫: ⏳กำลังเช็คตั๋ว';
         updateBtn(UI.tBtn, '🎫เก็บตั๋ว', '#6c757d', true);
 
@@ -241,11 +257,13 @@
         } catch (e) {
             console.error("Ticket Check Error", e);
             UI.tStatus.innerText = '🎫: ❌พบข้อผิดพลาด';
+            clearTicketTimers();
             STATE.ticket.interval = setTimeout(checkTicketLoop, 60000);
         }
     }
 
     function calcNextRoundTime() {
+        clearTicketTimers();
         const now = new Date();
         let target = new Date(now);
         if (now.getHours() < 12) {
@@ -264,12 +282,12 @@
     }
 
     function startTicketCountdown(seconds, prefix) {
-        clearInterval(STATE.ticket.interval);
+        clearTicketTimers();
         const targetEndTime = Date.now() + (seconds * 1000);
         const tick = () => {
             const rem = Math.ceil((targetEndTime - Date.now()) / 1000);
             if (rem <= 0) {
-                clearInterval(STATE.ticket.interval);
+                clearTicketTimers();
                 checkTicketLoop();
                 return;
             }
@@ -321,7 +339,7 @@
 
     async function checkFarmLoop() {
         if (STATE.farm.isWorking) return;
-        clearInterval(STATE.farm.interval);
+        clearFarmTimers();
         UI.fStatus.innerText = '🌾: ⏳กำลังเช็คฟาร์ม';
         updateBtn(UI.fBtn, '🌾เก็บผัก', '#6c757d', true);
 
@@ -378,18 +396,19 @@
         } catch (e) {
             console.error("Farm Check Error", e);
             UI.fStatus.innerText = '🌾: ❌พบข้อผิดพลาด';
+            clearFarmTimers();
             STATE.farm.interval = setTimeout(checkFarmLoop, 60000);
         }
     }
 
     function startFarmCountdown(seconds) {
-        clearInterval(STATE.farm.interval);
+        clearFarmTimers();
         const targetEndTime = Date.now() + (seconds * 1000);
 
         const tick = () => {
             const rem = Math.ceil((targetEndTime - Date.now()) / 1000);
             if (rem <= 0) {
-                clearInterval(STATE.farm.interval);
+                clearFarmTimers();
                 checkFarmLoop();
                 return;
             }

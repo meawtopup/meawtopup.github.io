@@ -19,7 +19,7 @@
 - Auto Drone 3.6 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้ - TDD  
   [View Here](js/Auto-Drone-3.6.user.js) | [Feature](docs/FEATURES.md#auto-drone-36)  
 - Chat+ 1.2 | ฟังชั่นสำหรับหน้าแชท - TDD  
-  [View Here](js/Chat+.user.js) | [Feature](docs/FEATURES.md#chat)  
+  [View Here](js/Chat+.user.js) | [Feature](docs/FEATURES.md#chat-12)  
 - Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ - TDD  
   [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - DLnSS Button BB 3.2 | DL-Now/SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - BB  

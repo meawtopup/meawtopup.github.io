@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.3 | TDD
+// @name         Auto Drone 4.3.1 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.3
+// @version      4.3.1
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -300,7 +300,8 @@
     async function executeTicketCollection() {
     try {
         await fetch('/ticket.php?mod=get-ticket');
-        console.log('ส่งคำสั่งเก็บตั๋วเรียบร้อย');
+        console.log('เก็บตั๋วแล้ว รอ Server อัปเดต...');
+        await new Promise(r => setTimeout(r, 1000));
     } catch (e) {
         console.error('Error executing ticket', e);
     }

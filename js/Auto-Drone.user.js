@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.3.1 | TDD
+// @name         Auto Drone 4.3.2 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.3.1
+// @version      4.3.2
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -337,7 +337,8 @@
             const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
             const hIds = [];
             const pIds = [];
-            let maxElapsedSeconds = -1;
+            const remainingTimes = [];
+            const TARGET = 6 * 3600;
 
             for (let i = 1; i <= 9; i++) {
                 if (doc.querySelector(`[onclick*="action=store&ground=${i}"]`)) hIds.push(i);
@@ -347,37 +348,29 @@
             doc.querySelectorAll('.f10').forEach(el => {
                 const m = el.innerText.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);
                 if (m) {
-                    const s = (parseInt(m[1]) * 86400) + (parseInt(m[2]) * 3600) + (parseInt(m[3]) * 60) + parseInt(m[4]);
-                    if (s > maxElapsedSeconds) maxElapsedSeconds = s;
+                    const elapsed = (parseInt(m[1]) * 86400) + (parseInt(m[2]) * 3600) + (parseInt(m[3]) * 60) + parseInt(m[4]);
+                    const remaining = TARGET - elapsed;
+                    if (remaining > 0) remainingTimes.push(remaining);
                 }
             });
 
-            if (currentZen < 25000 && pIds.length > 0 && hIds.length === 0) {
-                UI.fStatus.innerText = '🌾: ❌ยอดเงิน Zen ต่ำกว่า 25,000';
-                if (STATE.farm.autoMode) toggleFarmAuto();
+            const minRemaining = remainingTimes.length > 0 ? Math.min(...remainingTimes) : 0;
+            let statusParts = [];
+            if (hIds.length > 0) statusParts.push(`✔️พร้อมเก็บ ${hIds.length}`);
+            if (minRemaining > 0) statusParts.push(`ยังรอผักโตอีก ${formatTime(minRemaining)}`);
+            
+            UI.fStatus.innerText = statusParts.length > 0 ? `🌾: ${statusParts.join('/')}` : '🌾: พร้อมใช้งาน';
+            updateBtn(UI.fBtn, hIds.length > 0 ? '🌾เก็บผัก' : '🌾ปลูกผัก', '#28a745', false);
+
+            if (STATE.farm.autoMode && hIds.length > 0) {
+                await manualCollectFarm();
                 return;
             }
 
-            if (hIds.length > 0 || pIds.length > 0) {
-                let statusText = '';
-                if (hIds.length > 0 && pIds.length > 0) statusText = `✔️พร้อมเก็บ ${hIds.length}/พร้อมปลูก ${pIds.length}`;
-                else if (hIds.length > 0) statusText = `✔️พร้อมเก็บ ${hIds.length}`;
-                else statusText = `✔️พร้อมปลูก ${pIds.length}`;
-
-                UI.fStatus.innerText = `🌾: ${statusText}`;
-                updateBtn(UI.fBtn, hIds.length > 0 ? '🌾เก็บผัก' : '🌾ปลูกผัก', '#28a745', false);
-
-                if (STATE.farm.autoMode) {
-                    await manualCollectFarm();
-                }
-                return;
-            }
-
-            if (maxElapsedSeconds >= 0) {
-                const TARGET = 6 * 3600;
-                let rem = TARGET - maxElapsedSeconds;
-                if (rem <= 0) rem = 5;
-                startFarmCountdown(rem);
+            if (minRemaining > 0) {
+                startFarmCountdown(minRemaining);
+            } else if (hIds.length === 0 && pIds.length > 0 && currentZen < 25000) {
+                UI.fStatus.innerText = '🌾: ❌เงินไม่พอปลูก';
             }
 
         } catch (e) {
@@ -399,7 +392,17 @@
                 checkFarmLoop();
                 return;
             }
-            UI.fStatus.innerText = `🌾: ❌รอผักโตอีก ${formatTime(rem)}`;
+            
+            const currentStatus = UI.fStatus.innerText;
+            const hasHarvest = currentStatus.includes('✔️พร้อมเก็บ');
+            const timeStr = formatTime(rem);
+            
+            if (hasHarvest) {
+                const harvestPart = currentStatus.split('/')[0];
+                UI.fStatus.innerText = `${harvestPart}/ยังรอผักโตอีก ${timeStr}`;
+            } else {
+                UI.fStatus.innerText = `🌾: ยังรอผักโตอีก ${timeStr}`;
+            }
         };
         tick();
         STATE.farm.interval = setInterval(tick, 1000);

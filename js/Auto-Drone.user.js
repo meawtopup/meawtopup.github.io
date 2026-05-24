@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.3.6 | TDD
+// @name         Auto Drone 4.3.7 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.3.6
+// @version      4.3.7
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -53,10 +53,10 @@
         });
 
         UI.tStatus = createStatusBadge('🎫: ⏳กำลังเช็คตั๋ว');
-        UI.tBtn = createBtn('🎫พร้อมใช้งาน', '#6c757d', true, manualCollectTicket);
+        UI.tBtn = createBtn('🎫รอเช็คสถานะ', '#6c757d', true, manualCollectTicket);
         UI.tAutoBtn = createBtn(`🎫โดรน: ${STATE.ticket.autoMode ? 'เปิด' : 'ปิด'}`, STATE.ticket.autoMode ? '#ff9800' : '#6c757d', false, toggleTicketAuto);
         UI.fStatus = createStatusBadge('🌾: ⏳กำลังเช็คฟาร์ม');
-        UI.fBtn = createBtn('🌾พร้อมใช้งาน', '#6c757d', true, manualCollectFarm);
+        UI.fBtn = createBtn('🌾รอเช็คสถานะ', '#6c757d', true, manualCollectFarm);
         UI.fAutoBtn = createBtn(`🌾โดรน: ${STATE.farm.autoMode ? 'เปิด' : 'ปิด'}`, STATE.farm.autoMode ? '#ff9800' : '#6c757d', false, toggleFarmAuto);
 
         container.append(

@@ -24,8 +24,8 @@
   [View Here](js/Domain-Fixer.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - DLnSS Button BB 3.2 | DL-Now/SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - BB  
   [View Here](js/DLnSS-Button-BB.user.js) | [Feature](docs/FEATURES.md#dlnss-button-BB-32)  
-- DLnSS Button TDD 1.0 | SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - TDD  
-  [View Here](js/DLnSS-Button-TDD.user.js) | [Feature](docs/FEATURES.md#dlnss-button-TDD-10)  
+- DLnSS Button TDD 1.1 | SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - TDD  
+  [View Here](js/DLnSS-Button-TDD.user.js) | [Feature](docs/FEATURES.md#dlnss-button-TDD-11)  
 <!--
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
   [View Here](js/Chat-Mods-4.8.user.js) | [Feature](docs/FEATURES.md#chat-mods-48)  

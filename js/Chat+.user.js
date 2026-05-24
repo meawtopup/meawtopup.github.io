@@ -8,8 +8,8 @@
 // @run-at       document-start
 // @icon         https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
 // @grant        none
-// @updateURL    https://github.com/meawtopup/meawtopup.github.io/blob/main/js/Chat+.user.js?raw=true
-// @downloadURL  https://github.com/meawtopup/meawtopup.github.io/blob/main/js/Chat+.user.js?raw=true
+// @updateURL    https://github.com/meawtopup/meawtopup.github.io/blob/main/js/Chat%2B.user.js?raw=true
+// @downloadURL  https://github.com/meawtopup/meawtopup.github.io/blob/main/js/Chat%2B.user.js?raw=true
 // ==/UserScript==
 
 /* global $ */

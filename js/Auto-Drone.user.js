@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.3.2 | TDD
+// @name         Auto Drone 4.3.3 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.3.2
+// @version      4.3.3
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -48,7 +48,8 @@
             fontSize: '11px',
             color: '#fff',
             marginLeft: '0px',
-            verticalAlign: 'middle'
+            verticalAlign: 'middle',
+            whiteSpace: 'nowrap'
         });
 
         UI.tStatus = createStatusBadge('🎫: ⏳กำลังเช็คตั๋ว');
@@ -88,6 +89,7 @@
             height: '23px',
             boxSizing: 'border-box',
             whiteSpace: 'nowrap',
+            flexShrink: 0,
             marginRight: '0px'
         });
         return el;
@@ -107,9 +109,16 @@
         el.disabled = disabled;
         el.onclick = onClick;
         Object.assign(el.style, {
-            padding: '3px 8px', fontSize: '11px', color: 'white',
-            background: bgColor, border: 'none', borderRadius: '4px',
-            cursor: disabled ? 'not-allowed' : 'pointer', marginRight: '0px'
+            padding: '3px 8px', 
+            fontSize: '11px', 
+            color: 'white',
+            background: bgColor, 
+            border: 'none', 
+            borderRadius: '4px',
+            cursor: disabled ? 'not-allowed' : 'pointer', 
+            marginRight: '0px',
+            whiteSpace: 'nowrap',
+            flexShrink: 0
         });
         return el;
     }
@@ -357,7 +366,7 @@
             const minRemaining = remainingTimes.length > 0 ? Math.min(...remainingTimes) : 0;
             let statusParts = [];
             if (hIds.length > 0) statusParts.push(`✔️พร้อมเก็บ ${hIds.length}`);
-            if (minRemaining > 0) statusParts.push(`ยังรอผักโตอีก ${formatTime(minRemaining)}`);
+            if (minRemaining > 0) statusParts.push(`รอโตอีก ${formatTime(minRemaining)}`);
             
             UI.fStatus.innerText = statusParts.length > 0 ? `🌾: ${statusParts.join('/')}` : '🌾: พร้อมใช้งาน';
             updateBtn(UI.fBtn, hIds.length > 0 ? '🌾เก็บผัก' : '🌾ปลูกผัก', '#28a745', false);
@@ -399,9 +408,9 @@
             
             if (hasHarvest) {
                 const harvestPart = currentStatus.split('/')[0];
-                UI.fStatus.innerText = `${harvestPart}/ยังรอผักโตอีก ${timeStr}`;
+                UI.fStatus.innerText = `${harvestPart}/รอโตอีก ${timeStr}`;
             } else {
-                UI.fStatus.innerText = `🌾: ยังรอผักโตอีก ${timeStr}`;
+                UI.fStatus.innerText = `🌾: รอโตอีก ${timeStr}`;
             }
         };
         tick();

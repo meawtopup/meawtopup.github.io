@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.3.3 | TDD
+// @name         Auto Drone 4.3.4 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.3.3
+// @version      4.3.4
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -369,7 +369,23 @@
             if (minRemaining > 0) statusParts.push(`รอโตอีก ${formatTime(minRemaining)}`);
             
             UI.fStatus.innerText = statusParts.length > 0 ? `🌾: ${statusParts.join('/')}` : '🌾: พร้อมใช้งาน';
-            updateBtn(UI.fBtn, hIds.length > 0 ? '🌾เก็บผัก' : '🌾ปลูกผัก', '#28a745', false);
+
+            const canHarvest = hIds.length > 0;
+            const canPlant = hIds.length === 0 && pIds.length > 0 && currentZen >= 25000;
+            const btnEnabled = canHarvest || canPlant;
+            
+            let btnText = '🌾พร้อมใช้งาน';
+            let btnColor = '#6c757d';
+
+            if (canHarvest) {
+                btnText = '🌾เก็บผัก';
+                btnColor = '#28a745';
+            } else if (canPlant) {
+                btnText = '🌾ปลูกผัก';
+                btnColor = '#28a745';
+            }
+
+            updateBtn(UI.fBtn, btnText, btnColor, !btnEnabled);
 
             if (STATE.farm.autoMode && hIds.length > 0) {
                 await manualCollectFarm();
@@ -380,6 +396,11 @@
                 startFarmCountdown(minRemaining);
             } else if (hIds.length === 0 && pIds.length > 0 && currentZen < 25000) {
                 UI.fStatus.innerText = '🌾: ❌เงินไม่พอปลูก';
+                if (STATE.farm.autoMode) {
+                    STATE.farm.autoMode = false;
+                    localStorage.setItem('tdd_farm_auto', 'false');
+                    updateBtn(UI.fAutoBtn, `🌾โดรน: ปิด`, '#6c757d', false);
+                }
             }
 
         } catch (e) {

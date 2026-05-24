@@ -9,6 +9,8 @@
 // @include        *://bearbit.*/details.php*
 // @icon           https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/iconbb48.png?raw=true
 // @grant          none
+// @updateURL    https://github.com/meawtopup/meawtopup.github.io/blob/main/js/DLnSS-Button-BB.user.js?raw=true
+// @downloadURL  https://github.com/meawtopup/meawtopup.github.io/blob/main/js/DLnSS-Button-BB.user.js?raw=true
 // ==/UserScript==
 
 (function () {

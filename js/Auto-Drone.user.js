@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.3.5 | TDD
+// @name         Auto Drone 4.3.6 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.3.5
+// @version      4.3.6
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -53,10 +53,10 @@
         });
 
         UI.tStatus = createStatusBadge('🎫: ⏳กำลังเช็คตั๋ว');
-        UI.tBtn = createBtn('🎫เก็บตั๋ว', '#6c757d', true, manualCollectTicket);
+        UI.tBtn = createBtn('🎫พร้อมใช้งาน', '#6c757d', true, manualCollectTicket);
         UI.tAutoBtn = createBtn(`🎫โดรน: ${STATE.ticket.autoMode ? 'เปิด' : 'ปิด'}`, STATE.ticket.autoMode ? '#ff9800' : '#6c757d', false, toggleTicketAuto);
         UI.fStatus = createStatusBadge('🌾: ⏳กำลังเช็คฟาร์ม');
-        UI.fBtn = createBtn('🌾เก็บผัก', '#6c757d', true, manualCollectFarm);
+        UI.fBtn = createBtn('🌾พร้อมใช้งาน', '#6c757d', true, manualCollectFarm);
         UI.fAutoBtn = createBtn(`🌾โดรน: ${STATE.farm.autoMode ? 'เปิด' : 'ปิด'}`, STATE.farm.autoMode ? '#ff9800' : '#6c757d', false, toggleFarmAuto);
 
         container.append(
@@ -203,7 +203,7 @@
         if (STATE.ticket.isWorking) return;
         clearTicketTimers();
         UI.tStatus.innerText = '🎫: ⏳กำลังเช็คตั๋ว';
-        updateBtn(UI.tBtn, '🎫เก็บตั๋ว', '#6c757d', true);
+        updateBtn(UI.tBtn, '🎫พร้อมใช้งาน', '#6c757d', true);
 
         try {
             const res = await fetch('/ticket.php');
@@ -285,6 +285,7 @@
         const h = target.getHours().toString().padStart(2, '0');
         const m = target.getMinutes().toString().padStart(2, '0');
         UI.tStatus.innerText = `🎫: ❌รอบถัดไป ${h}:${m}`;
+        updateBtn(UI.tBtn, '🎫พร้อมใช้งาน', '#6c757d', true);
 
         const diffMs = target.getTime() - Date.now();
         STATE.ticket.interval = setTimeout(checkTicketLoop, diffMs);
@@ -292,6 +293,7 @@
 
     function startTicketCountdown(seconds, prefix) {
         clearTicketTimers();
+        updateBtn(UI.tBtn, '🎫พร้อมใช้งาน', '#6c757d', true);
         const targetEndTime = Date.now() + (seconds * 1000);
         const tick = () => {
             const rem = Math.ceil((targetEndTime - Date.now()) / 1000);

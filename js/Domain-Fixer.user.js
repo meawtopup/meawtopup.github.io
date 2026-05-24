@@ -7,6 +7,8 @@
 // @match        *://*.torrentdd.net/*
 // @icon          https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
 // @grant        none
+// @updateURL    https://github.com/meawtopup/meawtopup.github.io/blob/main/js/Domain-Fixer.user.js?raw=true
+// @downloadURL  https://github.com/meawtopup/meawtopup.github.io/blob/main/js/Domain-Fixer.user.js?raw=true
 // @run-at       document-end
 // ==/UserScript==
 

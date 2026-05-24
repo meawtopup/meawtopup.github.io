@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.0 | TDD
+// @name         Auto Drone 4.1 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.0
+// @version      4.1
 // @description  ticket + farm parallel processing with fetch
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -14,7 +14,6 @@
 (function () {
     'use strict';
 
-    // --- Configuration & State ---
     const STATE = {
         ticket: {
             interval: null,
@@ -30,7 +29,6 @@
 
     let myUserId = null;
 
-    // --- UI Setup ---
     const UI = {
         container: null,
         tStatus: null, tBtn: null, tAutoBtn: null,
@@ -53,12 +51,9 @@
             verticalAlign: 'middle'
         });
 
-        // Ticket UI (ปรับให้สร้างกรอบสถานะแบบใหม่ที่เด่นชัดขึ้น)
         UI.tStatus = createStatusBadge('🎫: ⏳กำลังเช็คตั๋ว');
         UI.tBtn = createBtn('🎫เก็บตั๋ว', '#6c757d', true, manualCollectTicket);
         UI.tAutoBtn = createBtn(`🎫โดรน: ${STATE.ticket.autoMode ? 'เปิด' : 'ปิด'}`, STATE.ticket.autoMode ? '#ff9800' : '#6c757d', false, toggleTicketAuto);
-
-        // Farm UI (ปรับให้สร้างกรอบสถานะแบบใหม่ที่เด่นชัดขึ้น)
         UI.fStatus = createStatusBadge('🌾: ⏳กำลังเช็คฟาร์ม');
         UI.fBtn = createBtn('🌾เก็บผัก', '#6c757d', true, manualCollectFarm);
         UI.fAutoBtn = createBtn(`🌾โดรน: ${STATE.farm.autoMode ? 'เปิด' : 'ปิด'}`, STATE.farm.autoMode ? '#ff9800' : '#6c757d', false, toggleFarmAuto);
@@ -78,21 +73,20 @@
         }
     }
 
-    // ฟังก์ชันสร้างกรอบข้อความสถานะ (Status Badge) ดีไซน์ล้อไปกับรูปทรงปุ่มเพื่อไม่ให้กลืนกับพื้นหลัง
     function createStatusBadge(text) {
         const el = document.createElement('span');
         el.innerText = text;
         Object.assign(el.style, {
-            padding: '3px 8px', // ลดลงมาให้เท่ากับปุ่ม (BTN_BASE_STYLE เดิมของปุ่มคือ 3px 8px)
+            padding: '3px 8px',
             fontSize: '11px',
             color: '#ffffff',
             background: 'rgba(0, 0, 0, 0.4)',
             border: '1px solid rgba(255, 255, 255, 0.15)',
             borderRadius: '4px',
-            display: 'inline-flex', // เปลี่ยนเป็น inline-flex เพื่อให้แนวตั้งขึงตึงสม่ำเสมอกับวัตถุข้างเคียง
-            alignItems: 'center', // จัดตัวหนังสือและไอคอนให้อยู่กึ่งกลางในแนวตั้งพอดี
-            height: '23px', // ล็อกความสูงกล่อง (เมื่อรวม padding/border จะพอดีกับปุ่มมาตรฐาน)
-            boxSizing: 'border-box', // บังคับให้บราวเซอร์นับรวม border เข้าไปในความสูง 24px จะได้ไม่ล้นออกมา
+            display: 'inline-flex',
+            alignItems: 'center',
+            height: '23px',
+            boxSizing: 'border-box',
             whiteSpace: 'nowrap',
             marginRight: '0px'
         });
@@ -127,7 +121,6 @@
         el.style.cursor = disabled ? 'not-allowed' : 'pointer';
     }
 
-    // --- Helper Functions ---
     async function getUserId() {
         if (myUserId) return myUserId;
         const html = document.body.innerHTML;
@@ -167,9 +160,6 @@
         return `${h}:${m}:${s}`;
     }
 
-    // ==========================================
-    // TICKETS LOGIC
-    // ==========================================
     function toggleTicketAuto() {
         STATE.ticket.autoMode = !STATE.ticket.autoMode;
         localStorage.setItem('tdd_ticket_auto', STATE.ticket.autoMode);
@@ -191,15 +181,12 @@
         updateBtn(UI.tBtn, '🎫เก็บตั๋ว', '#6c757d', true);
 
         try {
-            // 1. Fetch ticket page for 3HR count (แก้ให้ดึงข้อความดิบมาเช็ค Regex ป้องกันข้อผิดพลาด DOM)
             const res = await fetch('/ticket.php');
             const rawText = await res.text();
             const html = new DOMParser().parseFromString(rawText, 'text/html');
-
             const hrMatch = rawText.match(/CN(?:&gt;|>).*?class="text-success ml-2 mr-2">(\d+)<\/span>/s);
             const hrCount = hrMatch ? parseInt(hrMatch[1]) : 0;
 
-            // 2. Check < 5 logic -> mypeers
             if (hrCount < 5) {
                 const uid = await getUserId();
                 if (uid) {
@@ -213,7 +200,7 @@
                             if (!isOver3Hr) {
                                 const timeText = col.innerText.trim();
                                 const seededSec = parseSeedTimeSeconds(timeText);
-                                const neededSec = 10800 - seededSec; // 3 hours
+                                const neededSec = 10800 - seededSec;
                                 if (neededSec > 0) {
                                     startTicketCountdown(neededSec, '❌3HR');
                                     return;
@@ -224,14 +211,12 @@
                 }
             }
 
-            // 3. Check already collected this round
             const infoText = html.querySelector('.text-danger.f12');
             if (infoText && infoText.innerText.includes('รับตั๋วสุ่มกาชาไปแล้ว')) {
                 calcNextRoundTime();
                 return;
             }
 
-            // 4. Check Cooldown
             const historyRows = html.querySelectorAll('.table-responsive table tbody tr');
             if (historyRows.length > 1) {
                 const timeStr = historyRows[1].querySelectorAll('td')[2]?.innerText.trim();
@@ -246,7 +231,6 @@
                 }
             }
 
-            // All clear
             UI.tStatus.innerText = '🎫: ✔️ตั๋วพร้อมเก็บ';
             updateBtn(UI.tBtn, '🎫เก็บตั๋ว', '#28a745', false);
 
@@ -257,7 +241,7 @@
         } catch (e) {
             console.error("Ticket Check Error", e);
             UI.tStatus.innerText = '🎫: ❌พบข้อผิดพลาด';
-            STATE.ticket.interval = setTimeout(checkTicketLoop, 60000); // Retry 1 min
+            STATE.ticket.interval = setTimeout(checkTicketLoop, 60000);
         }
     }
 
@@ -265,10 +249,10 @@
         const now = new Date();
         let target = new Date(now);
         if (now.getHours() < 12) {
-            target.setHours(12, 0, 5, 0); // เที่ยงตรง + 5 วิ
+            target.setHours(12, 0, 5, 0);
         } else {
             target.setDate(target.getDate() + 1);
-            target.setHours(0, 0, 5, 0); // เที่ยงคืน + 5 วิ
+            target.setHours(0, 0, 5, 0);
         }
 
         const h = target.getHours().toString().padStart(2, '0');
@@ -281,9 +265,7 @@
 
     function startTicketCountdown(seconds, prefix) {
         clearInterval(STATE.ticket.interval);
-        // แก้ไข: ใช้เวลาจริงระบบฮาร์ดแวร์ล็อกเป้าหมายปลายทาง ป้องกันบราวเซอร์ Sleep ทำเวลาเพี้ยน
         const targetEndTime = Date.now() + (seconds * 1000);
-
         const tick = () => {
             const rem = Math.ceil((targetEndTime - Date.now()) / 1000);
             if (rem <= 0) {
@@ -307,7 +289,7 @@
                 const form = btn.closest('form');
                 if (form) {
                     const formData = new FormData(form);
-                    if(btn.name) formData.append(btn.name, btn.value || '');
+                    if (btn.name) formData.append(btn.name, btn.value || '');
 
                     await fetch(form.action || '/ticket.php', {
                         method: form.method || 'POST',
@@ -317,16 +299,12 @@
                     await fetch('/ticket.php?action=get');
                 }
             }
-        } catch(e) { console.error('Error executing ticket', e); }
+        } catch (e) { console.error('Error executing ticket', e); }
 
         STATE.ticket.isWorking = false;
         checkTicketLoop();
     }
 
-
-    // ==========================================
-    // FARM LOGIC
-    // ==========================================
     function toggleFarmAuto() {
         STATE.farm.autoMode = !STATE.farm.autoMode;
         localStorage.setItem('tdd_farm_auto', STATE.farm.autoMode);
@@ -350,11 +328,8 @@
         try {
             const res = await fetch(`/farm.php?t=${Date.now()}`);
             const doc = await textToDoc(res);
-
-            // Check Zen
             const moneyEl = doc.getElementById('money');
             const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
-
             const hIds = [];
             const pIds = [];
             let maxElapsedSeconds = -1;
@@ -374,7 +349,7 @@
 
             if (currentZen < 25000 && pIds.length > 0 && hIds.length === 0) {
                 UI.fStatus.innerText = '🌾: ❌ยอดเงิน Zen ต่ำกว่า 25,000';
-                if(STATE.farm.autoMode) toggleFarmAuto();
+                if (STATE.farm.autoMode) toggleFarmAuto();
                 return;
             }
 
@@ -393,11 +368,10 @@
                 return;
             }
 
-            // ไม่พร้อมเก็บ/ปลูก ต้องนับถอยหลัง
             if (maxElapsedSeconds >= 0) {
                 const TARGET = 6 * 3600;
                 let rem = TARGET - maxElapsedSeconds;
-                if (rem <= 0) rem = 5; // safety offset
+                if (rem <= 0) rem = 5;
                 startFarmCountdown(rem);
             }
 
@@ -410,7 +384,6 @@
 
     function startFarmCountdown(seconds) {
         clearInterval(STATE.farm.interval);
-        // แก้ไข: ใช้เวลาจริงระบบฮาร์ดแวร์ล็อกเป้าหมายปลายทาง ป้องกันบราวเซอร์ Sleep ทำเวลาเพี้ยน
         const targetEndTime = Date.now() + (seconds * 1000);
 
         const tick = () => {
@@ -434,13 +407,11 @@
             for (let i = 1; i <= 9; i++) {
                 if (doc.querySelector(`[onclick*="action=store&ground=${i}"]`)) hIds.push(i);
             }
-            // เก็บผัก
             for (let id of hIds) {
                 await fetch(`/farm.php?action=store&ground=${id}`);
                 await new Promise(r => setTimeout(r, 400));
             }
 
-            // เช็คและปลูก
             doc = await textToDoc(await fetch(`/farm.php?t=${Date.now()}`));
             const moneyEl = doc.getElementById('money');
             const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
@@ -461,13 +432,11 @@
         checkFarmLoop();
     }
 
-    // --- Utilities ---
     async function textToDoc(res) {
         const text = await res.text();
         return new DOMParser().parseFromString(text, 'text/html');
     }
 
-    // --- Start ---
     initUI();
     setTimeout(() => {
         checkTicketLoop();

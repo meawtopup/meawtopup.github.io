@@ -1,13 +1,15 @@
 // ==UserScript==
-// @name         Chat+ 1.0 | TDD
+// @name         Chat+ 1.1 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Chat+ Modifyer
 // @author       MObyEX
 // @include      *://*.torrentdd.*/chat.php*
 // @run-at       document-start
 // @icon         https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
 // @grant        none
+// @updateURL    https://github.com/meawtopup/meawtopup.github.io/blob/main/js/Chat+.user.js?raw=true
+// @downloadURL  https://github.com/meawtopup/meawtopup.github.io/blob/main/js/Chat+.user.js?raw=true
 // ==/UserScript==
 
 /* global $ */
@@ -39,6 +41,43 @@
         }
         return originalOpen.apply(this, arguments);
     };
+
+    function showSSPopup(imgUrl) {
+        let overlay = document.createElement('div');
+        overlay.style = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; display:flex; align-items:center; justify-content:center; cursor:pointer;';
+        let container = document.createElement('div');
+        container.style = 'position:relative; background:#fff; padding:5px; border-radius:5px; max-height:95vh; max-width:95vw; box-shadow:0 0 20px rgba(0,0,0,0.5); cursor:default; overflow:hidden; display:flex; flex-direction:column; align-items:center;';
+        let img = document.createElement('img');
+        img.src = imgUrl;
+        img.style = 'height:auto; max-height:82vh; width:auto; max-width:90vw; display:block; border-radius:3px; object-fit:contain;';
+        let closeBtn = document.createElement('div');
+        closeBtn.innerHTML = 'CLOSE';
+        closeBtn.style = 'margin-top:10px; margin-bottom:5px; padding:0 20px; background:#ff4444; color:#fff; text-align:center; line-height:26px; font-size:12px; font-weight:bold; cursor:pointer; border-radius:3px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);';
+        closeBtn.onclick = () => document.body.removeChild(overlay);
+        overlay.onclick = (e) => { if (e.target === overlay) document.body.removeChild(overlay); };
+        container.appendChild(img);
+        container.appendChild(closeBtn);
+        overlay.appendChild(container);
+        document.body.appendChild(overlay);
+    }
+
+    function initChatImagePopup() {
+        const chatScreen = document.querySelector('.chat-screen');
+        if (!chatScreen) return;
+
+        chatScreen.addEventListener('click', function (e) {
+            const link = e.target.closest('.box-msg span a, .box-msg .text-break-all > span a');
+            if (!link) return;
+
+            const url = link.href;
+            if (url.match(/\.(jpeg|jpg|gif|png|webp|bmp)(?:\?.*)?$/i)) {
+                if (e.button === 0 && !e.ctrlKey && !e.shiftKey && !e.metaKey) {
+                    e.preventDefault();
+                    showSSPopup(url);
+                }
+            }
+        });
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -98,7 +137,7 @@
                         transition: background-color 0.2s;
                     }
                     img.btn-copy:hover {
-                        background-color: #d1d1d1; 
+                        background-color: #d1d1d1;
                     }
                 `;
             }
@@ -115,10 +154,10 @@
             `;
 
             css += `
-                #audio { 
-                    opacity: 0 !important; 
-                    pointer-events: none !important; 
-                    position: absolute !important; 
+                #audio {
+                    opacity: 0 !important;
+                    pointer-events: none !important;
+                    position: absolute !important;
                     height: 0px !important;
                     width: 0px !important;
                     overflow: hidden !important;
@@ -129,12 +168,12 @@
 
             if (settings.radio === 'Off') {
                 css += `
-                    #audio, #radio, 
-                    a[href*="request_song_widget.php"], 
-                    embed[src*="radio"], 
-                    iframe[src*="radio"] { 
-                        display: none !important; 
-                        visibility: hidden !important; 
+                    #audio, #radio,
+                    a[href*="request_song_widget.php"],
+                    embed[src*="radio"],
+                    iframe[src*="radio"] {
+                        display: none !important;
+                        visibility: hidden !important;
                         opacity: 0 !important;
                         pointer-events: none !important;
                     }
@@ -381,6 +420,7 @@
 
         applySettingsUI();
         buildMenu();
+        initChatImagePopup();
         let radioRetry = 0;
         const checkRadio = setInterval(() => {
             if ($('#audio').length > 0 || radioRetry > 100) {

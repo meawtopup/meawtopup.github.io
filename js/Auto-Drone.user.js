@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Auto Drone 3.6 | TDD
+// @name         Auto Drone 4.0 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      3.6
-// @description  ticket + farm
+// @version      4.0
+// @description  ticket + farm parallel processing with fetch
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
 // @icon         https://github.com/meawtopup/meawtopup.github.io/blob/main/assets/icon48.png?raw=true
@@ -14,492 +14,356 @@
 (function () {
     'use strict';
 
-    if (!window.location.pathname.includes('/chat.php')) return;
-
-    let autoCheckTimeout = null;
-    let ticketCheckTimer = null;
-    let ticketCountdownInterval = null;
-    let farmCheckTimer = null;
-    let farmCountdownTimer = null;
-    let isWorking = false;
-    let reloadTimer = null;
-    let farmRetryCount = 0;
-
-    const BTN_BASE_STYLE = {
-        padding: '3px 8px',
-        fontSize: '11px',
-        whiteSpace: 'nowrap',
-        color: 'white',
-        border: 'none',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        transition: 'background 0.3s',
-        marginRight: '5px'
+    // --- Configuration & State ---
+    const STATE = {
+        ticket: {
+            interval: null,
+            isWorking: false,
+            autoMode: localStorage.getItem('tdd_ticket_auto') === 'true'
+        },
+        farm: {
+            interval: null,
+            isWorking: false,
+            autoMode: localStorage.getItem('tdd_farm_auto') === 'true'
+        }
     };
 
-    function applyStyle(el, color, extra = {}) {
-        if (!el) return;
-        Object.assign(el.style, BTN_BASE_STYLE, { background: color }, extra);
-    }
+    let myUserId = null;
 
-    function clearAllTimers() {
-        if (autoCheckTimeout) clearTimeout(autoCheckTimeout);
-        if (ticketCheckTimer) clearTimeout(ticketCheckTimer);
-        if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
-        if (farmCheckTimer) clearTimeout(farmCheckTimer);
-        if (reloadTimer) clearInterval(reloadTimer);
-        if (farmCountdownTimer) {
-            clearInterval(farmCountdownTimer);
-            farmCountdownTimer = null;
+    // --- UI Setup ---
+    const UI = {
+        container: null,
+        tStatus: null, tBtn: null, tAutoBtn: null,
+        fStatus: null, fBtn: null, fAutoBtn: null
+    };
+
+    function initUI() {
+        const old = document.getElementById('tdd-bot-container');
+        if (old) old.remove();
+
+        const container = document.createElement('div');
+        container.id = 'tdd-bot-container';
+        Object.assign(container.style, {
+            display: 'inline-flex',
+            gap: '5px',
+            alignItems: 'center',
+            fontSize: '11px',
+            color: '#fff',
+            marginLeft: '0px',
+            verticalAlign: 'middle'
+        });
+
+        // Ticket UI (ปรับให้สร้างกรอบสถานะแบบใหม่ที่เด่นชัดขึ้น)
+        UI.tStatus = createStatusBadge('🎫: ⏳กำลังเช็คตั๋ว');
+        UI.tBtn = createBtn('🎫เก็บตั๋ว', '#6c757d', true, manualCollectTicket);
+        UI.tAutoBtn = createBtn(`🎫โดรน: ${STATE.ticket.autoMode ? 'เปิด' : 'ปิด'}`, STATE.ticket.autoMode ? '#ff9800' : '#6c757d', false, toggleTicketAuto);
+
+        // Farm UI (ปรับให้สร้างกรอบสถานะแบบใหม่ที่เด่นชัดขึ้น)
+        UI.fStatus = createStatusBadge('🌾: ⏳กำลังเช็คฟาร์ม');
+        UI.fBtn = createBtn('🌾เก็บผัก', '#6c757d', true, manualCollectFarm);
+        UI.fAutoBtn = createBtn(`🌾โดรน: ${STATE.farm.autoMode ? 'เปิด' : 'ปิด'}`, STATE.farm.autoMode ? '#ff9800' : '#6c757d', false, toggleFarmAuto);
+
+        container.append(
+            UI.tStatus, UI.tBtn, UI.tAutoBtn,
+            createSpan(' | '),
+            UI.fStatus, UI.fBtn, UI.fAutoBtn
+        );
+
+        const menuToggler = document.querySelector('button.navbar-toggler[data-toggle="minimize"]');
+        if (menuToggler) {
+            menuToggler.parentNode.insertBefore(container, menuToggler.nextSibling);
+        } else {
+            Object.assign(container.style, { position: 'fixed', top: '10px', right: '10px', background: 'rgba(0,0,0,0.8)', padding: '5px 10px', borderRadius: '4px', zIndex: '9999' });
+            document.body.appendChild(container);
         }
     }
 
-    async function get3HRCount() {
-        try {
-            const response = await fetch('ticket.php');
-            const html = await response.text();
-            const regex = /CN(?:&gt;|>).*?class="text-success ml-2 mr-2">(\d+)<\/span>/s;
-            const match = html.match(regex);
-            if (match) return parseInt(match[1]);
-        } catch (e) {
-            console.error("❌ Fetch Error:", e);
-        }
-        return 0;
+    // ฟังก์ชันสร้างกรอบข้อความสถานะ (Status Badge) ดีไซน์ล้อไปกับรูปทรงปุ่มเพื่อไม่ให้กลืนกับพื้นหลัง
+    function createStatusBadge(text) {
+        const el = document.createElement('span');
+        el.innerText = text;
+        Object.assign(el.style, {
+            padding: '3px 8px', // ลดลงมาให้เท่ากับปุ่ม (BTN_BASE_STYLE เดิมของปุ่มคือ 3px 8px)
+            fontSize: '11px',
+            color: '#ffffff',
+            background: 'rgba(0, 0, 0, 0.4)',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            borderRadius: '4px',
+            display: 'inline-flex', // เปลี่ยนเป็น inline-flex เพื่อให้แนวตั้งขึงตึงสม่ำเสมอกับวัตถุข้างเคียง
+            alignItems: 'center', // จัดตัวหนังสือและไอคอนให้อยู่กึ่งกลางในแนวตั้งพอดี
+            height: '23px', // ล็อกความสูงกล่อง (เมื่อรวม padding/border จะพอดีกับปุ่มมาตรฐาน)
+            boxSizing: 'border-box', // บังคับให้บราวเซอร์นับรวม border เข้าไปในความสูง 24px จะได้ไม่ล้นออกมา
+            whiteSpace: 'nowrap',
+            marginRight: '0px'
+        });
+        return el;
     }
 
-    async function fetchFarmDoc() {
+    function createSpan(text) {
+        const el = document.createElement('span');
+        el.innerText = text;
+        el.style.marginRight = '0px';
+        el.style.color = 'rgba(255, 255, 255, 0.5)';
+        return el;
+    }
+
+    function createBtn(text, bgColor, disabled, onClick) {
+        const el = document.createElement('button');
+        el.innerText = text;
+        el.disabled = disabled;
+        el.onclick = onClick;
+        Object.assign(el.style, {
+            padding: '3px 8px', fontSize: '11px', color: 'white',
+            background: bgColor, border: 'none', borderRadius: '4px',
+            cursor: disabled ? 'not-allowed' : 'pointer', marginRight: '0px'
+        });
+        return el;
+    }
+
+    function updateBtn(el, text, bgColor, disabled) {
+        el.innerText = text;
+        el.style.background = bgColor;
+        el.disabled = disabled;
+        el.style.cursor = disabled ? 'not-allowed' : 'pointer';
+    }
+
+    // --- Helper Functions ---
+    async function getUserId() {
+        if (myUserId) return myUserId;
+        const html = document.body.innerHTML;
+        const match = html.match(/userdetails\.php\?id=(\d+)/);
+        if (match) {
+            myUserId = match[1];
+            return myUserId;
+        }
         try {
-            const res = await fetch('/farm.php?t=' + Date.now());
+            const res = await fetch('/');
             const text = await res.text();
-            return new DOMParser().parseFromString(text, 'text/html');
-        } catch (e) { return document; }
+            const m = text.match(/userdetails\.php\?id=(\d+)/);
+            if (m) myUserId = m[1];
+        } catch (e) { console.error('Get UserID failed', e); }
+        return myUserId;
     }
 
-    function getHarvestableIDs(doc) {
-        let ids = [];
-        for (let i = 1; i <= 9; i++) {
-            if (doc.querySelector(`[onclick*="action=store&ground=${i}"]`)) ids.push(i);
+    function parseSeedTimeSeconds(timeStr) {
+        if (!timeStr) return 0;
+        let total = 0;
+        const dMatch = timeStr.match(/(\d+)d/);
+        if (dMatch) total += parseInt(dMatch[1]) * 86400;
+        const tMatch = timeStr.match(/(\d{2}):(\d{2}):(\d{2})/);
+        if (tMatch) {
+            total += parseInt(tMatch[1]) * 3600 + parseInt(tMatch[2]) * 60 + parseInt(tMatch[3]);
+        } else {
+            const t2Match = timeStr.match(/(\d{2}):(\d{2})/);
+            if (t2Match) total += parseInt(t2Match[1]) * 60 + parseInt(t2Match[2]);
         }
-        return ids;
+        return total;
     }
 
-    function getPlantableIDs(doc) {
-        let ids = [];
-        for (let i = 1; i <= 9; i++) {
-            if (doc.querySelector(`[onclick*="action=seed&ground=${i}"]`)) ids.push(i);
-        }
-        return ids;
+    function formatTime(seconds) {
+        const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+        const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        return `${h}:${m}:${s}`;
     }
 
-    function getBuyableIDs(doc) {
-        let ids = [];
-        for (let i = 1; i <= 9; i++) {
-            if (doc.querySelector(`[onclick*="action=buy&ground=${i}"]`)) ids.push(i);
-        }
-        return ids;
+    // ==========================================
+    // TICKETS LOGIC
+    // ==========================================
+    function toggleTicketAuto() {
+        STATE.ticket.autoMode = !STATE.ticket.autoMode;
+        localStorage.setItem('tdd_ticket_auto', STATE.ticket.autoMode);
+        updateBtn(UI.tAutoBtn, `🎫โดรน: ${STATE.ticket.autoMode ? 'เปิด' : 'ปิด'}`, STATE.ticket.autoMode ? '#ff9800' : '#6c757d', false);
+        if (STATE.ticket.autoMode) checkTicketLoop();
     }
 
-    async function processActions(ids, actionType) {
-        for (let id of ids) {
-            await fetch(`/farm.php?action=${actionType}&ground=${id}`);
-            await new Promise(r => setTimeout(r, 500));
-        }
+    async function manualCollectTicket() {
+        if (STATE.ticket.isWorking || UI.tBtn.disabled) return;
+        STATE.ticket.isWorking = true;
+        updateBtn(UI.tBtn, '⏳กำลังเก็บ...', '#17a2b8', true);
+        await executeTicketCollection();
     }
 
-    function startReloadCountdown(fromSource = 'farm') {
-        if (fromSource === 'ticket' && isWorking) return;
+    async function checkTicketLoop() {
+        if (STATE.ticket.isWorking) return;
+        clearInterval(STATE.ticket.interval);
+        UI.tStatus.innerText = '🎫: ⏳กำลังเช็คตั๋ว';
+        updateBtn(UI.tBtn, '🎫เก็บตั๋ว', '#6c757d', true);
 
-        clearAllTimers();
-        if (reloadTimer) clearInterval(reloadTimer);
+        try {
+            // 1. Fetch ticket page for 3HR count (แก้ให้ดึงข้อความดิบมาเช็ค Regex ป้องกันข้อผิดพลาด DOM)
+            const res = await fetch('/ticket.php');
+            const rawText = await res.text();
+            const html = new DOMParser().parseFromString(rawText, 'text/html');
 
-        const container = document.getElementById('tdd-farm-bot-item-content');
-        if (!container) { location.reload(); return; }
+            const hrMatch = rawText.match(/CN(?:&gt;|>).*?class="text-success ml-2 mr-2">(\d+)<\/span>/s);
+            const hrCount = hrMatch ? parseInt(hrMatch[1]) : 0;
 
-        let seconds = 10;
-        const updateUI = () => {
-            container.innerHTML = `<span style="color:#ffeb3b; font-weight:bold;">⚠️ รีโหลดใน ${seconds} (จาก: ${fromSource}) ⚠️</span>`;
-            if (seconds <= 0) {
-                clearInterval(reloadTimer);
-                location.reload();
-            }
-            seconds--;
-        };
-        updateUI();
-        reloadTimer = setInterval(updateUI, 1000);
-    }
-
-    async function initBot() {
-        clearAllTimers();
-        const oldContainer = document.getElementById('tdd-farm-bot-item');
-        if (oldContainer) oldContainer.remove();
-
-        const container = document.createElement('li');
-        container.id = 'tdd-farm-bot-item';
-        container.className = 'nav-item d-flex align-items-center';
-
-        const content = document.createElement('div');
-        content.id = 'tdd-farm-bot-item-content';
-        content.style = 'display: flex; align-items: center; gap: 6px; margin-right: 8px; font-size: 12px; color: #fff;';
-        container.appendChild(content);
-
-
-        const hrBtn = document.createElement('button');
-        const tBtn = document.createElement('button');
-        const tAutoBtn = document.createElement('button');
-
-        applyStyle(hrBtn, '#6f42c1');
-        hrBtn.innerHTML = '🎫 3HR: ...';
-
-        applyStyle(tBtn, '#17a2b8');
-        tBtn.innerHTML = '⏳ เตรียมการ...';
-
-        let isTicketAuto = localStorage.getItem('tdTicketAuto') === 'true';
-        applyStyle(tAutoBtn, isTicketAuto ? '#ff9800' : '#6c757d');
-        tAutoBtn.innerHTML = isTicketAuto ? '🎫 โดรน: เปิด' : '🎫 โดรน: ปิด';
-
-        hrBtn.onclick = () => {
-            if (isWorking) return;
-            localStorage.removeItem('tdNextTicketCheck');
-            checkTicketStatus();
-        };
-
-        tBtn.onclick = () => {
-            if (isWorking || tBtn.disabled) return;
-            const savedNextCheck = localStorage.getItem('tdNextTicketCheck');
-            if (savedNextCheck || ticketCountdownInterval) {
-                console.log("Manual Reset: Clearing ticket countdown.");
-                localStorage.removeItem('tdNextTicketCheck');
-                location.reload();
-                return;
-            }
-            if (tBtn.getAttribute('data-ready') === 'true') collectTicket();
-            else checkTicketStatus();
-        };
-
-        tAutoBtn.onclick = () => {
-            isTicketAuto = !isTicketAuto;
-            localStorage.setItem('tdTicketAuto', isTicketAuto);
-            applyStyle(tAutoBtn, isTicketAuto ? '#ff9800' : '#6c757d');
-            tAutoBtn.innerHTML = isTicketAuto ? '🎫 โดรน: เปิด' : '🎫 โดรน: ปิด';
-            if (isTicketAuto) checkTicketStatus();
-        };
-
-        function getLastCollectionTime(doc) {
-            try {
-                const rows = doc.querySelectorAll('.table-responsive table tbody tr');
-                if (rows.length > 1) {
-                    const timeStr = rows[1].querySelectorAll('td')[2]?.innerText.trim();
-                    if (timeStr) return new Date(timeStr.replace(/-/g, '/')).getTime();
-                }
-            } catch (e) { console.error("❌ Parse Table Error:", e); }
-            return 0;
-        }
-
-        async function checkTicketStatus() {
-            if (ticketCheckTimer) clearTimeout(ticketCheckTimer);
-            if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
-
-            hrBtn.innerHTML = '🎫 กำลังเช็ค 3HR...';
-            const count = await get3HRCount();
-            hrBtn.innerHTML = `🎫 3HR มี ${count} รายการ`;
-
-            const savedNextCheck = localStorage.getItem('tdNextTicketCheck');
-            if (savedNextCheck && Date.now() < parseInt(savedNextCheck)) {
-                const diff = parseInt(savedNextCheck) - Date.now();
-                const label = diff > 300000 ? "รอเช็ค 3HR ในอีก" : "เตรียมเก็บตั๋ว";
-                runTicketCountdown(parseInt(savedNextCheck), label);
-                return;
-            }
-
-            if (count < 5) {
-                tBtn.innerHTML = '🎫 ตั๋วไม่พร้อมเก็บ';
-                applyStyle(tBtn, '#dc3545');
-                tBtn.disabled = true;
-                tBtn.setAttribute('data-ready', 'false');
-
-                const nextCheckTime = Date.now() + 900000;
-                localStorage.setItem('tdNextTicketCheck', nextCheckTime);
-                runTicketCountdown(nextCheckTime, "รอเช็ค 3HR ในอีก");
-                return;
-            }
-
-            tBtn.disabled = true;
-            tBtn.innerHTML = '⏳ เช็คประวัติ...';
-
-            try {
-                const res = await fetch('/ticket.php');
-                const text = await res.text();
-                const doc = new DOMParser().parseFromString(text, 'text/html');
-                const infoText = doc.querySelector('.text-danger.f12');
-                let already = infoText?.innerText.includes('รับตั๋วสุ่มกาชาไปแล้ว');
-
-                if (already) {
-                    tBtn.innerHTML = '🎫 เก็บตั๋วรอบนี้ไปแล้ว';
-                    applyStyle(tBtn, '#6c757d');
-                    tBtn.disabled = false;
-                    await scheduleNextTicketCheck(true);
-                    return;
-                }
-
-                const lastTime = getLastCollectionTime(doc);
-                const cooldownMs = 3 * 60 * 60 * 1000;
-                const nextAvailable = lastTime + cooldownMs;
-                if (Date.now() < nextAvailable) {
-                    tBtn.innerHTML = '🎫 ติดคูลดาวน์ 3 ชม.';
-                    applyStyle(tBtn, '#6c757d');
-                    localStorage.setItem('tdNextTicketCheck', nextAvailable);
-                    runTicketCountdown(nextAvailable, "คูลดาวน์ 3 ชม.");
-                    return;
-                }
-
-                const readyBtn = doc.querySelector('button.get-ticket');
-                let status = readyBtn ? `พร้อมเก็บ ${readyBtn.innerText.match(/(\d+)/)?.[1] || ''} ชิ้น` : 'ไม่มีตั๋วให้เก็บ';
-                tBtn.innerHTML = `🎫 ${status}`;
-                applyStyle(tBtn, readyBtn ? '#28a745' : '#dc3545');
-                tBtn.setAttribute('data-ready', readyBtn ? 'true' : 'false');
-                tBtn.disabled = false;
-                if (readyBtn && isTicketAuto && !isWorking) collectTicket();
-            } catch (e) {
-                tBtn.innerHTML = '🎫 ข้อผิดพลาด';
-                applyStyle(tBtn, '#dc3545');
-                tBtn.disabled = false;
-            }
-        }
-
-        function collectTicket() {
-            if (isWorking) return;
-            isWorking = true;
-            tBtn.disabled = true;
-            tBtn.innerHTML = '🎫 กำลังเก็บตั๋ว...';
-
-            const safetyTimeout = setTimeout(() => {
-                if (isWorking) {
-                    isWorking = false;
-                    checkTicketStatus();
-                    console.log("Ticket safety timeout reached.");
-                }
-            }, 8000);
-
-            let iframe = document.getElementById('tdd-ticket-iframe') || document.createElement('iframe');
-            iframe.id = 'tdd-ticket-iframe';
-            iframe.style.display = 'none';
-            if (!iframe.parentNode) document.body.appendChild(iframe);
-
-            iframe.onload = () => {
-                try {
-                    const idoc = iframe.contentDocument || iframe.contentWindow.document;
-                    const btn = idoc.querySelector('button.get-ticket');
-                    if (btn) {
-                        btn.click();
-                        localStorage.removeItem('tdNextTicketCheck');
-                        setTimeout(() => {
-                            clearTimeout(safetyTimeout);
-                            isWorking = false;
-                            startReloadCountdown('ticket');
-                        }, 1500);
-                    } else {
-                        clearTimeout(safetyTimeout);
-                        isWorking = false;
-                        checkTicketStatus();
-                    }
-                } catch (e) {
-                    clearTimeout(safetyTimeout);
-                    isWorking = false;
-                    startReloadCountdown('ticket');
-                }
-            };
-            iframe.src = '/ticket.php';
-        }
-
-        function runTicketCountdown(targetTimestamp, label = "รอเช็คตั๋ว") {
-            if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
-            ticketCountdownInterval = setInterval(() => {
-                const remaining = Math.ceil((targetTimestamp - Date.now()) / 1000);
-                if (remaining <= 0) {
-                    clearInterval(ticketCountdownInterval);
-                    localStorage.removeItem('tdNextTicketCheck');
-                    checkTicketStatus();
-                } else {
-                    const h = Math.floor(remaining / 3600);
-                    const m = Math.floor((remaining % 3600) / 60);
-                    const s = remaining % 60;
-                    let timeStr = h > 0
-                        ? `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
-                        : `${m}:${s.toString().padStart(2, '0')}`;
-                    if (label.includes("เตรียม")) {
-                        tBtn.innerHTML = `🎫 ${label}: ${remaining}s`;
-                        applyStyle(tBtn, '#ff9800');
-                    } else {
-                        tBtn.innerHTML = `🎫 ${label}: ${timeStr}`;
-                        applyStyle(tBtn, '#6c757d');
-                    }
-                    tBtn.disabled = false;
-                }
-            }, 1000);
-        }
-
-        async function scheduleNextTicketCheck(isAlreadyCollected) {
-            if (ticketCheckTimer) clearTimeout(ticketCheckTimer);
-            if (ticketCountdownInterval) clearInterval(ticketCountdownInterval);
-
-            if (isAlreadyCollected === false) {
-                checkTicketStatus();
-                return;
-            }
-
-            const now = new Date();
-            let target = new Date(now);
-
-            if (now.getHours() < 12) {
-                target.setHours(12, 0, 5, 0);
-            } else {
-                target.setDate(target.getDate() + 1);
-                target.setHours(0, 0, 5, 0);
-            }
-
-            const diff = target.getTime() - now.getTime();
-            const fiveMinutes = 5 * 60 * 1000;
-
-            if (diff <= fiveMinutes) {
-                runTicketCountdown(target.getTime(), "เตรียมเก็บตั๋ว");
-            } else {
-                const h = target.getHours().toString().padStart(2, '0');
-                const m = target.getMinutes().toString().padStart(2, '0');
-                tBtn.innerHTML = `🎫 รอบถัดไป ${h}:${m}`;
-                applyStyle(tBtn, '#6c757d');
-                ticketCheckTimer = setTimeout(() => {
-                    checkTicketStatus();
-                }, diff - fiveMinutes);
-            }
-        }
-
-        const fStatusBtn = document.createElement('button');
-        const fAutoBtn = document.createElement('button');
-        let isFarmAuto = localStorage.getItem('tdFarmAuto') === 'true';
-        applyStyle(fAutoBtn, isFarmAuto ? '#ff9800' : '#6c757d');
-        fAutoBtn.innerHTML = isFarmAuto ? '🌾 โดรน: เปิด' : '🌾 โดรน: ปิด';
-
-        function toggleFarmAuto(state) {
-            isFarmAuto = state;
-            localStorage.setItem('tdFarmAuto', isFarmAuto);
-            applyStyle(fAutoBtn, isFarmAuto ? '#ff9800' : '#6c757d');
-            fAutoBtn.innerHTML = isFarmAuto ? '🌾 โดรน: เปิด' : '🌾 โดรน: ปิด';
-        }
-
-        fAutoBtn.onclick = async () => {
-            if (fAutoBtn.disabled) return;
-            if (!isFarmAuto) {
-                toggleFarmAuto(true);
-                fAutoBtn.disabled = true;
-                const doc = await fetchFarmDoc();
-                const moneyEl = doc.getElementById('money');
-                const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
-                if (currentZen < 25000) {
-                    alert('❌ Zen ไม่พอ (ต้องมีขั้นต่ำ 25,000 Zen)');
-                    toggleFarmAuto(false);
-                } else {
-                    checkFarmStatus();
-                }
-                fAutoBtn.disabled = false;
-            } else {
-                toggleFarmAuto(false);
-            }
-        };
-
-        fStatusBtn.onclick = () => {
-            if (isWorking || fStatusBtn.disabled) return;
-            executeFarm();
-        };
-
-        async function checkFarmStatus() {
-            if (isWorking) {
-                fStatusBtn.innerHTML = '⏳ รอคิว (โดรนตั๋วทำงานอยู่)...';
-                if (farmCheckTimer) clearTimeout(farmCheckTimer);
-                farmCheckTimer = setTimeout(checkFarmStatus, 5000);
-                return;
-            }
-            if (farmCheckTimer) clearTimeout(farmCheckTimer);
-            if (farmCountdownTimer) {
-                clearInterval(farmCountdownTimer);
-                farmCountdownTimer = null;
-            }
-            fStatusBtn.disabled = true;
-            applyStyle(fStatusBtn, '#17a2b8');
-            fStatusBtn.innerHTML = '⏳ กำลังเช็คแปลง...';
-            try {
-                const doc = await fetchFarmDoc();
-                const hIds = getHarvestableIDs(doc);
-                const pIds = getPlantableIDs(doc);
-                const buyIds = getBuyableIDs(doc);
-                if (buyIds.length === 9) {
-                    fStatusBtn.innerHTML = '🌾 ยังไม่ได้ซื้อแปลงปลูก';
-                    applyStyle(fStatusBtn, '#6c757d');
-                    fStatusBtn.disabled = true;
-                    toggleFarmAuto(false);
-                    return;
-                }
-                let readyToWork = (hIds.length > 0 || pIds.length > 0);
-                if (readyToWork && isFarmAuto) {
-                    executeFarm();
-                } else {
-                    scheduleNextFarmCheck(doc);
-                }
-            } catch (e) {
-                fStatusBtn.innerHTML = '🌾 ข้อผิดพลาดเช็คแปลง';
-                applyStyle(fStatusBtn, '#dc3545');
-                fStatusBtn.disabled = false;
-            }
-        }
-
-        async function executeFarm() {
-            if (isWorking) return;
-            isWorking = true;
-            fStatusBtn.disabled = true;
-            fStatusBtn.innerHTML = '⏳ กำลังทำงาน...';
-            applyStyle(fStatusBtn, '#17a2b8');
-            try {
-                let currentDoc = await fetchFarmDoc();
-                let harvestIDs = getHarvestableIDs(currentDoc);
-                if (harvestIDs.length > 0) {
-                    fStatusBtn.innerHTML = `⏳ กำลังเก็บ ${harvestIDs.length} แปลง...`;
-                    await processActions(harvestIDs, 'store');
-                    await new Promise(r => setTimeout(r, 1500));
-                    currentDoc = await fetchFarmDoc();
-                }
-                let plantIDs = getPlantableIDs(currentDoc);
-                const moneyEl = currentDoc.getElementById('money');
-                const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
-                if (plantIDs.length > 0) {
-                    if (currentZen < 25000) {
-                        toggleFarmAuto(false);
-                        fStatusBtn.innerHTML = '⚠️ เงินไม่พอปลูก (ปิดออโต้)';
-                        applyStyle(fStatusBtn, '#dc3545');
-                    } else {
-                        fStatusBtn.innerHTML = `⏳ กำลังปลูก ${plantIDs.length} แปลง...`;
-                        await processActions(plantIDs, 'seed');
+            // 2. Check < 5 logic -> mypeers
+            if (hrCount < 5) {
+                const uid = await getUserId();
+                if (uid) {
+                    const peerRes = await fetch(`/mypeers.php?userid=${uid}`);
+                    const peerDoc = await textToDoc(peerRes);
+                    const rows = peerDoc.querySelectorAll('tbody tr');
+                    if (rows.length >= 6) {
+                        const col = rows[5].querySelectorAll('td')[6];
+                        if (col) {
+                            const isOver3Hr = col.innerHTML.includes('CN>3HR') || col.innerHTML.includes('CN&gt;3HR');
+                            if (!isOver3Hr) {
+                                const timeText = col.innerText.trim();
+                                const seededSec = parseSeedTimeSeconds(timeText);
+                                const neededSec = 10800 - seededSec; // 3 hours
+                                if (neededSec > 0) {
+                                    startTicketCountdown(neededSec, '❌3HR');
+                                    return;
+                                }
+                            }
+                        }
                     }
                 }
-                fStatusBtn.innerHTML = '🌾 ทำฟาร์มเสร็จสิ้น';
-                applyStyle(fStatusBtn, '#28a745');
-                isWorking = false;
-                startReloadCountdown('farm');
-            } catch (err) {
-                console.error(err);
-                isWorking = false;
-                fStatusBtn.disabled = false;
-                checkFarmStatus();
             }
-        }
 
-        function scheduleNextFarmCheck(doc) {
-            if (!doc) {
-                fStatusBtn.innerHTML = `⏳ พบข้อผิดพลาด... (รอเช็คใหม่ 5 นาที)`;
-                setTimeout(checkFarmStatus, 300000);
+            // 3. Check already collected this round
+            const infoText = html.querySelector('.text-danger.f12');
+            if (infoText && infoText.innerText.includes('รับตั๋วสุ่มกาชาไปแล้ว')) {
+                calcNextRoundTime();
                 return;
             }
+
+            // 4. Check Cooldown
+            const historyRows = html.querySelectorAll('.table-responsive table tbody tr');
+            if (historyRows.length > 1) {
+                const timeStr = historyRows[1].querySelectorAll('td')[2]?.innerText.trim();
+                if (timeStr) {
+                    const lastTime = new Date(timeStr.replace(/-/g, '/')).getTime();
+                    const now = Date.now();
+                    const cooldownMs = 3 * 60 * 60 * 1000;
+                    if (now < lastTime + cooldownMs) {
+                        startTicketCountdown(Math.ceil((lastTime + cooldownMs - now) / 1000), '❌Cooldown');
+                        return;
+                    }
+                }
+            }
+
+            // All clear
+            UI.tStatus.innerText = '🎫: ✔️ตั๋วพร้อมเก็บ';
+            updateBtn(UI.tBtn, '🎫เก็บตั๋ว', '#28a745', false);
+
+            if (STATE.ticket.autoMode) {
+                await manualCollectTicket();
+            }
+
+        } catch (e) {
+            console.error("Ticket Check Error", e);
+            UI.tStatus.innerText = '🎫: ❌พบข้อผิดพลาด';
+            STATE.ticket.interval = setTimeout(checkTicketLoop, 60000); // Retry 1 min
+        }
+    }
+
+    function calcNextRoundTime() {
+        const now = new Date();
+        let target = new Date(now);
+        if (now.getHours() < 12) {
+            target.setHours(12, 0, 5, 0); // เที่ยงตรง + 5 วิ
+        } else {
+            target.setDate(target.getDate() + 1);
+            target.setHours(0, 0, 5, 0); // เที่ยงคืน + 5 วิ
+        }
+
+        const h = target.getHours().toString().padStart(2, '0');
+        const m = target.getMinutes().toString().padStart(2, '0');
+        UI.tStatus.innerText = `🎫: ❌รอบถัดไป ${h}:${m}`;
+
+        const diffMs = target.getTime() - Date.now();
+        STATE.ticket.interval = setTimeout(checkTicketLoop, diffMs);
+    }
+
+    function startTicketCountdown(seconds, prefix) {
+        clearInterval(STATE.ticket.interval);
+        // แก้ไข: ใช้เวลาจริงระบบฮาร์ดแวร์ล็อกเป้าหมายปลายทาง ป้องกันบราวเซอร์ Sleep ทำเวลาเพี้ยน
+        const targetEndTime = Date.now() + (seconds * 1000);
+
+        const tick = () => {
+            const rem = Math.ceil((targetEndTime - Date.now()) / 1000);
+            if (rem <= 0) {
+                clearInterval(STATE.ticket.interval);
+                checkTicketLoop();
+                return;
+            }
+            UI.tStatus.innerText = `🎫: ${prefix}: ${formatTime(rem)}`;
+        };
+        tick();
+        STATE.ticket.interval = setInterval(tick, 1000);
+    }
+
+    async function executeTicketCollection() {
+        try {
+            const res = await fetch('/ticket.php');
+            const html = await textToDoc(res);
+            const btn = html.querySelector('button.get-ticket');
+
+            if (btn) {
+                const form = btn.closest('form');
+                if (form) {
+                    const formData = new FormData(form);
+                    if(btn.name) formData.append(btn.name, btn.value || '');
+
+                    await fetch(form.action || '/ticket.php', {
+                        method: form.method || 'POST',
+                        body: formData
+                    });
+                } else {
+                    await fetch('/ticket.php?action=get');
+                }
+            }
+        } catch(e) { console.error('Error executing ticket', e); }
+
+        STATE.ticket.isWorking = false;
+        checkTicketLoop();
+    }
+
+
+    // ==========================================
+    // FARM LOGIC
+    // ==========================================
+    function toggleFarmAuto() {
+        STATE.farm.autoMode = !STATE.farm.autoMode;
+        localStorage.setItem('tdd_farm_auto', STATE.farm.autoMode);
+        updateBtn(UI.fAutoBtn, `🌾โดรน: ${STATE.farm.autoMode ? 'เปิด' : 'ปิด'}`, STATE.farm.autoMode ? '#ff9800' : '#6c757d', false);
+        if (STATE.farm.autoMode) checkFarmLoop();
+    }
+
+    async function manualCollectFarm() {
+        if (STATE.farm.isWorking || UI.fBtn.disabled) return;
+        STATE.farm.isWorking = true;
+        updateBtn(UI.fBtn, '⏳กำลังจัดการ...', '#17a2b8', true);
+        await executeFarmCollection();
+    }
+
+    async function checkFarmLoop() {
+        if (STATE.farm.isWorking) return;
+        clearInterval(STATE.farm.interval);
+        UI.fStatus.innerText = '🌾: ⏳กำลังเช็คฟาร์ม';
+        updateBtn(UI.fBtn, '🌾เก็บผัก', '#6c757d', true);
+
+        try {
+            const res = await fetch(`/farm.php?t=${Date.now()}`);
+            const doc = await textToDoc(res);
+
+            // Check Zen
+            const moneyEl = doc.getElementById('money');
+            const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
+
+            const hIds = [];
+            const pIds = [];
             let maxElapsedSeconds = -1;
-            const TARGET_SECONDS = (6 * 3600) + 5;
-            const CHECKPOINTS = [18000, 14400, 10800, 7200, 3600];
+
+            for (let i = 1; i <= 9; i++) {
+                if (doc.querySelector(`[onclick*="action=store&ground=${i}"]`)) hIds.push(i);
+                if (doc.querySelector(`[onclick*="action=seed&ground=${i}"]`)) pIds.push(i);
+            }
+
             doc.querySelectorAll('.f10').forEach(el => {
                 const m = el.innerText.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);
                 if (m) {
@@ -507,98 +371,107 @@
                     if (s > maxElapsedSeconds) maxElapsedSeconds = s;
                 }
             });
-            const hIds = getHarvestableIDs(doc);
-            const pIds = getPlantableIDs(doc);
-            if (hIds.length > 0 || pIds.length > 0 || maxElapsedSeconds >= 0) {
-                farmRetryCount = 0;
+
+            if (currentZen < 25000 && pIds.length > 0 && hIds.length === 0) {
+                UI.fStatus.innerText = '🌾: ❌ยอดเงิน Zen ต่ำกว่า 25,000';
+                if(STATE.farm.autoMode) toggleFarmAuto();
+                return;
             }
-            if (hIds.length > 0 || pIds.length > 0 || maxElapsedSeconds >= TARGET_SECONDS) {
-                applyStyle(fStatusBtn, '#28a745');
-                fStatusBtn.innerHTML = hIds.length > 0 ? `🌾 พร้อมเก็บ ${hIds.length} แปลง` : (pIds.length > 0 ? `🌾 พร้อมปลูก ${pIds.length} แปลง` : `🌾 ผักพร้อมแล้ว`);
-                fStatusBtn.disabled = false;
-                if (farmCountdownTimer) {
-                    clearInterval(farmCountdownTimer);
-                    farmCountdownTimer = null;
-                }
-                if (isFarmAuto && !isWorking) {
-                    executeFarm();
+
+            if (hIds.length > 0 || pIds.length > 0) {
+                let statusText = '';
+                if (hIds.length > 0 && pIds.length > 0) statusText = `✔️พร้อมเก็บ ${hIds.length}/พร้อมปลูก ${pIds.length}`;
+                else if (hIds.length > 0) statusText = `✔️พร้อมเก็บ ${hIds.length}`;
+                else statusText = `✔️พร้อมปลูก ${pIds.length}`;
+
+                UI.fStatus.innerText = `🌾: ${statusText}`;
+                updateBtn(UI.fBtn, hIds.length > 0 ? '🌾เก็บผัก' : '🌾ปลูกผัก', '#28a745', false);
+
+                if (STATE.farm.autoMode) {
+                    await manualCollectFarm();
                 }
                 return;
             }
+
+            // ไม่พร้อมเก็บ/ปลูก ต้องนับถอยหลัง
             if (maxElapsedSeconds >= 0) {
-                let rem = TARGET_SECONDS - maxElapsedSeconds;
-                const targetTime = Date.now() + (rem * 1000);
-                if (sessionStorage.getItem('farm_prev_rem') === null) {
-                    sessionStorage.setItem('farm_prev_rem', rem.toString());
-                }
-                applyStyle(fStatusBtn, '#6c757d');
-                fStatusBtn.disabled = false;
-                if (farmCountdownTimer) clearInterval(farmCountdownTimer);
-                farmCountdownTimer = setInterval(() => {
-                    const currentRem = Math.round((targetTime - Date.now()) / 1000);
-                    const prevRem = parseInt(sessionStorage.getItem('farm_prev_rem') || currentRem);
-
-                    for (let cp of CHECKPOINTS) {
-                        if (prevRem > cp && currentRem <= cp) {
-                            fStatusBtn.innerHTML = `⏳ กำลัง Sync เวลาเซิร์ฟเวอร์...`;
-                            sessionStorage.setItem('farm_prev_rem', currentRem.toString());
-                            clearInterval(farmCountdownTimer);
-                            checkFarmStatus();
-                            return;
-                        }
-                    }
-
-                    if (currentRem <= -5) {
-                        sessionStorage.removeItem('farm_prev_rem');
-                        clearInterval(farmCountdownTimer);
-                        fStatusBtn.innerHTML = `⏳ กำลังเตรียมเช็คแปลง... (+${Math.abs(currentRem)}s)`;
-                        checkFarmStatus();
-                        return;
-                    }
-
-                    if (currentRem > 0) {
-                        const h = Math.floor(currentRem / 3600).toString().padStart(2, '0');
-                        const m = Math.floor((currentRem % 3600) / 60).toString().padStart(2, '0');
-                        const s = (currentRem % 60).toString().padStart(2, '0');
-                        fStatusBtn.innerHTML = `🌾 รอผักโตอีก: ${h}:${m}:${s}`;
-                        sessionStorage.setItem('farm_prev_rem', currentRem.toString());
-                    } else {
-                        fStatusBtn.innerHTML = `⏳ เตรียมเก็บเกี่ยว... (${Math.abs(currentRem)}s)`;
-                    }
-                }, 1000);
+                const TARGET = 6 * 3600;
+                let rem = TARGET - maxElapsedSeconds;
+                if (rem <= 0) rem = 5; // safety offset
+                startFarmCountdown(rem);
             }
-            else {
-                farmRetryCount++;
-                if (farmRetryCount <= 3) {
-                    applyStyle(fStatusBtn, '#ff9800');
-                    fStatusBtn.innerHTML = `⏳ ไม่พบข้อมูล... ลองใหม่ ${farmRetryCount}/3 (ใน 5 นาที)`;
-                    if (farmCheckTimer) clearTimeout(farmCheckTimer);
-                    farmCheckTimer = setTimeout(checkFarmStatus, 300000);
-                } else {
-                    fStatusBtn.innerHTML = `⚠️ พบข้อผิดพลาด สคริปหยุดทำงาน`;
-                    applyStyle(fStatusBtn, '#dc3545');
-                    toggleFarmAuto(false);
-                    farmRetryCount = 0;
-                }
-            }
+
+        } catch (e) {
+            console.error("Farm Check Error", e);
+            UI.fStatus.innerText = '🌾: ❌พบข้อผิดพลาด';
+            STATE.farm.interval = setTimeout(checkFarmLoop, 60000);
         }
-
-        content.appendChild(hrBtn);
-        content.appendChild(tBtn);
-        content.appendChild(tAutoBtn);
-        content.appendChild(fStatusBtn);
-        content.appendChild(fAutoBtn);
-
-        const menuToggler = document.querySelector('button.navbar-toggler[data-toggle="minimize"]');
-        if (menuToggler) menuToggler.parentNode.insertBefore(container, menuToggler.nextSibling);
-        else {
-            Object.assign(container.style, { position: 'fixed', bottom: '10px', right: '10px', background: 'rgba(0,0,0,0.8)', padding: '8px', borderRadius: '8px', zIndex: '9999' });
-            document.body.appendChild(container);
-        }
-
-        checkTicketStatus();
-        checkFarmStatus();
     }
 
-    initBot();
+    function startFarmCountdown(seconds) {
+        clearInterval(STATE.farm.interval);
+        // แก้ไข: ใช้เวลาจริงระบบฮาร์ดแวร์ล็อกเป้าหมายปลายทาง ป้องกันบราวเซอร์ Sleep ทำเวลาเพี้ยน
+        const targetEndTime = Date.now() + (seconds * 1000);
+
+        const tick = () => {
+            const rem = Math.ceil((targetEndTime - Date.now()) / 1000);
+            if (rem <= 0) {
+                clearInterval(STATE.farm.interval);
+                checkFarmLoop();
+                return;
+            }
+            UI.fStatus.innerText = `🌾: ❌รอผักโตอีก ${formatTime(rem)}`;
+        };
+        tick();
+        STATE.farm.interval = setInterval(tick, 1000);
+    }
+
+    async function executeFarmCollection() {
+        try {
+            let doc = await textToDoc(await fetch(`/farm.php?t=${Date.now()}`));
+            let hIds = [], pIds = [];
+
+            for (let i = 1; i <= 9; i++) {
+                if (doc.querySelector(`[onclick*="action=store&ground=${i}"]`)) hIds.push(i);
+            }
+            // เก็บผัก
+            for (let id of hIds) {
+                await fetch(`/farm.php?action=store&ground=${id}`);
+                await new Promise(r => setTimeout(r, 400));
+            }
+
+            // เช็คและปลูก
+            doc = await textToDoc(await fetch(`/farm.php?t=${Date.now()}`));
+            const moneyEl = doc.getElementById('money');
+            const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
+
+            if (currentZen >= 25000) {
+                for (let i = 1; i <= 9; i++) {
+                    if (doc.querySelector(`[onclick*="action=seed&ground=${i}"]`)) pIds.push(i);
+                }
+                for (let id of pIds) {
+                    await fetch(`/farm.php?action=seed&ground=${id}`);
+                    await new Promise(r => setTimeout(r, 400));
+                }
+            }
+
+        } catch (e) { console.error('Error executing farm', e); }
+
+        STATE.farm.isWorking = false;
+        checkFarmLoop();
+    }
+
+    // --- Utilities ---
+    async function textToDoc(res) {
+        const text = await res.text();
+        return new DOMParser().parseFromString(text, 'text/html');
+    }
+
+    // --- Start ---
+    initUI();
+    setTimeout(() => {
+        checkTicketLoop();
+        checkFarmLoop();
+    }, 1000);
+
 })();

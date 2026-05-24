@@ -1,6 +1,6 @@
 [**HOME**](../README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
-# Auto Drone 3.5
+# Auto Drone 3.6
 *อัพเดทเมื่อ 7/5/2569*    
 <picture><img src="../assets/autodrone3_5.jpg" width="570" height="30" alt="Auto Drone"></picture>
 1. ระบบเก็บตั๋ว 🎫
@@ -80,7 +80,6 @@
 6. Radio: On/Off เครื่องเล่นวิทยุแบบใหม่ เพื่อแก้บัคให้บางบราวเซอร์วิทยุหาย
 7. Apply changes & Refresh ปุ่มเพื่อยืนยันค่าที่เปลี่ยนแล้วรีเฟรชหน้าแชทใหม่
 8. ฟังชั่นกดแสดงลิ้งรูปแบบ PopUp
-9. มีระบบเช็คอัพเดทสคริป
 
 **หมายเหตุ :**  
 - เมื่อปรับแล้วหน้าแชทจะเปลี่ยนเมื่อทำการรีเฟรชหน้าแชทใหม่เท่านั้น

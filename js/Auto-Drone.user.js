@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.2 | TDD
+// @name         Auto Drone 4.3 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.2
+// @version      4.3
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -298,30 +298,16 @@
     }
 
     async function executeTicketCollection() {
-        try {
-            const res = await fetch('/ticket.php');
-            const html = await textToDoc(res);
-            const btn = html.querySelector('button.get-ticket');
-
-            if (btn) {
-                const form = btn.closest('form');
-                if (form) {
-                    const formData = new FormData(form);
-                    if (btn.name) formData.append(btn.name, btn.value || '');
-
-                    await fetch(form.action || '/ticket.php', {
-                        method: form.method || 'POST',
-                        body: formData
-                    });
-                } else {
-                    await fetch('/ticket.php?action=get');
-                }
-            }
-        } catch (e) { console.error('Error executing ticket', e); }
-
-        STATE.ticket.isWorking = false;
-        checkTicketLoop();
+    try {
+        await fetch('/ticket.php?mod=get-ticket');
+        console.log('ส่งคำสั่งเก็บตั๋วเรียบร้อย');
+    } catch (e) {
+        console.error('Error executing ticket', e);
     }
+
+    STATE.ticket.isWorking = false;
+    checkTicketLoop();
+}
 
     function toggleFarmAuto() {
         STATE.farm.autoMode = !STATE.farm.autoMode;

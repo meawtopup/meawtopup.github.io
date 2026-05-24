@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name           DLnSS Button 1.0 | TDD
+// @name           DLnSS Button 1.1 | TDD
 // @namespace      http://tampermonkey.net/
-// @version        1.0
+// @version        1.1
 // @description    Download/SS+/Status-DL for TorrentDD
 // @author         MObyEX
 // @include      *://*.torrentdd.*/browse.php*

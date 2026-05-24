@@ -59,11 +59,12 @@
 **กรณีสคริปไม่ได้เขียนอัพเดทจาก URL**
 1. กดที่ Icon TamperMonkey <picture><img src="../assets/tampermonkey_logo.png" width="15" height="15" alt="Tampermonkey Logo"></picture>
 2. เลือก ⚙️Dashboard
-3. กดที่ Tab> Installed Userscripts แล้วกดที่ชื่อสคริปที่ต้องการเปลี่ยน<br>
-   เช่น ```Click Farm 5.0 | TDDFarm```
-4. กดที่ Tab> Edit> Select All
-5. ก็อปสคริปมาวางทับ แล้วกด Save (File> 💾Save)
-6. หรือจะกดลบสคริปที่ไม่ใช้แล้วค่อยกด +Create a new script... ก็ได้
+3. กดที่ Tab> Installed Userscripts แล้วกดที่ชื่อสคริปที่ต้องการอัพเดท<br>
+   เช่น ```Chat+ 1.2 | TDD```
+4. กดที่ Tab> File> Check for Updates
+5. ถ้ามีการอัพเดทจะมี popup ถามให้เลือก Overwrite
 
-**หมายเหตุ** ถ้า Script ไหนไม่ใช้ก็ลบทิ้งในหน้า ⚙️Dashboard ได้เลย
+**หมายเหตุ**  
+- ถ้า Script ไหนไม่ใช้ก็ลบทิ้งในหน้า ⚙️Dashboard ได้เลย
+- สคริปที่อัพเดทได้จะมี @updateURL กับ @downloadURL ถ้าไม่มีให้ใช้วิธีก็อปสคริปมาวางทับแล้วกดเซพได้เลย
 <br><br>

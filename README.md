@@ -17,15 +17,15 @@
 **คำแนะนำ:** กด View Here เพื่อดูโค้ด | กด Feature เพื่อดูว่าสคริปทำอะไรได้บ้าง  
 **คอมโบแนะนำ:** Auto Drone กับ Chat+ เปิดแค่หน้าแชททิ้งไว้
 - Auto Drone 3.6 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้ - TDD  
-  [View Here](js/Auto-Drone-3.6.user.js) | [Feature](docs/FEATURES.md#auto-drone-36)  
+  [View Here](js/Auto-Drone.user.js) | [Feature](docs/FEATURES.md#auto-drone-36)  
 - Chat+ 1.2 | ฟังชั่นสำหรับหน้าแชท - TDD  
   [View Here](js/Chat+.user.js) | [Feature](docs/FEATURES.md#chat-12)  
 - Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ - TDD  
-  [View Here](js/Domain-Fixer-1.0.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
+  [View Here](js/Domain-Fixer.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - DLnSS Button BB 3.2 | DL-Now/SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - BB  
-  [View Here](js/DLnSS-Button-BB-3.2.user.js) | [Feature](docs/FEATURES.md#dlnss-button-BB-32)  
+  [View Here](js/DLnSS-Button-BB.user.js) | [Feature](docs/FEATURES.md#dlnss-button-BB-32)  
 - DLnSS Button TDD 1.0 | SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - TDD  
-  [View Here](js/DLnSS-Button-TDD-1.0.user.js) | [Feature](docs/FEATURES.md#dlnss-button-TDD-10)  
+  [View Here](js/DLnSS-Button-TDD.user.js) | [Feature](docs/FEATURES.md#dlnss-button-TDD-10)  
 <!--
 - Chat Mods 4.8 | กรอบแชทคงที่ เพิ่มจำนวนข้อความ และวิทยุแบบสลับสถานะ  
   [View Here](js/Chat-Mods-4.8.user.js) | [Feature](docs/FEATURES.md#chat-mods-48)  

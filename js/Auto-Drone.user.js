@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.3.7 | TDD
+// @name         Auto Drone 4.3.8 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.3.7
+// @version      4.3.8
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -18,12 +18,14 @@
         ticket: {
             interval: null,
             isWorking: false,
-            autoMode: localStorage.getItem('tdd_ticket_auto') === 'true'
+            autoMode: localStorage.getItem('tdd_ticket_auto') === 'true',
+            retryCount: 0
         },
         farm: {
             interval: null,
             isWorking: false,
-            autoMode: localStorage.getItem('tdd_farm_auto') === 'true'
+            autoMode: localStorage.getItem('tdd_farm_auto') === 'true',
+            retryCount: 0
         }
     };
 
@@ -227,6 +229,7 @@
                                 const seededSec = parseSeedTimeSeconds(timeText);
                                 const neededSec = 10800 - seededSec;
                                 if (neededSec > 0) {
+                                    STATE.ticket.retryCount = 0;
                                     startTicketCountdown(neededSec, '❌3HR');
                                     return;
                                 }
@@ -238,6 +241,7 @@
 
             const infoText = html.querySelector('.text-danger.f12');
             if (infoText && infoText.innerText.includes('รับตั๋วสุ่มกาชาไปแล้ว')) {
+                STATE.ticket.retryCount = 0;
                 calcNextRoundTime();
                 return;
             }
@@ -250,12 +254,14 @@
                     const now = Date.now();
                     const cooldownMs = 3 * 60 * 60 * 1000;
                     if (now < lastTime + cooldownMs) {
+                        STATE.ticket.retryCount = 0;
                         startTicketCountdown(Math.ceil((lastTime + cooldownMs - now) / 1000), '❌Cooldown');
                         return;
                     }
                 }
             }
 
+            STATE.ticket.retryCount = 0;
             UI.tStatus.innerText = '🎫: ✔️ตั๋วพร้อมเก็บ';
             updateBtn(UI.tBtn, '🎫เก็บตั๋ว', '#28a745', false);
 
@@ -265,9 +271,14 @@
 
         } catch (e) {
             console.error("Ticket Check Error", e);
-            UI.tStatus.innerText = '🎫: ❌พบข้อผิดพลาด';
-            clearTicketTimers();
-            STATE.ticket.interval = setTimeout(checkTicketLoop, 60000);
+            STATE.ticket.retryCount++;
+            if (STATE.ticket.retryCount <= 5) {
+                UI.tStatus.innerText = `🎫: ❌ผิดพลาด(${STATE.ticket.retryCount}/5)`;
+                clearTicketTimers();
+                STATE.ticket.interval = setTimeout(checkTicketLoop, 60000);
+            } else {
+                UI.tStatus.innerText = '🎫: ❌หยุดทำงาน (Error)';
+            }
         }
     }
 
@@ -390,26 +401,36 @@
             updateBtn(UI.fBtn, btnText, btnColor, !btnEnabled);
 
             if (STATE.farm.autoMode && hIds.length > 0) {
+                STATE.farm.retryCount = 0;
                 await manualCollectFarm();
                 return;
             }
 
             if (minRemaining > 0) {
+                STATE.farm.retryCount = 0;
                 startFarmCountdown(minRemaining);
             } else if (hIds.length === 0 && pIds.length > 0 && currentZen < 25000) {
+                STATE.farm.retryCount = 0;
                 UI.fStatus.innerText = '🌾: ❌เงินไม่พอปลูก';
                 if (STATE.farm.autoMode) {
                     STATE.farm.autoMode = false;
                     localStorage.setItem('tdd_farm_auto', 'false');
                     updateBtn(UI.fAutoBtn, `🌾โดรน: ปิด`, '#6c757d', false);
                 }
+            } else {
+                STATE.farm.retryCount = 0;
             }
 
         } catch (e) {
             console.error("Farm Check Error", e);
-            UI.fStatus.innerText = '🌾: ❌พบข้อผิดพลาด';
-            clearFarmTimers();
-            STATE.farm.interval = setTimeout(checkFarmLoop, 60000);
+            STATE.farm.retryCount++;
+            if (STATE.farm.retryCount <= 5) {
+                UI.fStatus.innerText = `🌾: ❌ผิดพลาด(${STATE.farm.retryCount}/5)`;
+                clearFarmTimers();
+                STATE.farm.interval = setTimeout(checkFarmLoop, 60000);
+            } else {
+                UI.fStatus.innerText = '🌾: ❌หยุดทำงาน (Error)';
+            }
         }
     }
 

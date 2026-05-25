@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.3.8 | TDD
+// @name         Auto Drone 4.4 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.3.8
+// @version      4.4
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*

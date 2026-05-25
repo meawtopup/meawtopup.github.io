@@ -111,13 +111,13 @@
         el.disabled = disabled;
         el.onclick = onClick;
         Object.assign(el.style, {
-            padding: '3px 8px', 
-            fontSize: '11px', 
+            padding: '3px 8px',
+            fontSize: '11px',
             color: 'white',
-            background: bgColor, 
-            border: 'none', 
+            background: bgColor,
+            border: 'none',
             borderRadius: '4px',
-            cursor: disabled ? 'not-allowed' : 'pointer', 
+            cursor: disabled ? 'not-allowed' : 'pointer',
             marginRight: '0px',
             whiteSpace: 'nowrap',
             flexShrink: 0
@@ -205,7 +205,7 @@
         if (STATE.ticket.isWorking) return;
         clearTicketTimers();
         UI.tStatus.innerText = '🎫: ⏳กำลังเช็คตั๋ว';
-        updateBtn(UI.tBtn, '🎫พร้อมใช้งาน', '#6c757d', true);
+        updateBtn(UI.tBtn, '🎫กำลังเช็คสถานะ', '#6c757d', true);
 
         try {
             const res = await fetch('/ticket.php');
@@ -350,7 +350,7 @@
         if (STATE.farm.isWorking) return;
         clearFarmTimers();
         UI.fStatus.innerText = '🌾: ⏳กำลังเช็คฟาร์ม';
-        updateBtn(UI.fBtn, '🌾เก็บผัก', '#6c757d', true);
+        updateBtn(UI.fBtn, '🌾กำลังเช็คสถานะ', '#6c757d', true);
 
         try {
             const res = await fetch(`/farm.php?t=${Date.now()}`);
@@ -380,13 +380,13 @@
             let statusParts = [];
             if (hIds.length > 0) statusParts.push(`✔️พร้อมเก็บ ${hIds.length}`);
             if (minRemaining > 0) statusParts.push(`❌รอโตอีก ${formatTime(minRemaining)}`);
-            
+
             UI.fStatus.innerText = statusParts.length > 0 ? `🌾: ${statusParts.join('/')}` : '🌾: พร้อมใช้งาน';
 
             const canHarvest = hIds.length > 0;
             const canPlant = hIds.length === 0 && pIds.length > 0 && currentZen >= 25000;
             const btnEnabled = canHarvest || canPlant;
-            
+
             let btnText = '🌾พร้อมใช้งาน';
             let btnColor = '#6c757d';
 
@@ -445,11 +445,11 @@
                 checkFarmLoop();
                 return;
             }
-            
+
             const currentStatus = UI.fStatus.innerText;
             const hasHarvest = currentStatus.includes('✔️พร้อมเก็บ');
             const timeStr = formatTime(rem);
-            
+
             if (hasHarvest) {
                 const harvestPart = currentStatus.split('/')[0];
                 UI.fStatus.innerText = `${harvestPart}/❌รอโตอีก ${timeStr}`;

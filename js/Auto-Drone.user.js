@@ -74,7 +74,7 @@
         UI.fAutoBtn = createBtn(`🌾โดรน: ${STATE.farm.autoMode ? 'เปิด' : 'ปิด'}`, STATE.farm.autoMode ? '#ff9800' : '#6c757d', false, toggleFarmAuto);
         fGroup.append(UI.fStatus, UI.fBtn, UI.fAutoBtn);
 
-        container.append(tGroup, fGroup);
+        container.append(tGroup, createSpan(' | '), fGroup);
 
         const menuToggler = document.querySelector('button.navbar-toggler[data-toggle="minimize"]');
         if (menuToggler) {

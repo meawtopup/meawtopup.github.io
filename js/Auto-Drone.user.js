@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.4.2 | TDD
+// @name         Auto Drone 4.4.3 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.4.2
+// @version      4.4.3
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -225,18 +225,14 @@
 
             if (hrCount < 5) {
                 const uid = await getUserId();
-                console.log('Debug: UserID คือ', uid);
                 if (uid) {
                     const peerRes = await fetch(`/mypeers.php?userid=${uid}`);
                     const peerDoc = await textToDoc(peerRes);
                     const rows = peerDoc.querySelectorAll('tbody tr');
-                    console.log('Debug: จำนวนแถวที่พบในตาราง', rows.length);
                     if (rows.length >= 6) {
                         const col = rows[5].querySelectorAll('td')[6];
-                        console.log('Debug: ข้อมูลในแถวที่ 5 คอลัมน์ที่ 6 คือ', col ? col.innerText : 'หาไม่เจอ');
                         if (col) {
                             const isOver3Hr = col.innerHTML.includes('CN>3HR') || col.innerHTML.includes('CN&gt;3HR');
-                            console.log('Debug 3HR Status:', { isOver3Hr });
                             if (!isOver3Hr) {
                                 const timeMatch = col.innerText.match(/(\d+d\s*)?\d{2}:\d{2}(:\d{2})?/);
 
@@ -244,18 +240,13 @@
                                     const timeText = timeMatch[0];
                                     const seededSec = parseSeedTimeSeconds(timeText);
                                     const neededSec = 10800 - seededSec;
-                                    console.log('Debug 3HR Math:', { seededSec, neededSec });
 
                                     if (neededSec > 0) {
                                         STATE.ticket.retryCount = 0;
                                         startTicketCountdown(neededSec, '❌3HR');
                                         return;
-                                    } else {
-                                        console.log('Debug: ไม่เข้าเงื่อนไข 3HR เพราะ neededSec <= 0');
                                     }
                                 }
-                            } else {
-                                console.log('Debug: ตรวจพบ 3HR แล้ว ข้ามไปเช็ค Cooldown');
                             }
                         }
                     }

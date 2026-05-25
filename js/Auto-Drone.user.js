@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.4 | TDD
+// @name         Auto Drone 4.4.1 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.4
+// @version      4.4.1
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -68,7 +68,7 @@
         fGroup.style.display = 'inline-flex';
         fGroup.style.gap = '2px';
         fGroup.style.alignItems = 'center';
-                
+
         UI.fStatus = createStatusBadge('🌾: ⏳กำลังเช็คฟาร์ม');
         UI.fBtn = createBtn('🌾รอเช็คสถานะ', '#6c757d', true, manualCollectFarm);
         UI.fAutoBtn = createBtn(`🌾โดรน: ${STATE.farm.autoMode ? 'เปิด' : 'ปิด'}`, STATE.farm.autoMode ? '#ff9800' : '#6c757d', false, toggleFarmAuto);
@@ -225,22 +225,30 @@
 
             if (hrCount < 5) {
                 const uid = await getUserId();
+                console.log('Debug: UserID คือ', uid);
                 if (uid) {
                     const peerRes = await fetch(`/mypeers.php?userid=${uid}`);
                     const peerDoc = await textToDoc(peerRes);
                     const rows = peerDoc.querySelectorAll('tbody tr');
+                    console.log('Debug: จำนวนแถวที่พบในตาราง', rows.length);
                     if (rows.length >= 6) {
                         const col = rows[5].querySelectorAll('td')[6];
+                        console.log('Debug: ข้อมูลในแถวที่ 5 คอลัมน์ที่ 6 คือ', col ? col.innerText : 'หาไม่เจอ');
                         if (col) {
                             const isOver3Hr = col.innerHTML.includes('CN>3HR') || col.innerHTML.includes('CN&gt;3HR');
                             if (!isOver3Hr) {
-                                const timeText = col.innerText.trim();
-                                const seededSec = parseSeedTimeSeconds(timeText);
-                                const neededSec = 10800 - seededSec;
-                                if (neededSec > 0) {
-                                    STATE.ticket.retryCount = 0;
-                                    startTicketCountdown(neededSec, '❌3HR');
-                                    return;
+                                const timeMatch = col.innerText.match(/(\d+d\s*)?\d{2}:\d{2}(:\d{2})?/);
+
+                                if (timeMatch) {
+                                    const timeText = timeMatch[0];
+                                    const seededSec = parseSeedTimeSeconds(timeText);
+                                    const neededSec = 10800 - seededSec;
+
+                                    if (neededSec > 0) {
+                                        STATE.ticket.retryCount = 0;
+                                        startTicketCountdown(neededSec, '❌3HR');
+                                        return;
+                                    }
                                 }
                             }
                         }

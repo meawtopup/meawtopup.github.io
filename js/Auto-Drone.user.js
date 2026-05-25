@@ -46,7 +46,7 @@
         Object.assign(container.style, {
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '5px',
+            gap: '2px',
             alignItems: 'center',
             fontSize: '11px',
             color: '#fff',
@@ -57,7 +57,7 @@
 
         const tGroup = document.createElement('div');
         tGroup.style.display = 'inline-flex';
-        tGroup.style.gap = '5px';
+        tGroup.style.gap = '2px';
         tGroup.style.alignItems = 'center';
 
         UI.tStatus = createStatusBadge('🎫: ⏳กำลังเช็คตั๋ว');
@@ -66,7 +66,7 @@
         tGroup.append(UI.tStatus, UI.tBtn, UI.tAutoBtn);
         const fGroup = document.createElement('div');
         fGroup.style.display = 'inline-flex';
-        fGroup.style.gap = '5px';
+        fGroup.style.gap = '2px';
         fGroup.style.alignItems = 'center';
                 
         UI.fStatus = createStatusBadge('🌾: ⏳กำลังเช็คฟาร์ม');
@@ -89,7 +89,7 @@
         const el = document.createElement('span');
         el.innerText = text;
         Object.assign(el.style, {
-            padding: '3px 8px',
+            padding: '2px 5px',
             fontSize: '11px',
             color: '#ffffff',
             background: 'rgba(0, 0, 0, 0.4)',
@@ -97,7 +97,7 @@
             borderRadius: '4px',
             display: 'inline-flex',
             alignItems: 'center',
-            height: '23px',
+            height: '20px',
             boxSizing: 'border-box',
             whiteSpace: 'nowrap',
             flexShrink: 0,
@@ -120,7 +120,7 @@
         el.disabled = disabled;
         el.onclick = onClick;
         Object.assign(el.style, {
-            padding: '3px 8px',
+            padding: '2px 5px',
             fontSize: '11px',
             color: 'white',
             background: bgColor,

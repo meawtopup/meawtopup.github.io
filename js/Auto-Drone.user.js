@@ -44,7 +44,8 @@
         const container = document.createElement('div');
         container.id = 'tdd-bot-container';
         Object.assign(container.style, {
-            display: 'inline-flex',
+            display: 'flex',
+            flexWrap: 'wrap',
             gap: '5px',
             alignItems: 'center',
             fontSize: '11px',
@@ -54,18 +55,26 @@
             whiteSpace: 'nowrap'
         });
 
+        const tGroup = document.createElement('div');
+        tGroup.style.display = 'inline-flex';
+        tGroup.style.gap = '5px';
+        tGroup.style.alignItems = 'center';
+
         UI.tStatus = createStatusBadge('🎫: ⏳กำลังเช็คตั๋ว');
         UI.tBtn = createBtn('🎫รอเช็คสถานะ', '#6c757d', true, manualCollectTicket);
         UI.tAutoBtn = createBtn(`🎫โดรน: ${STATE.ticket.autoMode ? 'เปิด' : 'ปิด'}`, STATE.ticket.autoMode ? '#ff9800' : '#6c757d', false, toggleTicketAuto);
+        tGroup.append(UI.tStatus, UI.tBtn, UI.tAutoBtn);
+        const fGroup = document.createElement('div');
+        fGroup.style.display = 'inline-flex';
+        fGroup.style.gap = '5px';
+        fGroup.style.alignItems = 'center';
+                
         UI.fStatus = createStatusBadge('🌾: ⏳กำลังเช็คฟาร์ม');
         UI.fBtn = createBtn('🌾รอเช็คสถานะ', '#6c757d', true, manualCollectFarm);
         UI.fAutoBtn = createBtn(`🌾โดรน: ${STATE.farm.autoMode ? 'เปิด' : 'ปิด'}`, STATE.farm.autoMode ? '#ff9800' : '#6c757d', false, toggleFarmAuto);
+        fGroup.append(UI.fStatus, UI.fBtn, UI.fAutoBtn);
 
-        container.append(
-            UI.tStatus, UI.tBtn, UI.tAutoBtn,
-            createSpan(' | '),
-            UI.fStatus, UI.fBtn, UI.fAutoBtn
-        );
+        container.append(tGroup, fGroup);
 
         const menuToggler = document.querySelector('button.navbar-toggler[data-toggle="minimize"]');
         if (menuToggler) {

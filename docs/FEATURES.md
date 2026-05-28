@@ -1,7 +1,7 @@
 [**HOME**](../README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
-# Auto Drone 4.4.3
-*อัพเดทเมื่อ 25/5/2569*    
+# Auto Drone 4.4.4
+*อัพเดทเมื่อ 28/5/2569*    
 <picture><img src="../assets/autodrone4_0.jpg" width="605" height="40" alt="Auto Drone"></picture>
 1. ระบบเก็บตั๋ว 🎫
    - ปุ่มแสดงสถานะตั๋ว: ⏳กำลังเช็คตั๋ว/✔️ตั๋วพร้อมเก็บ/❌3HR/❌Cooldown/❌รอบถัดไป
@@ -61,8 +61,8 @@
 
 **หมายเหตุ :** แสดงผล***เฉพาะหน้า Chat เท่านั้น***  
 -->
-# Chat+ 1.2
-*อัพเดทเมื่อ 24/5/2569*  
+# Chat+ 1.2.1
+*อัพเดทเมื่อ 28/5/2569*  
 <picture><img src="../assets/chat+button1_0.jpg" width="93" height="42" alt="Chat+"></picture>  
 เมนู  
 <picture><img src="../assets/chat+menu1_0.jpg" width="232" height="303" alt="Chat+ Menu"></picture>  

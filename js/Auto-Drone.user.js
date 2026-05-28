@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.4.3 | TDD
+// @name         Auto Drone 4.4.4 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.4.3
+// @version      4.4.4
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -163,12 +163,18 @@
         let total = 0;
         const dMatch = timeStr.match(/(\d+)d/);
         if (dMatch) total += parseInt(dMatch[1]) * 86400;
-        const tMatch = timeStr.match(/(\d{2}):(\d{2}):(\d{2})/);
-        if (tMatch) {
-            total += parseInt(tMatch[1]) * 3600 + parseInt(tMatch[2]) * 60 + parseInt(tMatch[3]);
-        } else {
-            const t2Match = timeStr.match(/(\d{2}):(\d{2})/);
-            if (t2Match) total += parseInt(t2Match[1]) * 60 + parseInt(t2Match[2]);
+
+        const match = timeStr.match(/(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?/);
+        if (match) {
+            const p1 = parseInt(match[1]);
+            const p2 = parseInt(match[2]);
+            const p3 = parseInt(match[3]);
+
+            if (match[3] !== undefined) {
+                total += (p1 * 3600) + (p2 * 60) + p3;
+            } else {
+                total += (p1 * 60) + p2;
+            }
         }
         return total;
     }
@@ -234,7 +240,7 @@
                         if (col) {
                             const isOver3Hr = col.innerHTML.includes('CN>3HR') || col.innerHTML.includes('CN&gt;3HR');
                             if (!isOver3Hr) {
-                                const timeMatch = col.innerText.match(/(\d+d\s*)?\d{2}:\d{2}(:\d{2})?/);
+                                const timeMatch = col.innerText.match(/(\d+d\s*)?\d{1,2}:\d{2}(:\d{2})?/);
 
                                 if (timeMatch) {
                                     const timeText = timeMatch[0];
@@ -246,9 +252,29 @@
                                         startTicketCountdown(neededSec, '❌3HR');
                                         return;
                                     }
+                                } else {
+                                    console.log('Debug: พบตาราง/คอลัมน์แล้ว แต่ Regex ไม่เจอเวลา, ค่าในคอลัมน์คือ:', col.innerText);
+                                    console.log('Debug: พบตารางแล้ว แต่ยังไม่อ่านค่าเวลาไม่ได้ กำลังรอรีเช็ค...');
+                                    UI.tStatus.innerText = '🎫: ⏳รอข้อมูลเวลา Peers...';
+                                    updateBtn(UI.tBtn, '🎫กดเพื่อรีเช็ค', '#dc3545', false);
+                                    UI.tBtn.onclick = checkTicketLoop;
+                                    return;
                                 }
                             }
+                        } else {
+
+                            console.log('Debug: ไม่พบคอลัมน์เวลา');
+                            UI.tStatus.innerText = '🎫: ❌ไม่พบคอลัมน์เวลา';
+                            updateBtn(UI.tBtn, '🎫กดเพื่อรีเช็ค', '#dc3545', false);
+                            UI.tBtn.onclick = checkTicketLoop;
+                            return;
                         }
+                    } else {
+                        console.log('Debug: ยังไม่พบตาราง Peers หรือตารางว่าง');
+                        UI.tStatus.innerText = '🎫: ⏳กำลังรอโหลดตาราง Peers...';
+                        updateBtn(UI.tBtn, '🎫กดเพื่อรีเช็ค', '#dc3545', false);
+                        UI.tBtn.onclick = checkTicketLoop;
+                        return;
                     }
                 }
             }
@@ -334,17 +360,17 @@
     }
 
     async function executeTicketCollection() {
-    try {
-        await fetch('/ticket.php?mod=get-ticket');
-        console.log('เก็บตั๋วแล้ว รอ Server อัปเดต...');
-        await new Promise(r => setTimeout(r, 1000));
-    } catch (e) {
-        console.error('Error executing ticket', e);
-    }
+        try {
+            await fetch('/ticket.php?mod=get-ticket');
+            console.log('เก็บตั๋วแล้ว รอ Server อัปเดต...');
+            await new Promise(r => setTimeout(r, 1000));
+        } catch (e) {
+            console.error('Error executing ticket', e);
+        }
 
-    STATE.ticket.isWorking = false;
-    checkTicketLoop();
-}
+        STATE.ticket.isWorking = false;
+        checkTicketLoop();
+    }
 
     function toggleFarmAuto() {
         STATE.farm.autoMode = !STATE.farm.autoMode;

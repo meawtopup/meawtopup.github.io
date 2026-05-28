@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Chat+ 1.2 | TDD
+// @name         Chat+ 1.2.1 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.2.1
 // @description  Chat+ Modifyer
 // @author       MObyEX
 // @include      *://*.torrentdd.*/chat.php*

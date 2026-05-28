@@ -187,7 +187,7 @@
                 };
 
                 killRadio();
-                setTimeout(killRadio, 1000);
+                setTimeout(killRadio, 2000);
             }
         }
 

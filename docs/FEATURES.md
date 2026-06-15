@@ -145,15 +145,15 @@
 - มีผลเทุกบราวเซอร์
 - มีผลกับเว็บ TDD เท่านั้น (ทั้ง com และ net)
 
-# Block IPv6 by MObyEX
-*อัพเดทเมื่อ 8/4/2569*  
-1. แก้ปัญหาผู้ใช้ 3BB ที่เข้าเว็บ TDD+TBT แล้วติด CloudFlare: Error code 524  
-   (เกิดจาก IPv6 ของ 3BB เข้า CloudFlare ไม่ได้)  
+# Block IPv6 Type2 by MObyEX
+*อัพเดทเมื่อ 15/6/2569*  
+1. แก้ปัญหาผู้ใช้ 3BB ที่เข้าเว็บไม่ได้หรือติด CloudFlare: Error code 524  
+   (เกิดจาก IPv6 ของ 3BB โดนปิดกั้นทำให้เข้า CloudFlare ไม่ได้)  
 2. Script จะตั้ง Outbound Rules ใน Windows Defender Firewall เพื่อ Block IPv6  
    (เมื่อบราวเซอร์อ่าน IPv6 ไม่ได้ ก็ทำจะเลือกใช้งาน IPv4 ที่ไม่มีปัญหาแทน)  
 3. มีฟังชั่น Unblock เพื่อเคลีย Rules ที่เคยตั้งไว้
 4. มีฟังชั่น Flush DNS ที่ยังค้างอยู่
+5. สคริปนี้ไม่บล็อคการทำงานของ IPv4 ในการหาเพียร์ของโปรแกรมบิททอเร้นท์
 
 **หมายเหตุ :** 
-- มีผลเฉพาะบราวเซอร์ Chrome/Edge/Firefox เท่านั้น
-- มีผลกับเว็บ TDD เท่านั้น (ทั้ง com และ net)
+- มีผลเฉพาะบราวเซอร์ Chrome, Firefox, Edge, Brave, Opera, OperaGX, Safari  

@@ -1,6 +1,6 @@
 [**HOME**](../README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
-**Block IPv6 TDD by MObyEX**
+**Block IPv6 Type2 by MObyEX**
 
 # System Compatibility
 ฺ**สามารถเปิดใช้ได้บน**

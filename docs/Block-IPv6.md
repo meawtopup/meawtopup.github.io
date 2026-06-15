@@ -67,12 +67,6 @@
    ==================================================
    Select an option (1-2):
    ```  
-   **หากปรากฎข้อความแบบนี้**  
-   ```
-   [Error] Please right-click and "Run as Administrator"
-   Press any key to continue . . .
-   ```  
-   แสดงว่าวินโดที่ท่านใช้ไม่มีสิทธิ์แก้ไขระดับแอดมิน
 7. ถ้าต้องการ Block IPv6 ให้กด **1** ถ้าจะยกเลิกการ Block IPv6 ให้กด **2**
 8. สคริปต์จะตรวจสอบบราวเซอร์ที่ติดตั้งในเครื่อง (Chrome, Firefox, Edge, Brave, Opera, Opera GX, Safari)
    และเพิ่ม Firewall Outbound Rules เฉพาะบราวเซอร์ที่พบ

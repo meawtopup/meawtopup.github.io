@@ -30,14 +30,14 @@
 
 # Download
 **สำหรับ Windows**  
-มี 2 วิธี ในการดาวโหลด Block IPv6 TDD (WinOS).bat
+มี 2 วิธี ในการดาวโหลด Block-IPv6-Type2-WinOS.bat  
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/BlockIPv6_Type2_WinOS/Block-IPv6-Type2-WinOS.bat)  
    (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 (WinOS)](../tools/Block-IPv6-Type2-WinOS.bat)  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/mshs9d7p03xa92l/Block-IPv6-Type2-WinOS.bat/file)  
    (หากลิ้งเสียกรุณาแจ้งที่หน้าแชท)  
 
 **สำหรับ MacOS**  
-มี 2 วิธี ในการดาวโหลด Block IPv6 TDD (MacOS).sh
+มี 2 วิธี ในการดาวโหลด Block-IPv6-Type2-MacOS.sh  
 1. โหลดจาก GitHub: [Download on GitHub](https://github.com/meawtopup/meawtopup.github.io/releases/download/BlockIPv6_Type2_MacOS/Block-IPv6-Type2-MacOS.sh)  
    (หรือตรวจสอบโค้ดได้ที่ > [Block IPv6 (MacOS)](../tools/Block-IPv6-Type2-MacOS.sh)  
 2. โหลดจาก MediaFire: [Download on MediaFire](https://www.mediafire.com/file/0lcuatx9ia1qzok/Block-IPv6-Type2-MacOS.sh/file)  

@@ -42,11 +42,12 @@
 # Tools
 **แก้ปัญหาเน็ต 3BB เข้าเว็บไม่ได้เพราะ IPV6 โดนปิดกั้น**  
 *(เลือกใช้อย่างใดอย่างหนึ่ง ถ้าไม่ได้คืนค่าเดิมแล้วค่อยลองอีกวิธี)*  
-- Block IPv6 Type2 by MObyEX  
-  หลัการทำงานของสคริป: เพิ่ม Outbound Rules ใน Firewall เพื่อ Block IPv6 แต่ยังใช้ IPv6 ในการจับเพียร์ได้อยู่  
-  [View Here (Download)](docs/Block-IPv6.md) | [Self-Configuration](docs/Self-Config-IPV6.md) | [Feature](docs/FEATURES.md#block-ipv6-by-mobyex)  
 - RUN-FixIPv4 by RIPMAN  
   หลัการทำงานของสคริป: ทำการแก้ hosts เพิ่มโดเมนให้ไปวิ่งหา IPv4  
   [View Here (Download)](docs/RUN-FixIPv4.md) | [Self-Configuration](docs/Self-Config-FixIPv4.md) | [Feature](docs/FEATURES.md#run-fixipv4-by-ripman)  
+- Block IPv6 Type2 by MObyEX  
+  หลัการทำงานของสคริป: เพิ่ม Outbound Rules ใน Firewall เพื่อ Block IPv6 แต่ยังใช้ IPv6 ในการจับเพียร์ได้อยู่  
+  [View Here (Download)](docs/Block-IPv6.md) | [Self-Configuration](docs/Self-Config-IPV6.md) | [Feature](docs/FEATURES.md#block-ipv6-by-mobyex)  
+
 
 

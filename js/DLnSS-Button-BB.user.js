@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name           DLnSS Button 3.2 | BB
+// @name           DLnSS Button 3.3 | BB
 // @namespace      http://tampermonkey.net/
-// @version        3.2
-// @description    Download/SS+/Status-DL
+// @version        3.3
+// @description    Download/SS+/Status-DL (Updated for new download gate)
 // @author         MObyEX
 // @include        *://bearbit.*/viewno18sbx.php*
 // @include        *://bearbit.*/viewbrsb.php*
@@ -15,6 +15,28 @@
 
 (function () {
     'use strict';
+
+    const BB_BASE = window.location.origin;
+    let lastDownloadTime = 0;
+    let minInterval = 1500;
+
+    function waitForSlot() {
+        return new Promise(resolve => {
+            let now = Date.now();
+            let timeSinceLast = now - lastDownloadTime;
+
+            if (timeSinceLast >= minInterval) {
+                lastDownloadTime = now;
+                resolve();
+            } else {
+                let waitTime = minInterval - timeSinceLast;
+                setTimeout(() => {
+                    lastDownloadTime = Date.now();
+                    resolve();
+                }, waitTime);
+            }
+        });
+    }
 
     function showSSPopup(imgUrl) {
         let overlay = document.createElement('div');
@@ -36,39 +58,158 @@
     }
 
     function processDownload(torrentId, dlBtn, container, bookmarkBtn) {
-        dlBtn.innerHTML = ' ⏳ ';
-        let iframe = document.createElement('iframe');
-        iframe.src = "https://bearbit.org/details.php?id=" + torrentId;
-        iframe.style.display = "none";
-        document.body.appendChild(iframe);
-        iframe.onload = function () {
-            try {
-                let iframeDoc = iframe.contentWindow.document;
-                let thanksBtn = iframeDoc.querySelector('td#saythanks a[onclick*="say_thanks"]');
-                if (thanksBtn) {
-                    thanksBtn.click();
+        dlBtn.innerHTML = ' ⏳ 6';
+        dlBtn.style.pointerEvents = 'none';
+
+        fetch(BB_BASE + "/details.php?id=" + torrentId, {
+            credentials: 'include'
+        })
+            .then(response => response.text())
+            .then(html => {
+                let thanksMatch = html.match(/href="([^"]*say_thanks[^"]*)"/);
+                let dlMatch = html.match(/href="(downloadnew\.php\?id=\d+&amp;genid=[^"]*&amp;dltm=[^"]*&amp;dlt=[^"]*&amp;filename=[^"]*)"/);
+
+                if (!dlMatch) {
+                    throw new Error('LOCKED');
                 }
-                setTimeout(() => {
-                    let downloadLink = iframeDoc.querySelector('a[href^="downloadnew.php"]');
-                    if (downloadLink) {
-                        window.location.href = "https://bearbit.org/" + downloadLink.getAttribute('href');
-                        dlBtn.innerHTML = ' ✔️ ';
-                    } else {
-                        window.location.href = `https://bearbit.org/downloadnew.php?id=${torrentId}`;
+
+                let downloadUrl = dlMatch[1].replace(/&amp;/g, '&');
+                if (!downloadUrl.startsWith('http')) {
+                    downloadUrl = BB_BASE + "/" + downloadUrl;
+                }
+
+                let startCountdownAndDownload = () => {
+                    let countdown = 6;
+                    dlBtn.innerHTML = ' ⏳ ' + countdown;
+
+                    let countdownInterval = setInterval(() => {
+                        countdown--;
+                        if (countdown > 0) {
+                            dlBtn.innerHTML = ' ⏳ ' + countdown;
+                        } else {
+                            dlBtn.innerHTML = ' ⏳ 0';
+                            clearInterval(countdownInterval);
+                        }
+                    }, 1000);
+
+                    let openDownloadGate = () => {
+                        let iframe = document.createElement('iframe');
+                        iframe.style.display = 'none';
+                        iframe.name = 'bb_gate_' + torrentId;
+                        iframe.id = 'bb_iframe_' + torrentId;
+                        iframe.dataset.completed = 'false';
+                        document.body.appendChild(iframe);
+                        iframe.src = downloadUrl;
+
+                        let cleanupInterval = setInterval(() => {
+                            let allIframes = document.querySelectorAll('iframe[id^="bb_iframe_"]');
+                            allIframes.forEach(f => {
+                                if (f.dataset.completed === 'true') {
+                                    if (f.parentNode) {
+                                        f.parentNode.removeChild(f);
+                                    }
+                                }
+                            });
+                            if (!document.querySelector('iframe[id^="bb_iframe_"]')) {
+                                clearInterval(cleanupInterval);
+                            }
+                        }, 5000);
+
+                        let doDownload = () => {
+                            try {
+                                let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                                let bbDlBtn = iframeDoc.querySelector('a#bbDlBtn');
+
+                                if (bbDlBtn && !bbDlBtn.classList.contains('bb-disabled')) {
+                                    bbDlBtn.click();
+
+                                    clearInterval(countdownInterval);
+                                    iframe.dataset.completed = 'true';
+                                    dlBtn.innerHTML = ' ✔️ ';
+
+                                    setTimeout(() => {
+                                        dlBtn.innerHTML = dlBtn.getAttribute('data-original-html');
+                                        dlBtn.style.pointerEvents = 'auto';
+                                    }, 3000);
+
+                                    setTimeout(() => {
+                                        if (iframe.parentNode) {
+                                            document.body.removeChild(iframe);
+                                        }
+                                        if (container && bookmarkBtn) {
+                                            checkDownloaded(torrentId, container, bookmarkBtn);
+                                        }
+                                    }, 3000);
+
+                                    return true;
+                                }
+                            } catch (err) {
+                                console.log('Iframe access error:', err);
+                            }
+                            return false;
+                        };
+
+                        let checkReady = setInterval(() => {
+                            if (countdown <= 0) {
+                                if (doDownload()) {
+                                    clearInterval(checkReady);
+                                } else {
+                                    setTimeout(() => {
+                                        if (!doDownload()) {
+                                            clearInterval(checkReady);
+                                            iframe.dataset.completed = 'true';
+                                            window.open(downloadUrl, '_blank');
+                                            clearInterval(countdownInterval);
+                                            dlBtn.innerHTML = ' ✔️ ';
+                                            setTimeout(() => {
+                                                dlBtn.innerHTML = dlBtn.getAttribute('data-original-html');
+                                                dlBtn.style.pointerEvents = 'auto';
+                                            }, 3000);
+                                            setTimeout(() => {
+                                                if (iframe.parentNode) {
+                                                    document.body.removeChild(iframe);
+                                                }
+                                            }, 3000);
+                                        }
+                                    }, 1000);
+                                    clearInterval(checkReady);
+                                }
+                            }
+                        }, 200);
+                    };
+
+                    openDownloadGate();
+                };
+
+                let doThanks = () => {
+                    waitForSlot().then(() => {
+                        startCountdownAndDownload();
+                    });
+                };
+
+                if (thanksMatch) {
+                    let thanksUrl = thanksMatch[1].replace(/&amp;/g, '&');
+                    if (!thanksUrl.startsWith('http')) {
+                        thanksUrl = BB_BASE + "/" + thanksUrl;
                     }
-                    setTimeout(() => {
-                        if (iframe.parentNode) document.body.removeChild(iframe);
-                        dlBtn.innerHTML = dlBtn.getAttribute('data-original-html');
-                        if (container && bookmarkBtn) checkDownloaded(torrentId, container, bookmarkBtn);
-                    }, 1500);
-                }, 300);
-            } catch (err) { window.location.href = "https://bearbit.org/details.php?id=" + torrentId; }
-        };
+                    fetch(thanksUrl, { credentials: 'include' })
+                        .then(() => doThanks())
+                        .catch(() => doThanks());
+                } else {
+                    doThanks();
+                }
+            })
+            .catch(err => {
+                console.log('Process error:', err);
+                dlBtn.innerHTML = ' 🔒 ';
+                dlBtn.title = 'ไฟล์นี้ถูก Locked';
+                dlBtn.style.pointerEvents = 'none';
+            });
     }
 
     function checkDownloaded(torrentId, container, bookmarkBtn, ssBtn) {
         if (container.querySelector(`.status-check-${torrentId}`)) return;
-        fetch(`https://bearbit.org/details.php?id=${torrentId}`)
+        fetch(BB_BASE + "/details.php?id=" + torrentId)
             .then(response => response.arrayBuffer())
             .then(buffer => {
                 let decoder = new TextDecoder('tis-620');
@@ -123,13 +264,11 @@
             const handleSSClick = (e) => {
                 const isLeftClick = e.button === 0 && !e.ctrlKey && !e.shiftKey && !e.metaKey;
                 if (!isLeftClick) return;
-
                 e.preventDefault();
-
                 if (ssBtn.href && ssBtn.href !== window.location.href) {
                     showSSPopup(ssBtn.href);
                 } else {
-                    window.open(`https://bearbit.org/details.php?id=${torrentId}`, '_blank');
+                    window.open(BB_BASE + "/details.php?id=" + torrentId, '_blank');
                 }
             };
 

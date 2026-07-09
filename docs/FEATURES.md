@@ -98,8 +98,8 @@
 
 **หมายเหตุ :** แสดงผล***เฉพาะหน้า Chat เท่านั้น***  
 -->
-# DLnSS Button BB 3.3
-*อัพเดทเมื่อ 3/7/2569*  
+# DLnSS Button BB 3.4
+*อัพเดทเมื่อ 9/7/2569*  
 <picture><img src="../assets/DLnSS_3_1.jpg" width="222" height="33" alt="DLnSS Button"></picture>  
 1. ปุ่มดาวโหลด DL-Now แบบกด Thank ให้เลย และไม่แสดงหน้าโฆษณา
 2. ปุ่มรูป SS+ (คลิกซ้ายเปิดแบบ Popup/คลิกขวาเลือก Open link ได้)

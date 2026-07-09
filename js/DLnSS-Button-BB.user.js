@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name           DLnSS Button 3.5 | BB
+// @name           DLnSS Button 3.6 | BB
 // @namespace      http://tampermonkey.net/
-// @version        3.5
+// @version        3.6
 // @description    Download/SS+/Status-DL (Updated for new download gate)
 // @author         MObyEX
 // @include        *://bearbit.*/viewno18sbx.php*
@@ -118,7 +118,18 @@
                                 let bbDlBtn = iframeDoc.querySelector('a#bbDlBtn');
 
                                 if (bbDlBtn && !bbDlBtn.classList.contains('bb-disabled')) {
-                                    bbDlBtn.click();
+                                    let finalUrl = bbDlBtn.getAttribute('href');
+                                    if (!finalUrl.startsWith('http')) {
+                                        finalUrl = BB_BASE + finalUrl;
+                                    }
+
+                                    let dlFrame = document.createElement('iframe');
+                                    dlFrame.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;';
+                                    dlFrame.src = finalUrl;
+                                    document.body.appendChild(dlFrame);
+                                    setTimeout(() => {
+                                        if (dlFrame.parentNode) dlFrame.remove();
+                                    }, 3000);
 
                                     clearInterval(countdownInterval);
                                     iframe.dataset.completed = 'true';
@@ -156,7 +167,13 @@
                                         if (!doDownload()) {
                                             clearInterval(checkReady);
                                             iframe.dataset.completed = 'true';
-                                            window.open(downloadUrl, '_blank');
+                                            let dlFrame = document.createElement('iframe');
+                                            dlFrame.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;';
+                                            dlFrame.src = downloadUrl;
+                                            document.body.appendChild(dlFrame);
+                                            setTimeout(() => {
+                                                if (dlFrame.parentNode) dlFrame.remove();
+                                            }, 3000);
                                             clearInterval(countdownInterval);
                                             dlBtn.innerHTML = ' ✔️ ';
                                             markQueueDone();

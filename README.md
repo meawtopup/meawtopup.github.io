@@ -22,8 +22,8 @@
   [View Here](js/Chat+.user.js) | [Feature](docs/FEATURES.md#chat-121)  
 - Domain Fixer 1.0 | สำหรับผู้ใช้เว็บผ่านโดเมน .net แก้ไขลิ้งให้กดได้เป็นปกติ - TDD  
   [View Here](js/Domain-Fixer.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
-- DLnSS Button BB 3.5 | DL-Now/SS+/เช็คสถานะ (ใช้งานครั้งแรกต้องปิด PopUP Block ก่อน) - BB  
-  [View Here](js/DLnSS-Button-BB.user.js) | [Feature](docs/FEATURES.md#dlnss-button-BB-35)  
+- DLnSS Button BB 3.6 | DL-Now/SS+/เช็คสถานะ (ใช้งานครั้งแรกต้องปิด PopUP Block ก่อน) - BB  
+  [View Here](js/DLnSS-Button-BB.user.js) | [Feature](docs/FEATURES.md#dlnss-button-BB-36)  
 - DLnSS Button TDD 1.1 | SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - TDD  
   [View Here](js/DLnSS-Button-TDD.user.js) | [Feature](docs/FEATURES.md#dlnss-button-TDD-11)  
 <!--

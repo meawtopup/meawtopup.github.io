@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name           DLnSS Button 3.3 | BB
+// @name           DLnSS Button 3.4 | BB
 // @namespace      http://tampermonkey.net/
-// @version        3.3
+// @version        3.4
 // @description    Download/SS+/Status-DL (Updated for new download gate)
 // @author         MObyEX
 // @include        *://bearbit.*/viewno18sbx.php*
@@ -18,7 +18,7 @@
 
     const BB_BASE = window.location.origin;
     let lastDownloadTime = 0;
-    let minInterval = 1500;
+    let minInterval = 3000;
 
     function waitForSlot() {
         return new Promise(resolve => {
@@ -58,7 +58,7 @@
     }
 
     function processDownload(torrentId, dlBtn, container, bookmarkBtn) {
-        dlBtn.innerHTML = ' ⏳ 6';
+        dlBtn.innerHTML = ' ⏳ 7';
         dlBtn.style.pointerEvents = 'none';
 
         fetch(BB_BASE + "/details.php?id=" + torrentId, {
@@ -79,7 +79,7 @@
                 }
 
                 let startCountdownAndDownload = () => {
-                    let countdown = 6;
+                    let countdown = 7;
                     dlBtn.innerHTML = ' ⏳ ' + countdown;
 
                     let countdownInterval = setInterval(() => {

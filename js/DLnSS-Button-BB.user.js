@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name           DLnSS Button 3.4 | BB
+// @name           DLnSS Button 3.5 | BB
 // @namespace      http://tampermonkey.net/
-// @version        3.4
+// @version        3.5
 // @description    Download/SS+/Status-DL (Updated for new download gate)
 // @author         MObyEX
 // @include        *://bearbit.*/viewno18sbx.php*
@@ -17,25 +17,20 @@
     'use strict';
 
     const BB_BASE = window.location.origin;
-    let lastDownloadTime = 0;
-    let minInterval = 3000;
+    let downloadQueue = [];
+    let isProcessing = false;
+    const QUEUE_DELAY = 1500;
 
-    function waitForSlot() {
-        return new Promise(resolve => {
-            let now = Date.now();
-            let timeSinceLast = now - lastDownloadTime;
+    function processQueue() {
+        if (isProcessing || downloadQueue.length === 0) return;
+        isProcessing = true;
+        let next = downloadQueue.shift();
+        next();
+    }
 
-            if (timeSinceLast >= minInterval) {
-                lastDownloadTime = now;
-                resolve();
-            } else {
-                let waitTime = minInterval - timeSinceLast;
-                setTimeout(() => {
-                    lastDownloadTime = Date.now();
-                    resolve();
-                }, waitTime);
-            }
-        });
+    function markQueueDone() {
+        isProcessing = false;
+        setTimeout(() => processQueue(), QUEUE_DELAY);
     }
 
     function showSSPopup(imgUrl) {
@@ -61,11 +56,13 @@
         dlBtn.innerHTML = ' ⏳ 7';
         dlBtn.style.pointerEvents = 'none';
 
-        fetch(BB_BASE + "/details.php?id=" + torrentId, {
-            credentials: 'include'
-        })
-            .then(response => response.text())
-            .then(html => {
+        let startProcess = () => {
+
+            fetch(BB_BASE + "/details.php?id=" + torrentId, {
+                credentials: 'include'
+            })
+                .then(response => response.text())
+                .then(html => {
                 let thanksMatch = html.match(/href="([^"]*say_thanks[^"]*)"/);
                 let dlMatch = html.match(/href="(downloadnew\.php\?id=\d+&amp;genid=[^"]*&amp;dltm=[^"]*&amp;dlt=[^"]*&amp;filename=[^"]*)"/);
 
@@ -126,6 +123,7 @@
                                     clearInterval(countdownInterval);
                                     iframe.dataset.completed = 'true';
                                     dlBtn.innerHTML = ' ✔️ ';
+                                    markQueueDone();
 
                                     setTimeout(() => {
                                         dlBtn.innerHTML = dlBtn.getAttribute('data-original-html');
@@ -161,6 +159,7 @@
                                             window.open(downloadUrl, '_blank');
                                             clearInterval(countdownInterval);
                                             dlBtn.innerHTML = ' ✔️ ';
+                                            markQueueDone();
                                             setTimeout(() => {
                                                 dlBtn.innerHTML = dlBtn.getAttribute('data-original-html');
                                                 dlBtn.style.pointerEvents = 'auto';
@@ -182,9 +181,7 @@
                 };
 
                 let doThanks = () => {
-                    waitForSlot().then(() => {
-                        startCountdownAndDownload();
-                    });
+                    startCountdownAndDownload();
                 };
 
                 if (thanksMatch) {
@@ -199,12 +196,16 @@
                     doThanks();
                 }
             })
-            .catch(err => {
+                .catch(err => {
                 console.log('Process error:', err);
                 dlBtn.innerHTML = ' 🔒 ';
                 dlBtn.title = 'ไฟล์นี้ถูก Locked';
                 dlBtn.style.pointerEvents = 'none';
+                markQueueDone();
             });
+        };
+        downloadQueue.push(startProcess);
+        processQueue();
     }
 
     function checkDownloaded(torrentId, container, bookmarkBtn, ssBtn) {
@@ -212,24 +213,24 @@
         fetch(BB_BASE + "/details.php?id=" + torrentId)
             .then(response => response.arrayBuffer())
             .then(buffer => {
-                let decoder = new TextDecoder('tis-620');
-                let html = decoder.decode(buffer);
-                if (html.includes('(ได้รับไปแล้ว)')) {
-                    const statusIcon = document.createElement('span');
-                    statusIcon.innerHTML = '✔️';
-                    statusIcon.className = `status-check-${torrentId}`;
-                    statusIcon.title = 'คุณเคยดาวน์โหลดไฟล์นี้แล้ว';
-                    statusIcon.style = 'display: inline-flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #fff; border-radius: 20px; padding: 0 12px; color: #fff; text-decoration: none; font-size: 11px; font-weight: bold; margin-right: 8px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 26px; vertical-align: middle; box-sizing: border-box; line-height: 1;';
-                    container.insertBefore(statusIcon, bookmarkBtn);
-                }
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const ssTitleTd = Array.from(doc.querySelectorAll('td.rowhead')).find(td => td.innerText.includes('ScreenShot'));
-                const imgUrl = ssTitleTd?.nextElementSibling?.querySelector('a[href]')?.getAttribute('href');
-                if (imgUrl && ssBtn) {
-                    ssBtn.href = imgUrl;
-                }
-            })
+            let decoder = new TextDecoder('tis-620');
+            let html = decoder.decode(buffer);
+            if (html.includes('(ได้รับไปแล้ว)')) {
+                const statusIcon = document.createElement('span');
+                statusIcon.innerHTML = '✔️';
+                statusIcon.className = `status-check-${torrentId}`;
+                statusIcon.title = 'คุณเคยดาวน์โหลดไฟล์นี้แล้ว';
+                statusIcon.style = 'display: inline-flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #fff; border-radius: 20px; padding: 0 12px; color: #fff; text-decoration: none; font-size: 11px; font-weight: bold; margin-right: 8px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 26px; vertical-align: middle; box-sizing: border-box; line-height: 1;';
+                container.insertBefore(statusIcon, bookmarkBtn);
+            }
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const ssTitleTd = Array.from(doc.querySelectorAll('td.rowhead')).find(td => td.innerText.includes('ScreenShot'));
+            const imgUrl = ssTitleTd?.nextElementSibling?.querySelector('a[href]')?.getAttribute('href');
+            if (imgUrl && ssBtn) {
+                ssBtn.href = imgUrl;
+            }
+        })
             .catch(err => console.log('Status check error:', err));
     }
 

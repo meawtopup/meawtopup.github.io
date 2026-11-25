@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.4.6 | TDD
+// @name         Auto Drone 4.4.7 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.4.6
+// @version      4.4.7
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -399,17 +399,23 @@
             const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
             const hIds = [];
             const pIds = [];
+            const bugIds = [];
             const remainingTimes = [];
             const TARGET = 6 * 3600;
 
             for (let i = 1; i <= 9; i++) {
-                const storeEl = doc.querySelector(`[onclick*="submitFarmAction('store', ${i})"]`);
-                const seedEl  = doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`);
-                const box = (storeEl || seedEl)?.closest('.box-text');
+                const box = doc.querySelector(`.box-text [onclick*="submitFarmAction('store', ${i})"]`)?.closest('.box-text')
+                         || doc.querySelector(`.box-text [onclick*="submitFarmAction('seed', ${i})"]`)?.closest('.box-text');
                 if (!box) continue;
                 const txt = box.textContent;
-                if (txt.includes('โตเต็มที่แล้ว')) hIds.push(i);
-                else if (seedEl) pIds.push(i);
+
+                if (txt.includes('โตเต็มที่แล้ว')) {
+                    hIds.push(i);
+                } else if (txt.includes('หนอนกิน')) {
+                    bugIds.push(i);
+                } else if (doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`)) {
+                    pIds.push(i);
+                }
             }
 
             doc.querySelectorAll('.box-text .f10').forEach(el => {
@@ -424,12 +430,13 @@
             const minRemaining = remainingTimes.length > 0 ? Math.min(...remainingTimes) : 0;
             let statusParts = [];
             if (hIds.length > 0) statusParts.push(`✔️พร้อมเก็บ ${hIds.length}`);
+            if (bugIds.length > 0) statusParts.push(`🐛หนอนกิน ${bugIds.length}`);
             if (minRemaining > 0) statusParts.push(`❌รอโตอีก ${formatTime(minRemaining)}`);
 
             UI.fStatus.innerText = statusParts.length > 0 ? `🌾: ${statusParts.join('/')}` : '🌾: พร้อมใช้งาน';
 
-            const canHarvest = hIds.length > 0;
-            const canPlant = hIds.length === 0 && pIds.length > 0 && currentZen >= 25000;
+            const canHarvest = hIds.length > 0 || bugIds.length > 0;
+            const canPlant = hIds.length === 0 && bugIds.length === 0 && pIds.length > 0 && currentZen >= 25000;
             const btnEnabled = canHarvest || canPlant;
 
             let btnText = '🌾พร้อมใช้งาน';
@@ -445,7 +452,8 @@
 
             updateBtn(UI.fBtn, btnText, btnColor, !btnEnabled);
 
-            if (STATE.farm.autoMode && hIds.length > 0) {
+            const hasActionable = hIds.length > 0 || bugIds.length > 0 || (pIds.length > 0 && currentZen >= 25000);
+            if (STATE.farm.autoMode && hasActionable) {
                 STATE.farm.retryCount = 0;
                 await manualCollectFarm();
                 return;
@@ -454,7 +462,7 @@
             if (minRemaining > 0) {
                 STATE.farm.retryCount = 0;
                 startFarmCountdown(minRemaining);
-            } else if (hIds.length === 0 && pIds.length > 0 && currentZen < 25000) {
+            } else if (hIds.length === 0 && bugIds.length === 0 && pIds.length > 0 && currentZen < 25000) {
                 STATE.farm.retryCount = 0;
                 UI.fStatus.innerText = '🌾: ❌เงินไม่พอปลูก';
                 if (STATE.farm.autoMode) {
@@ -492,12 +500,12 @@
             }
 
             const currentStatus = UI.fStatus.innerText;
-            const hasHarvest = currentStatus.includes('✔️พร้อมเก็บ');
+            const hasAction = currentStatus.includes('✔️พร้อมเก็บ') || currentStatus.includes('🐛หนอนกิน');
             const timeStr = formatTime(rem);
 
-            if (hasHarvest) {
-                const harvestPart = currentStatus.split('/')[0];
-                UI.fStatus.innerText = `${harvestPart}/❌รอโตอีก ${timeStr}`;
+            if (hasAction) {
+                const actionPart = currentStatus.split('/').filter(p => p.includes('✔️') || p.includes('🐛')).join('/');
+                UI.fStatus.innerText = `${actionPart}/❌รอโตอีก ${timeStr}`;
             } else {
                 UI.fStatus.innerText = `🌾: ❌รอโตอีก ${timeStr}`;
             }
@@ -506,11 +514,24 @@
         STATE.farm.interval = setInterval(tick, 1000);
     }
 
+    let _origConfirm = null, _origAlert = null;
+    function suppressParentDialogs(on) {
+        if (on) {
+            _origConfirm = window.confirm;
+            _origAlert = window.alert;
+            window.confirm = () => true;
+            window.alert = () => {};
+        } else {
+            if (_origConfirm) window.confirm = _origConfirm;
+            if (_origAlert) window.alert = _origAlert;
+        }
+    }
+
     function farmActionViaIframe(action, ground) {
         return new Promise((resolve) => {
             const iframe = document.createElement('iframe');
             iframe.style.display = 'none';
-            iframe.src = `/farm.php?t=${Date.now()}`;
+            iframe.src = location.origin + `/farm.php?t=${Date.now()}`;
             document.body.appendChild(iframe);
 
             let done = false;
@@ -523,75 +544,141 @@
 
             iframe.onload = () => {
                 try {
-                    const idoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const iwin = iframe.contentWindow;
+                    const idoc = iframe.contentDocument || iwin.document;
+
+                    try {
+                        iwin.confirm = () => true;
+                        iwin.alert   = () => {};
+                        iwin.prompt  = () => '';
+                    } catch (_) {}
+
+                    try {
+                        if (typeof iwin.Swal === 'function') {
+                            const _Swal = iwin.Swal;
+                            iwin.Swal = function(opts) {
+                                if (opts && (opts.showCancelButton || opts.buttons)) {
+                                    return Promise.resolve({ isConfirmed: true });
+                                }
+                                return _Swal.apply(this, arguments);
+                            };
+                            if (_Swal.fire) {
+                                iwin.Swal.fire = function(opts) {
+                                    if (opts && (opts.showCancelButton || opts.buttons)) {
+                                        return Promise.resolve({ isConfirmed: true });
+                                    }
+                                    return _Swal.fire.apply(this, arguments);
+                                };
+                            }
+                        }
+                        if (iwin.jQuery && iwin.jQuery.fn && iwin.jQuery.fn.modal) {
+                            const _modal = iwin.jQuery.fn.modal;
+                            iwin.jQuery.fn.modal = function(arg) {
+                                if (arg === 'show' || arg === undefined) return this;
+                                return _modal.apply(this, arguments);
+                            };
+                        }
+                    } catch (_) {}
+
                     const el = idoc.querySelector(
                         `[onclick*="submitFarmAction('${action}', ${ground})"]`
                     );
                     if (!el) { finish(false); return; }
-                    // คลิกจริงใน iframe → เว็บจะรัน submitFarmAction เอง
+
+                    try {
+                        const style = idoc.createElement('style');
+                        style.textContent = `
+                            .modal, .modal-backdrop, .swal2-container, .swal2-popup,
+                            .dialog, #confirm-dialog, #confirmModal { display: none !important; }
+                        `;
+                        idoc.head.appendChild(style);
+                    } catch (_) {}
+
                     el.click();
-                    // รอให้ request วิ่งเสร็จ
-                    setTimeout(() => finish(true), 800);
+
+                    let hideTries = 0;
+                    const hideModal = () => {
+                        hideTries++;
+                        try {
+                            idoc.querySelectorAll('.modal, .modal-backdrop, .swal2-container, .swal2-popup, .dialog, #confirm-dialog')
+                                .forEach(m => { m.style.display = 'none'; m.remove(); });
+                        } catch (_) {}
+                        if (hideTries < 3) setTimeout(hideModal, 50);
+                    };
+                    setTimeout(hideModal, 0);
+
+                    setTimeout(() => finish(true), 1000);
                 } catch (e) {
                     console.error('iframe farm action error', e);
                     finish(false);
                 }
             };
 
-            // timeout กันค้าง
-            setTimeout(() => finish(false), 8000);
+            setTimeout(() => finish(false), 10000);
         });
     }
 
     async function farmAction(action, ground) {
-        // ถ้าอยู่หน้า farm.php และมีฟังก์ชัน global → เรียกตรง (เร็วสุด)
         if (location.pathname.includes('farm.php') && typeof window.submitFarmAction === 'function') {
             try { window.submitFarmAction(action, ground); return true; } catch (_) {}
         }
-        // ไม่งั้นใช้ iframe คลิกปุ่มจริง
         return await farmActionViaIframe(action, ground);
     }
 
     async function executeFarmCollection() {
+        suppressParentDialogs(true);
         try {
             let doc = await textToDoc(await fetch(`/farm.php?t=${Date.now()}`));
-            let hIds = [], pIds = [];
+            let hIds = [], bugIds = [], pIds = [];
 
             for (let i = 1; i <= 9; i++) {
-                const storeEl = doc.querySelector(`[onclick*="submitFarmAction('store', ${i})"]`);
-                const seedEl  = doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`);
-                const box = (storeEl || seedEl)?.closest('.box-text');
+                const box = doc.querySelector(`.box-text [onclick*="submitFarmAction('store', ${i})"]`)?.closest('.box-text')
+                         || doc.querySelector(`.box-text [onclick*="submitFarmAction('seed', ${i})"]`)?.closest('.box-text');
                 if (!box) continue;
                 const txt = box.textContent;
                 if (txt.includes('โตเต็มที่แล้ว')) hIds.push(i);
-                else if (seedEl) pIds.push(i);
+                else if (txt.includes('หนอนกิน')) bugIds.push(i);
+                else if (doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`)) pIds.push(i);
             }
 
             for (let id of hIds) {
                 const ok = await farmAction('store', id);
-                console.log(`store ground ${id}:`, ok ? 'OK' : 'FAIL');
+                console.log(`store(harvest) ground ${id}:`, ok ? 'OK' : 'FAIL');
                 await new Promise(r => setTimeout(r, 600));
             }
 
+            for (let id of bugIds) {
+                const ok1 = await farmAction('store', id);
+                console.log(`store(bug) ground ${id}:`, ok1 ? 'OK' : 'FAIL');
+                await new Promise(r => setTimeout(r, 600));
+                const ok2 = await farmAction('seed', id);
+                console.log(`seed(bug) ground ${id}:`, ok2 ? 'OK' : 'FAIL');
+                await new Promise(r => setTimeout(r, 600));
+            }
+
+            await new Promise(r => setTimeout(r, 1000));
             doc = await textToDoc(await fetch(`/farm.php?t=${Date.now()}`));
             const moneyEl = doc.getElementById('money');
             const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
 
+            const justSeeded = new Set(bugIds);
+
             if (currentZen >= 25000) {
                 pIds = [];
                 for (let i = 1; i <= 9; i++) {
-                    const seedEl = doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`);
-                    if (seedEl) pIds.push(i);
+                    if (justSeeded.has(i)) continue;
+                    if (doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`)) pIds.push(i);
                 }
                 for (let id of pIds) {
                     const ok = await farmAction('seed', id);
-                    console.log(`seed ground ${id}:`, ok ? 'OK' : 'FAIL');
+                    console.log(`seed(empty) ground ${id}:`, ok ? 'OK' : 'FAIL');
                     await new Promise(r => setTimeout(r, 600));
                 }
             }
 
         } catch (e) { console.error('Error executing farm', e); }
 
+        suppressParentDialogs(false);
         STATE.farm.isWorking = false;
         checkFarmLoop();
     }

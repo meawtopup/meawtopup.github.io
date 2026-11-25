@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.4.5 | TDD
+// @name         Auto Drone 4.4.6 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.4.5
+// @version      4.4.6
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -380,7 +380,7 @@
     }
 
     async function manualCollectFarm() {
-        if (STATE.farm.isWorking || UI.fBtn.disabled) return;
+        if (STATE.farm.isWorking) return;
         STATE.farm.isWorking = true;
         updateBtn(UI.fBtn, '⏳กำลังจัดการ...', '#17a2b8', true);
         await executeFarmCollection();
@@ -506,13 +506,50 @@
         STATE.farm.interval = setInterval(tick, 1000);
     }
 
+    function farmActionViaIframe(action, ground) {
+        return new Promise((resolve) => {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = `/farm.php?t=${Date.now()}`;
+            document.body.appendChild(iframe);
+
+            let done = false;
+            const finish = (ok) => {
+                if (done) return;
+                done = true;
+                try { iframe.remove(); } catch (_) {}
+                resolve(ok);
+            };
+
+            iframe.onload = () => {
+                try {
+                    const idoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const el = idoc.querySelector(
+                        `[onclick*="submitFarmAction('${action}', ${ground})"]`
+                    );
+                    if (!el) { finish(false); return; }
+                    // คลิกจริงใน iframe → เว็บจะรัน submitFarmAction เอง
+                    el.click();
+                    // รอให้ request วิ่งเสร็จ
+                    setTimeout(() => finish(true), 800);
+                } catch (e) {
+                    console.error('iframe farm action error', e);
+                    finish(false);
+                }
+            };
+
+            // timeout กันค้าง
+            setTimeout(() => finish(false), 8000);
+        });
+    }
+
     async function farmAction(action, ground) {
-        // ถ้าอยู่หน้า farm.php และมีฟังก์ชัน global ของเว็บ → เรียกใช้ตรงๆ
+        // ถ้าอยู่หน้า farm.php และมีฟังก์ชัน global → เรียกตรง (เร็วสุด)
         if (location.pathname.includes('farm.php') && typeof window.submitFarmAction === 'function') {
-            try { window.submitFarmAction(action, ground); return; } catch (_) {}
+            try { window.submitFarmAction(action, ground); return true; } catch (_) {}
         }
-        // fallback: ยิง GET แบบเดิม
-        await fetch(`/farm.php?action=${action}&ground=${ground}`);
+        // ไม่งั้นใช้ iframe คลิกปุ่มจริง
+        return await farmActionViaIframe(action, ground);
     }
 
     async function executeFarmCollection() {
@@ -531,8 +568,9 @@
             }
 
             for (let id of hIds) {
-                await farmAction('store', id);
-                await new Promise(r => setTimeout(r, 400));
+                const ok = await farmAction('store', id);
+                console.log(`store ground ${id}:`, ok ? 'OK' : 'FAIL');
+                await new Promise(r => setTimeout(r, 600));
             }
 
             doc = await textToDoc(await fetch(`/farm.php?t=${Date.now()}`));
@@ -546,8 +584,9 @@
                     if (seedEl) pIds.push(i);
                 }
                 for (let id of pIds) {
-                    await farmAction('seed', id);
-                    await new Promise(r => setTimeout(r, 400));
+                    const ok = await farmAction('seed', id);
+                    console.log(`seed ground ${id}:`, ok ? 'OK' : 'FAIL');
+                    await new Promise(r => setTimeout(r, 600));
                 }
             }
 

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.4.9 | TDD
+// @name         Auto Drone 4.5.0 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.4.9
+// @version      4.5.0
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -13,6 +13,10 @@
 
 (function () {
     'use strict';
+
+    window.alert = () => {};
+    window.confirm = () => true;
+    window.prompt = () => '';
 
     const STATE = {
         ticket: {
@@ -293,7 +297,7 @@
                     const lastTime = new Date(timeStr.replace(/-/g, '/')).getTime();
                     const now = Date.now();
                     const cooldownMs = 3 * 60 * 60 * 1000;
-                    
+
                     if (now < lastTime + cooldownMs - 5000) {
                         STATE.ticket.retryCount = 0;
                         startTicketCountdown(Math.ceil((lastTime + cooldownMs - now) / 1000), '❌Cooldown');
@@ -425,7 +429,7 @@
     async function executeTicketCollection() {
         try {
             const ok = await ticketActionViaIframe();
-            
+
             if (ok) {
                 console.log('✅ กดรับตั๋วผ่าน iframe สำเร็จ รอ Server อัปเดต...');
             } else {
@@ -482,7 +486,7 @@
                     hIds.push(i);
                 } else if (txt.includes('หนอนกิน')) {
                     bugIds.push(i);
-                } else if (doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`)) {
+                } else if (doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`) || doc.querySelector(`button[onclick*="submitFarmAction('seed', ${i})"]`)) {
                     pIds.push(i);
                 }
             }
@@ -583,17 +587,7 @@
         STATE.farm.interval = setInterval(tick, 1000);
     }
 
-    let _origConfirm = null, _origAlert = null;
     function suppressParentDialogs(on) {
-        if (on) {
-            _origConfirm = window.confirm;
-            _origAlert = window.alert;
-            window.confirm = () => true;
-            window.alert = () => {};
-        } else {
-            if (_origConfirm) window.confirm = _origConfirm;
-            if (_origAlert) window.alert = _origAlert;
-        }
     }
 
     function farmActionViaIframe(action, ground) {
@@ -616,65 +610,35 @@
                     const iwin = iframe.contentWindow;
                     const idoc = iframe.contentDocument || iwin.document;
 
-                    try {
-                        iwin.confirm = () => true;
-                        iwin.alert   = () => {};
-                        iwin.prompt  = () => '';
-                    } catch (_) {}
-
-                    try {
-                        if (typeof iwin.Swal === 'function') {
-                            const _Swal = iwin.Swal;
-                            iwin.Swal = function(opts) {
-                                if (opts && (opts.showCancelButton || opts.buttons)) {
-                                    return Promise.resolve({ isConfirmed: true });
-                                }
-                                return _Swal.apply(this, arguments);
-                            };
-                            if (_Swal.fire) {
-                                iwin.Swal.fire = function(opts) {
-                                    if (opts && (opts.showCancelButton || opts.buttons)) {
-                                        return Promise.resolve({ isConfirmed: true });
-                                    }
-                                    return _Swal.fire.apply(this, arguments);
-                                };
-                            }
-                        }
-                        if (iwin.jQuery && iwin.jQuery.fn && iwin.jQuery.fn.modal) {
-                            const _modal = iwin.jQuery.fn.modal;
-                            iwin.jQuery.fn.modal = function(arg) {
-                                if (arg === 'show' || arg === undefined) return this;
-                                return _modal.apply(this, arguments);
-                            };
-                        }
-                    } catch (_) {}
-
                     const el = idoc.querySelector(
                         `[onclick*="submitFarmAction('${action}', ${ground})"]`
+                    ) || idoc.querySelector(
+                        `button[onclick*="submitFarmAction('${action}', ${ground})"]`
                     );
                     if (!el) { finish(false); return; }
 
                     try {
-                        const style = idoc.createElement('style');
-                        style.textContent = `
-                            .modal, .modal-backdrop, .swal2-container, .swal2-popup,
-                            .dialog, #confirm-dialog, #confirmModal { display: none !important; }
-                        `;
-                        idoc.head.appendChild(style);
+                        iwin.alert   = () => {};
+                        iwin.confirm = () => true;
+                        iwin.prompt  = () => '';
+
+                        if (iwin.Swal && typeof iwin.Swal.fire === 'function') {
+                            iwin.Swal.fire = () => Promise.resolve({ isConfirmed: true });
+                        }
+
+                        if (iwin.jQuery && iwin.jQuery.fn && iwin.jQuery.fn.modal) {
+                            iwin.jQuery.fn.modal = function() { return this; };
+                        }
+
+                        const scripts = idoc.querySelectorAll('script');
+                        scripts.forEach(s => {
+                            if (s.innerHTML.includes('alert(') || s.innerHTML.includes('swal(')) {
+                                s.remove();
+                            }
+                        });
                     } catch (_) {}
 
                     el.click();
-
-                    let hideTries = 0;
-                    const hideModal = () => {
-                        hideTries++;
-                        try {
-                            idoc.querySelectorAll('.modal, .modal-backdrop, .swal2-container, .swal2-popup, .dialog, #confirm-dialog')
-                                .forEach(m => { m.style.display = 'none'; m.remove(); });
-                        } catch (_) {}
-                        if (hideTries < 3) setTimeout(hideModal, 50);
-                    };
-                    setTimeout(hideModal, 0);
 
                     setTimeout(() => finish(true), 1000);
                 } catch (e) {
@@ -707,7 +671,7 @@
                 const txt = box.textContent;
                 if (txt.includes('โตเต็มที่แล้ว')) hIds.push(i);
                 else if (txt.includes('หนอนกิน')) bugIds.push(i);
-                else if (doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`)) pIds.push(i);
+                else if (doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`) || doc.querySelector(`button[onclick*="submitFarmAction('seed', ${i})"]`)) pIds.push(i);
             }
 
             for (let id of hIds) {
@@ -736,7 +700,7 @@
                 pIds = [];
                 for (let i = 1; i <= 9; i++) {
                     if (justSeeded.has(i)) continue;
-                    if (doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`)) pIds.push(i);
+                    if (doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`) || doc.querySelector(`button[onclick*="submitFarmAction('seed', ${i})"]`)) pIds.push(i);
                 }
                 for (let id of pIds) {
                     const ok = await farmAction('seed', id);

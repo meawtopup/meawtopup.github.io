@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.4.4 | TDD
+// @name         Auto Drone 4.4.5 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.4.4
+// @version      4.4.5
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -403,12 +403,17 @@
             const TARGET = 6 * 3600;
 
             for (let i = 1; i <= 9; i++) {
-                if (doc.querySelector(`[onclick*="action=store&ground=${i}"]`)) hIds.push(i);
-                if (doc.querySelector(`[onclick*="action=seed&ground=${i}"]`)) pIds.push(i);
+                const storeEl = doc.querySelector(`[onclick*="submitFarmAction('store', ${i})"]`);
+                const seedEl  = doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`);
+                const box = (storeEl || seedEl)?.closest('.box-text');
+                if (!box) continue;
+                const txt = box.textContent;
+                if (txt.includes('โตเต็มที่แล้ว')) hIds.push(i);
+                else if (seedEl) pIds.push(i);
             }
 
-            doc.querySelectorAll('.f10').forEach(el => {
-                const m = el.innerText.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);
+            doc.querySelectorAll('.box-text .f10').forEach(el => {
+                const m = el.textContent.match(/\((\d+)\s*วัน\)\s*(\d+):(\d+):(\d+)/);
                 if (m) {
                     const elapsed = (parseInt(m[1]) * 86400) + (parseInt(m[2]) * 3600) + (parseInt(m[3]) * 60) + parseInt(m[4]);
                     const remaining = TARGET - elapsed;
@@ -501,16 +506,32 @@
         STATE.farm.interval = setInterval(tick, 1000);
     }
 
+    async function farmAction(action, ground) {
+        // ถ้าอยู่หน้า farm.php และมีฟังก์ชัน global ของเว็บ → เรียกใช้ตรงๆ
+        if (location.pathname.includes('farm.php') && typeof window.submitFarmAction === 'function') {
+            try { window.submitFarmAction(action, ground); return; } catch (_) {}
+        }
+        // fallback: ยิง GET แบบเดิม
+        await fetch(`/farm.php?action=${action}&ground=${ground}`);
+    }
+
     async function executeFarmCollection() {
         try {
             let doc = await textToDoc(await fetch(`/farm.php?t=${Date.now()}`));
             let hIds = [], pIds = [];
 
             for (let i = 1; i <= 9; i++) {
-                if (doc.querySelector(`[onclick*="action=store&ground=${i}"]`)) hIds.push(i);
+                const storeEl = doc.querySelector(`[onclick*="submitFarmAction('store', ${i})"]`);
+                const seedEl  = doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`);
+                const box = (storeEl || seedEl)?.closest('.box-text');
+                if (!box) continue;
+                const txt = box.textContent;
+                if (txt.includes('โตเต็มที่แล้ว')) hIds.push(i);
+                else if (seedEl) pIds.push(i);
             }
+
             for (let id of hIds) {
-                await fetch(`/farm.php?action=store&ground=${id}`);
+                await farmAction('store', id);
                 await new Promise(r => setTimeout(r, 400));
             }
 
@@ -519,11 +540,13 @@
             const currentZen = moneyEl ? parseInt(moneyEl.innerText.replace(/,/g, ''), 10) || 0 : 0;
 
             if (currentZen >= 25000) {
+                pIds = [];
                 for (let i = 1; i <= 9; i++) {
-                    if (doc.querySelector(`[onclick*="action=seed&ground=${i}"]`)) pIds.push(i);
+                    const seedEl = doc.querySelector(`[onclick*="submitFarmAction('seed', ${i})"]`);
+                    if (seedEl) pIds.push(i);
                 }
                 for (let id of pIds) {
-                    await fetch(`/farm.php?action=seed&ground=${id}`);
+                    await farmAction('seed', id);
                     await new Promise(r => setTimeout(r, 400));
                 }
             }

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Auto Drone 4.4.7 | TDD
+// @name         Auto Drone 4.4.9 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      4.4.7
+// @version      4.4.9
 // @description  ticket + farm
 // @author       MobyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -210,7 +210,7 @@
     }
 
     async function manualCollectTicket() {
-        if (STATE.ticket.isWorking || UI.tBtn.disabled) return;
+        if (STATE.ticket.isWorking) return;
         STATE.ticket.isWorking = true;
         updateBtn(UI.tBtn, '⏳กำลังเก็บ...', '#17a2b8', true);
         await executeTicketCollection();
@@ -293,12 +293,21 @@
                     const lastTime = new Date(timeStr.replace(/-/g, '/')).getTime();
                     const now = Date.now();
                     const cooldownMs = 3 * 60 * 60 * 1000;
-                    if (now < lastTime + cooldownMs) {
+                    
+                    if (now < lastTime + cooldownMs - 5000) {
                         STATE.ticket.retryCount = 0;
                         startTicketCountdown(Math.ceil((lastTime + cooldownMs - now) / 1000), '❌Cooldown');
                         return;
                     }
                 }
+            }
+
+            const waitText = html.querySelector('.text-danger');
+            if (waitText && (waitText.textContent.includes('รับตั๋ว') || waitText.textContent.includes('ยังไม่ถึงเวลา'))) {
+                 STATE.ticket.retryCount = 0;
+                 UI.tStatus.innerText = '🎫: ❌รอรอบถัดไป';
+                 updateBtn(UI.tBtn, '🎫พร้อมใช้งาน', '#6c757d', true);
+                 return;
             }
 
             STATE.ticket.retryCount = 0;
@@ -359,11 +368,71 @@
         STATE.ticket.interval = setInterval(tick, 1000);
     }
 
+    function ticketActionViaIframe() {
+        return new Promise((resolve) => {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = location.origin + `/ticket.php?t=${Date.now()}`;
+            document.body.appendChild(iframe);
+
+            let done = false;
+            const finish = (ok) => {
+                if (done) return;
+                done = true;
+                try { iframe.remove(); } catch (_) {}
+                resolve(ok);
+            };
+
+            iframe.onload = () => {
+                try {
+                    const iwin = iframe.contentWindow;
+                    const idoc = iframe.contentDocument || iwin.document;
+
+                    try {
+                        iwin.confirm = () => true;
+                        iwin.alert   = () => {};
+                        iwin.prompt  = () => '';
+                    } catch (_) {}
+
+                    const btn = Array.from(idoc.querySelectorAll('button'))
+                        .find(b => b.textContent.includes('รับตั๋ว') && !b.disabled);
+
+                    if (!btn) {
+                        console.log('ไม่พบปุ่มรับตั๋วที่กดได้ใน iframe (อาจจะยังไม่ถึงเวลา หรือมีเงื่อนไขอื่น)');
+                        finish(false);
+                        return;
+                    }
+
+                    btn.click();
+
+                    try {
+                        const style = idoc.createElement('style');
+                        style.textContent = `.modal, .modal-backdrop, .swal2-container { display: none !important; }`;
+                        idoc.head.appendChild(style);
+                    } catch (_) {}
+
+                    setTimeout(() => finish(true), 1500);
+                } catch (e) {
+                    console.error('iframe ticket action error', e);
+                    finish(false);
+                }
+            };
+
+            setTimeout(() => finish(false), 10000);
+        });
+    }
+
     async function executeTicketCollection() {
         try {
-            await fetch('/ticket.php?mod=get-ticket');
-            console.log('เก็บตั๋วแล้ว รอ Server อัปเดต...');
-            await new Promise(r => setTimeout(r, 1000));
+            const ok = await ticketActionViaIframe();
+            
+            if (ok) {
+                console.log('✅ กดรับตั๋วผ่าน iframe สำเร็จ รอ Server อัปเดต...');
+            } else {
+                console.log('❌ ไม่สามารถกดรับตั๋วผ่าน iframe ได้ (ลอง fallback fetch เดิม)');
+                await fetch('/ticket.php?mod=get-ticket');
+            }
+            await new Promise(r => setTimeout(r, 1500));
         } catch (e) {
             console.error('Error executing ticket', e);
         }

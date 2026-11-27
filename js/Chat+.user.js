@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Chat+ 1.3.0 | TDD
+// @name         Chat+ 1.3.1 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      1.3.0
+// @version      1.3.1
 // @description  Chat+ Modifyer
 // @author       MObyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -231,7 +231,7 @@
                     border-radius: 7px;
                 }
             `;
-            document.getElementById('tdd-custom-css').innerHTML = css; 
+            document.getElementById('tdd-custom-css').innerHTML = css;
         }
 
         function forceLayout() {
@@ -295,13 +295,13 @@
             if ($myContainer.length === 0) {
                 $myContainer = $('<div class="tdd-custom-userlist"></div>');
 
-                const $parentBox = $originalList.closest('.chat-box-list'); 
+                const $parentBox = $originalList.closest('.chat-box-list');
                 if ($parentBox.length > 0) {
                     $parentBox.append($myContainer);
                 } else {
                     $originalList.after($myContainer);
                 }
-                
+
                 $originalList.closest('.slimScrollDiv').addClass('tdd-hide-original');
                 $originalList.addClass('tdd-hide-original');
             }
@@ -588,22 +588,21 @@
 
         forceLayout();
 
-        let sortTimeout;
-        const userListObserver = new MutationObserver(() => {
+        function runSortSafely() {
             if (isSorting) return;
-            isSorting = true;
-            
-            clearTimeout(sortTimeout);
-            sortTimeout = setTimeout(() => {
-                sortUserOnline();
-                isSorting = false;
-            }, 50);
-        });
+            const $list = $('.chat-userlist');
+            if ($list.length === 0 || $list.children('.form-inline').length === 0) return;
 
-        const $userListEl = $('.chat-userlist')[0];
-        if ($userListEl) {
-            userListObserver.observe($userListEl, { childList: true, subtree: true });
+            isSorting = true;
+            try {
+                sortUserOnline();
+            } finally {
+                isSorting = false;
+            }
         }
+
+        setTimeout(runSortSafely, 300);
+        setInterval(runSortSafely, 5000);
 
         $(window).on('resize', forceLayout);
     });

@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Chat+ 1.2.1 | TDD
+// @name         Chat+ 1.3.0 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      1.2.1
+// @version      1.3.0
 // @description  Chat+ Modifyer
 // @author       MObyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -23,8 +23,10 @@
         maxLines: parseInt(localStorage.getItem('tdd_maxlines')) || 100,
         userOnline: localStorage.getItem('tdd_useronline') || 'Show',
         quoteBtn: localStorage.getItem('tdd_quotebtn') || 'Default',
-        radio: localStorage.getItem('tdd_radio') || 'On'
+        radio: localStorage.getItem('tdd_radio') || 'On',
+        sortUser: localStorage.getItem('tdd_sortuser') || 'Default'
     };
+
     function saveSettings() {
         localStorage.setItem('tdd_layout', settings.layout);
         localStorage.setItem('tdd_height', settings.height);
@@ -32,8 +34,8 @@
         localStorage.setItem('tdd_useronline', settings.userOnline);
         localStorage.setItem('tdd_quotebtn', settings.quoteBtn);
         localStorage.setItem('tdd_radio', settings.radio);
+        localStorage.setItem('tdd_sortuser', settings.sortUser);
     }
-
     const originalOpen = XMLHttpRequest.prototype.open;
     XMLHttpRequest.prototype.open = function (method, url) {
         if (settings.radio === 'Off' && typeof url === 'string' && url.includes("radio=true")) {
@@ -189,6 +191,47 @@
                 killRadio();
                 setTimeout(killRadio, 2000);
             }
+
+            css += `
+                .chat-userlist.tdd-sorting {
+                    opacity: 0 !important;
+                    transition: opacity 0.2s;
+                }
+            `;
+
+            css += `
+                .tdd-hide-original {
+                    display: none !important;
+                }
+                .chat-box-list {
+                    background-color: #fff !important;
+                }
+                .tdd-custom-userlist {
+                    position: relative;
+                    background-color: #fff !important;
+                    height: ${settings.layout === 'Fixed' ? h : '500px'};
+                    max-height: ${settings.layout === 'Fixed' ? h : '500px'};
+                    width: auto;
+                    padding: 5px 10px;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    box-sizing: border-box;
+                }
+                .tdd-custom-userlist .form-inline {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 3px;
+                    line-height: 1.4;
+                }
+                .tdd-custom-userlist::-webkit-scrollbar {
+                    width: 7px;
+                }
+                .tdd-custom-userlist::-webkit-scrollbar-thumb {
+                    background: rgba(0, 0, 0, 0.4);
+                    border-radius: 7px;
+                }
+            `;
+            document.getElementById('tdd-custom-css').innerHTML = css; 
         }
 
         function forceLayout() {
@@ -217,6 +260,94 @@
                 configurable: false
             });
         };
+
+        let isSorting = false;
+        let myName = '';
+        const classRank = {
+            'text-sysop': 1,
+            'text-administrator': 2,
+            'text-moderator': 3,
+            'text-rainbow': 4,
+            'text-dj': 5,
+            'text-colo': 6,
+            'text-vip': 7,
+            'text-worldpro': 8,
+            'text-pro': 9,
+            'text-semipro': 10,
+            'text-amateur': 11,
+            'text-senior': 12,
+            'text-junior': 13,
+            'text-beginner': 14,
+            'text-rookie': 15,
+            'text-user': 16
+        };
+
+        function sortUserOnline() {
+            const $originalList = $('.chat-userlist');
+            if ($originalList.length === 0) return;
+
+            if (!myName) {
+                myName = $('.nav-profile .profile-name a').first().text().trim().toLowerCase();
+                if (!myName) return;
+            }
+
+            let $myContainer = $('.tdd-custom-userlist');
+            if ($myContainer.length === 0) {
+                $myContainer = $('<div class="tdd-custom-userlist"></div>');
+
+                const $parentBox = $originalList.closest('.chat-box-list'); 
+                if ($parentBox.length > 0) {
+                    $parentBox.append($myContainer);
+                } else {
+                    $originalList.after($myContainer);
+                }
+                
+                $originalList.closest('.slimScrollDiv').addClass('tdd-hide-original');
+                $originalList.addClass('tdd-hide-original');
+            }
+
+            let users = $originalList.children('.form-inline').toArray();
+            if (users.length === 0) {
+                $myContainer.empty();
+                return;
+            }
+
+            const seenNames = new Set();
+            users = users.filter(el => {
+                const name = $(el).find('a').text().trim().toLowerCase();
+                if (seenNames.has(name)) return false;
+                seenNames.add(name);
+                return true;
+            });
+
+            users.sort((a, b) => {
+                const nameA = $(a).find('a').text().trim().toLowerCase();
+                const nameB = $(b).find('a').text().trim().toLowerCase();
+                if (nameA === myName) return -1;
+                if (nameB === myName) return 1;
+
+                if (settings.sortUser === 'Name') {
+                    return nameA.localeCompare(nameB);
+                } else if (settings.sortUser === 'Class') {
+                    const getRank = (el) => {
+                        const cls = ($(el).find('a').attr('class') || '').split(/\s+/);
+                        let minRank = 99;
+                        for (const c of cls) {
+                            if (classRank[c] && classRank[c] < minRank) minRank = classRank[c];
+                        }
+                        return minRank;
+                    };
+                    return getRank(a) - getRank(b) || nameA.localeCompare(nameB);
+                }
+                return 0;
+            });
+
+            const $newHTML = $(users).clone();
+
+            if ($myContainer.html() !== $newHTML.html()) {
+                $myContainer.empty().append($newHTML);
+            }
+        }
 
         function buildMenu() {
             const target = $('a.nav-link').filter(function () {
@@ -249,6 +380,9 @@
                     </div>
                     <div class="px-2 py-1 mt-2">
                         <button id="st-useronline" class="btn btn-sm btn-block btn-${settings.userOnline === 'Show' ? 'success' : 'secondary'}">User Online: ${settings.userOnline}</button>
+                    </div>
+                    <div class="px-2 py-1">
+                        <button id="st-sortuser" class="btn btn-sm btn-block btn-${settings.sortUser === 'Default' ? 'secondary' : 'info'}">Sort Users: ${settings.sortUser}</button>
                     </div>
                     <div class="px-2 py-1">
                         <button id="st-quotebtn" class="btn btn-sm btn-block btn-${settings.quoteBtn === 'Default' ? 'secondary' : 'primary'}">Quote Button: ${settings.quoteBtn}</button>
@@ -326,6 +460,18 @@
                     .removeClass('btn-success btn-danger')
                     .addClass(settings.radio === 'On' ? 'btn-success' : 'btn-danger');
                 saveSettings(); $('#st-status').fadeIn();
+            });
+            $('#st-sortuser').click(function () {
+                if (settings.sortUser === 'Default') settings.sortUser = 'Name';
+                else if (settings.sortUser === 'Name') settings.sortUser = 'Class';
+                else settings.sortUser = 'Default';
+
+                $(this).text('Sort Users: ' + settings.sortUser)
+                    .removeClass('btn-secondary btn-info btn-primary')
+                    .addClass(settings.sortUser === 'Default' ? 'btn-secondary' : 'btn-info');
+
+                saveSettings();
+                sortUserOnline();
             });
             $('#st-apply-refresh').click(function () {
                 $('audio, video').each(function () { this.pause(); this.src = ""; });
@@ -441,6 +587,24 @@
         }
 
         forceLayout();
+
+        let sortTimeout;
+        const userListObserver = new MutationObserver(() => {
+            if (isSorting) return;
+            isSorting = true;
+            
+            clearTimeout(sortTimeout);
+            sortTimeout = setTimeout(() => {
+                sortUserOnline();
+                isSorting = false;
+            }, 50);
+        });
+
+        const $userListEl = $('.chat-userlist')[0];
+        if ($userListEl) {
+            userListObserver.observe($userListEl, { childList: true, subtree: true });
+        }
+
         $(window).on('resize', forceLayout);
     });
 })();

@@ -61,21 +61,22 @@
 
 **หมายเหตุ :** แสดงผล***เฉพาะหน้า Chat เท่านั้น***  
 -->
-# Chat+ 1.2.1
-*อัพเดทเมื่อ 28/5/2569*  
+# Chat+ 1.3.0
+*อัพเดทเมื่อ 27/11/2569*  
 <picture><img src="../assets/chat+button1_0.jpg" width="93" height="42" alt="Chat+"></picture>  
 เมนู  
-<picture><img src="../assets/chat+menu1_0.jpg" width="232" height="303" alt="Chat+ Menu"></picture>  
+<picture><img src="../assets/chat+menu1_3.jpg" width="225" height="339" alt="Chat+ Menu"></picture>  
 วิทยุแบบใหม่  
 <picture><img src="../assets/chat+radio1_0.jpg" width="213" height="28" alt="Chat+ Radio"></picture>  
 1. Chat layout: Default/Fixed เพื่อปรับ Layout Height เอง
 2. Layout Height กำหนดความสูงเอง ระหว่าง 150-4000 px (ในโหมด Fixed)
 3. Max Lines กำหนดจำนวนบรรทัดข้อความที่จะแสดงเอง ระหว่าง 10-1000 บรรทัด (Default=100)
 4. User Online: Show/Hide เพื่อเปิดหรือปิดตารางรายชื่อผู้ใช้ออนไลน์
-5. Quote Button: Default/Expanded เพื่อขยายขนาดปุ่ม Quote หน้าข้อความ
-6. Radio: On/Off เครื่องเล่นวิทยุแบบใหม่ เพื่อแก้บัคให้บางบราวเซอร์วิทยุหาย
-7. Apply changes & Refresh ปุ่มเพื่อยืนยันค่าที่เปลี่ยนแล้วรีเฟรชหน้าแชทใหม่
-8. ฟังชั่นกดแสดงลิ้งรูปแบบ PopUp
+5. Sort User: Default/Name/Class ไล่เรียงลำดับรายชื่อผู้ใช้ออนไลน์
+6. Quote Button: Default/Expanded เพื่อขยายขนาดปุ่ม Quote หน้าข้อความ
+7. Radio: On/Off เครื่องเล่นวิทยุแบบใหม่ เพื่อแก้บัคให้บางบราวเซอร์วิทยุหาย
+8. Apply changes & Refresh ปุ่มเพื่อยืนยันค่าที่เปลี่ยนแล้วรีเฟรชหน้าแชทใหม่
+9. ฟังชั่นกดแสดงลิ้งรูปแบบ PopUp
 
 **หมายเหตุ :**  
 - เมื่อปรับแล้วหน้าแชทจะเปลี่ยนเมื่อทำการรีเฟรชหน้าแชทใหม่เท่านั้น

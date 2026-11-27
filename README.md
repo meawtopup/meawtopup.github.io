@@ -18,8 +18,8 @@
 **คอมโบแนะนำ:** Auto Drone กับ Chat+ เปิดแค่หน้าแชททิ้งไว้
 - Auto Drone 5.0.0 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้ - TDD  
   [View Here](js/Auto-Drone.user.js) | [Feature](docs/FEATURES.md#auto-drone-444)  
-- Chat+ 1.2.1 | ฟังชั่นสำหรับหน้าแชท - TDD  
-  [View Here](js/Chat+.user.js) | [Feature](docs/FEATURES.md#chat-121)  
+- Chat+ 1.3.0 | ฟังชั่นสำหรับหน้าแชท - TDD  
+  [View Here](js/Chat+.user.js) | [Feature](docs/FEATURES.md#chat-130)  
 - Domain Fixer 1.1 | แก้ไขลิ้งให้กดได้ตรงกับโดเมนที่ใช้อยู่ - TDD  
   [View Here](js/Domain-Fixer.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
 - DLnSS Button BB 3.6 | DL-Now/SS+/เช็คสถานะ (ใช้งานครั้งแรกต้องปิด PopUP Block ก่อน) - BB  

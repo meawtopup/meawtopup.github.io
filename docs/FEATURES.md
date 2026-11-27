@@ -1,7 +1,7 @@
 [**HOME**](../README.md) | [**TOPUP**](https://meawtopup.github.io/) | [**MANUAL**](MANUAL.md) | [**FEATURE**](FEATURES.md)
 
 # Auto Drone 5.0.0
-*อัพเดทเมื่อ 27/11/2569*    
+*อัพเดทเมื่อ 26/11/2569*    
 <picture><img src="../assets/autodrone4_0.jpg" width="605" height="40" alt="Auto Drone"></picture>
 1. ระบบเก็บตั๋ว 🎫
    - ปุ่มแสดงสถานะตั๋ว: ⏳กำลังเช็คตั๋ว/✔️ตั๋วพร้อมเก็บ/❌3HR/❌Cooldown/❌รอบถัดไป
@@ -85,10 +85,13 @@
 - ตำแหน่งปุ่มอยู่ขวาบนหน้าปุ่ม Donation
 - สคริปแสดงผล***เฉพาะหน้า Chat เท่านั้น***  
 
-# Domain Fixer 1.0
-*อัพเดทเมื่อ 10/4/2569*
-1. สำหรับผู้ใช้ที่เข้าใช้งาน www.torrentdd.net
-2. ทำการแก้ไขลิ้งใดๆ ในเว็บที่เป็น torrentdd.com ให้เป็น .net
+# Domain Fixer 1.1
+*อัพเดทเมื่อ 26/11/2569*  
+สำหรับผู้ใช้ที่เข้าใช้งาน www.torrentdd.net  
+ทำการแก้ไขลิ้งใดๆ ในเว็บที่เป็น torrentdd.com ให้เป็น .net  
+
+สำหรับผู้ใช้ที่เข้าใช้งาน www.torrentdd.com  
+ทำการแก้ไขลิ้งใดๆ ในเว็บที่เป็น torrentdd.net ให้เป็น .com  
 
 **หมายเหตุ :** ระบบเช็ค Robot ตอนกดส่ง PM จะไม่สามารถใช้ได้
 <!--

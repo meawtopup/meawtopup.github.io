@@ -17,11 +17,11 @@
 **คำแนะนำ:** กด View Here เพื่อดูโค้ด | กด Feature เพื่อดูว่าสคริปทำอะไรได้บ้าง  
 **คอมโบแนะนำ:** Auto Drone กับ Chat+ เปิดแค่หน้าแชททิ้งไว้
 - Auto Drone 5.0.0 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้ - TDD  
-  [View Here](js/Auto-Drone.user.js) | [Feature](docs/FEATURES.md#auto-drone-444)  
+  [View Here](js/Auto-Drone.user.js) | [Feature](docs/FEATURES.md#auto-drone-500)  
 - Chat+ 1.3.0 | ฟังชั่นสำหรับหน้าแชท - TDD  
   [View Here](js/Chat+.user.js) | [Feature](docs/FEATURES.md#chat-130)  
 - Domain Fixer 1.1 | แก้ไขลิ้งให้กดได้ตรงกับโดเมนที่ใช้อยู่ - TDD  
-  [View Here](js/Domain-Fixer.user.js) | [Feature](docs/FEATURES.md#domain-fixer-10)
+  [View Here](js/Domain-Fixer.user.js) | [Feature](docs/FEATURES.md#domain-fixer-11)
 - DLnSS Button BB 3.6 | DL-Now/SS+/เช็คสถานะ (ใช้งานครั้งแรกต้องปิด PopUP Block ก่อน) - BB  
   [View Here](js/DLnSS-Button-BB.user.js) | [Feature](docs/FEATURES.md#dlnss-button-BB-36)  
 - DLnSS Button TDD 1.1 | SS+/สถานะดาวโหลดแล้วแบบอัพเดทตอนคลิก - TDD  

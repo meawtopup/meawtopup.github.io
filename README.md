@@ -15,7 +15,7 @@
 
 # Script Tampermonkey
 **คำแนะนำ:** กด View Here เพื่อดูโค้ด | กด Feature เพื่อดูว่าสคริปทำอะไรได้บ้าง  
-**คอมโบแนะนำ:** Auto Drone กับ Chat+ เปิดแค่หน้าแชททิ้งไว้
+**คอมโบแนะนำ:** Auto Drone กับ Chat+ เปิดแค่หน้าแชททิ้งไว้ แต่จะลงแค่ Auto Drone ก็ได้
 - Auto Drone 5.0.0 | เก็บตั๋ว+ทำฟาร์ม ระบบออโต้ - TDD  
   [View Here](js/Auto-Drone.user.js) | [Feature](docs/FEATURES.md#auto-drone-500)  
 - Chat+ 1.3.2 | ฟังชั่นสำหรับหน้าแชท - TDD  

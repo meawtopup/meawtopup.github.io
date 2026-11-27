@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Chat+ 1.3.1 | TDD
+// @name         Chat+ 1.3.2 | TDD
 // @namespace    http://tampermonkey.net/
-// @version      1.3.1
+// @version      1.3.2
 // @description  Chat+ Modifyer
 // @author       MObyEX
 // @include      *://*.torrentdd.*/chat.php*
@@ -231,6 +231,31 @@
                     border-radius: 7px;
                 }
             `;
+            css += `
+                #st-sortuser.tdd-sort-active {
+                    background-color: #1b9daf !important;
+                    border-color: #1b9daf !important;
+                    color: #fff !important;
+                }
+                @keyframes tddApplyPulse {
+                    0%, 100% {
+                        background-color: #dc3545;
+                        border-color: #dc3545;
+                        opacity: 1;
+                    }
+                    50% {
+                        background-color: #b02a37;
+                        border-color: #b02a37;
+                        opacity: 0.65;
+                    }
+                }
+                #st-apply-refresh {
+                    background-color: #dc3545 !important;
+                    border-color: #dc3545 !important;
+                    color: #fff !important;
+                    animation: tddApplyPulse 1.2s ease-in-out infinite;
+                }
+            `;
             document.getElementById('tdd-custom-css').innerHTML = css;
         }
 
@@ -288,7 +313,6 @@
 
             if (!myName) {
                 myName = $('.nav-profile .profile-name a').first().text().trim().toLowerCase();
-                if (!myName) return;
             }
 
             let $myContainer = $('.tdd-custom-userlist');
@@ -382,7 +406,7 @@
                         <button id="st-useronline" class="btn btn-sm btn-block btn-${settings.userOnline === 'Show' ? 'success' : 'secondary'}">User Online: ${settings.userOnline}</button>
                     </div>
                     <div class="px-2 py-1">
-                        <button id="st-sortuser" class="btn btn-sm btn-block btn-${settings.sortUser === 'Default' ? 'secondary' : 'info'}">Sort Users: ${settings.sortUser}</button>
+                        <button id="st-sortuser" class="btn btn-sm btn-block btn-secondary ${settings.sortUser === 'Default' ? '' : 'tdd-sort-active'}">Sort Users: ${settings.sortUser}</button>
                     </div>
                     <div class="px-2 py-1">
                         <button id="st-quotebtn" class="btn btn-sm btn-block btn-${settings.quoteBtn === 'Default' ? 'secondary' : 'primary'}">Quote Button: ${settings.quoteBtn}</button>
@@ -467,11 +491,13 @@
                 else settings.sortUser = 'Default';
 
                 $(this).text('Sort Users: ' + settings.sortUser)
-                    .removeClass('btn-secondary btn-info btn-primary')
-                    .addClass(settings.sortUser === 'Default' ? 'btn-secondary' : 'btn-info');
+                    .toggleClass('tdd-sort-active', settings.sortUser !== 'Default');
 
                 saveSettings();
-                sortUserOnline();
+                $('#st-status').fadeIn();
+                if (settings.sortUser !== 'Default') {
+                    runSortSafely();
+                }
             });
             $('#st-apply-refresh').click(function () {
                 $('audio, video').each(function () { this.pause(); this.src = ""; });
@@ -589,6 +615,7 @@
         forceLayout();
 
         function runSortSafely() {
+            if (settings.sortUser === 'Default') return;
             if (isSorting) return;
             const $list = $('.chat-userlist');
             if ($list.length === 0 || $list.children('.form-inline').length === 0) return;
@@ -601,7 +628,8 @@
             }
         }
 
-        setTimeout(runSortSafely, 300);
+        setTimeout(runSortSafely, 500);
+        setTimeout(runSortSafely, 1500);
         setInterval(runSortSafely, 5000);
 
         $(window).on('resize', forceLayout);

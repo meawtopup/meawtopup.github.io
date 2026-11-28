@@ -49,5 +49,18 @@
   หลัการทำงานของสคริป: เพิ่ม Outbound Rules ใน Firewall เพื่อ Block IPv6 แต่ยังใช้ IPv6 ในการจับเพียร์ได้อยู่  
   [View Here (Download)](docs/Block-IPv6.md) | [Self-Configuration](docs/Self-Config-IPV6.md) | [Feature](docs/FEATURES.md#block-ipv6-by-mobyex)  
 
+# qBittorrent  
+**เลือกใช้ให้เหมาะสมกับคอมพิวเตอร์ของท่าน**  
+*- libtorrent 2.0.x ระบบใหม่กว่า จัดการอ่านเขียนบน SSD ได้ดีกว่า*  
+*- libtorrent 1.2.x มีความเสถียรกว่า เหมาะสมกับใช้บน HDD มากกว่า*  
 
+**qBittorrent v5.2.4**  
+- Windows installer (สำหรับวินโด)  
+  [Download libtorrent 2.0.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent_5.2.4_lt20_x64_setup.exe) | 
+  [Download libtorrent 1.2.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent_5.2.4_x64_setup.exe)  
+- Linux AppImage (สำหรับลีนุกซ์)  
+  [Download libtorrent 2.0.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent-5.2.4_lt20_x86_64.AppImage) | 
+  [Download libtorrent 1.2.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent-5.2.4_x86_64.AppImage)
+  
+*หมายเหตุ: ลิ้งดาวโหลดมาจาก qBittorrent Official GitHub*  
 

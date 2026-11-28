@@ -54,23 +54,20 @@
 *- libtorrent 2.0.x ระบบใหม่กว่า จัดการอ่านเขียนบน SSD ได้ดีกว่า*  
 *- libtorrent 1.2.x มีความเสถียรกว่า เหมาะสมกับใช้บน HDD มากกว่า*  
 
-**qBittorrent v5.2.4**  
-- Windows installer (สำหรับวินโด)  
-  [Download libtorrent 2.0.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent_5.2.4_lt20_x64_setup.exe) | 
-  [Download libtorrent 1.2.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent_5.2.4_x64_setup.exe)  
-- Linux AppImage (สำหรับลีนุกซ์)  
-  [Download libtorrent 2.0.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent-5.2.4_lt20_x86_64.AppImage) | 
-  [Download libtorrent 1.2.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent-5.2.4_x86_64.AppImage)  
-  
-**qBittorrent v5.2.3**  
-- Windows installer (สำหรับระบบปฏิบัติการวินโด)  
-  [Download libtorrent 2.0.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent_5.2.3_lt20_x64_setup.exe) | 
-  [Download libtorrent 1.2.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent_5.2.3_x64_setup.exe)  
-- Linux AppImage (สำหรับระบบปฏิบัติการลีนุกซ์)  
-  [Download libtorrent 2.0.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent-5.2.3_lt20_x86_64.AppImage) | 
-  [Download libtorrent 1.2.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent-5.2.3_x86_64.AppImage)
-- macOS DMG (สำหรับระบบปฏิบัติการแมคโอเอส)  
-  [Download libtorrent 2.0.x](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent-5.2.3_lt20.dmg)  
-  
+**Windows installer (สำหรับวินโด)**
+   - qBittorrent v5.2.4 libtorrent 2.0.x [Download](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent_5.2.4_lt20_x64_setup.exe)  
+   - qBittorrent v5.2.4 libtorrent 1.2.x [Download](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent_5.2.4_x64_setup.exe)  
+   - qBittorrent v5.2.3 libtorrent 2.0.x [Download](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent_5.2.3_lt20_x64_setup.exe)  
+   - qBittorrent v5.2.3 libtorrent 1.2.x [Download](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent_5.2.3_x64_setup.exe)  
+
+**Linux AppImage (สำหรับลีนุกซ์)**
+   - qBittorrent v5.2.4 libtorrent 2.0.x [Download](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent-5.2.4_lt20_x86_64.AppImage)  
+   - qBittorrent v5.2.4 libtorrent 1.2.x [Download](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.4/qbittorrent-5.2.4_x86_64.AppImage)  
+   - qBittorrent v5.2.3 libtorrent 2.0.x [Download](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent-5.2.3_lt20_x86_64.AppImage)  
+   - qBittorrent v5.2.3 libtorrent 1.2.x [Download](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent-5.2.3_x86_64.AppImage)  
+
+**macOS DMG (สำหรับระบบปฏิบัติการแมคโอเอส)**
+   - qBittorrent v5.2.3 libtorrent 2.0.x [Download](https://github.com/qbittorrent/qBittorrent/releases/download/release-5.2.3/qbittorrent-5.2.3_lt20.dmg)  
+ 
 *หมายเหตุ: ลิ้งดาวโหลดมาจาก qBittorrent Official GitHub*  
 
